@@ -59,19 +59,76 @@ const quickCards = [
 ]
 
 // ── Departments ───────────────────────────────────────────────
+    // { color: 'from-blue-500 to-blue-600', textColor: 'text-blue-100', bg: 'bg-blue-50', icon: 'fa-heartbeat', name: 'Cardiology', subtitle: 'Heart & Cardiovascular Care', desc: 'Comprehensive cardiac care with advanced diagnostic facilities, interventional cardiology, and cardiac surgery.', specialists: '12+', beds: '45', services: ['ECG & Echocardiography', 'Angioplasty & Stenting', 'Cardiac Surgery'], available247: true },
+
 const departments = [
-    { color: 'from-blue-500 to-blue-600', textColor: 'text-blue-100', bg: 'bg-blue-50', icon: 'fa-heartbeat', name: 'Cardiology', subtitle: 'Heart & Cardiovascular Care', desc: 'Comprehensive cardiac care with advanced diagnostic facilities, interventional cardiology, and cardiac surgery.', specialists: '12+', beds: '45', services: ['ECG & Echocardiography', 'Angioplasty & Stenting', 'Cardiac Surgery'], available247: true },
-    { color: 'from-emerald-500 to-emerald-600', textColor: 'text-green-100', bg: 'bg-green-50', icon: 'fa-brain', name: 'Neurology', subtitle: 'Brain & Nervous System', desc: 'Expert care for neurological disorders with advanced diagnostic tools.', specialists: '10+', beds: null },
-    { color: 'from-purple-500 to-purple-600', textColor: 'text-purple-100', bg: 'bg-purple-50', icon: 'fa-bone', name: 'Orthopedics', subtitle: 'Bone & Joint Care', desc: 'Comprehensive orthopedic care including joint replacements and sports medicine.', specialists: '8+', beds: null },
-    { color: 'from-pink-500 to-pink-600', textColor: 'text-pink-100', bg: 'bg-pink-50', icon: 'fa-baby', name: 'Pediatrics', subtitle: 'Child Healthcare', desc: 'Specialized medical care for infants, children, and adolescents.', specialists: '12+', beds: null },
-    { color: 'from-red-500 to-red-600', textColor: 'text-red-100', bg: 'bg-red-50', icon: 'fa-female', name: 'Gynecology', subtitle: "Women's Health", desc: 'Complete women\'s health services including prenatal and postnatal care.', specialists: '8+', beds: null },
-    { color: 'from-yellow-500 to-yellow-600', textColor: 'text-yellow-100', bg: 'bg-yellow-50', icon: 'fa-eye', name: 'Ophthalmology', subtitle: 'Eye Care', desc: 'Advanced eye care services including cataract surgery and vision correction.', specialists: '6+', beds: null },
-    { color: 'from-indigo-500 to-indigo-600', textColor: 'text-indigo-100', bg: 'bg-indigo-50', icon: 'fa-lungs', name: 'Pulmonology', subtitle: 'Respiratory Care', desc: 'Specialized treatment for respiratory disorders and lung diseases.', specialists: '7+', beds: null },
-    { color: 'from-teal-500 to-teal-600', textColor: 'text-teal-100', bg: 'bg-teal-50', icon: 'fa-x-ray', name: 'Radiology', subtitle: 'Medical Imaging', desc: 'State-of-the-art imaging services including MRI, CT scan, and ultrasound.', specialists: '5+', beds: null },
-    { color: 'from-orange-500 to-orange-600', textColor: 'text-orange-100', bg: 'bg-orange-50', icon: 'fa-syringe', name: 'Endocrinology', subtitle: 'Hormone Disorders', desc: 'Expert management of diabetes, thyroid disorders, and hormonal imbalances.', specialists: '6+', beds: null },
-    { color: 'from-cyan-500 to-cyan-600', textColor: 'text-cyan-100', bg: 'bg-cyan-50', icon: 'fa-tooth', name: 'Dentistry', subtitle: 'Dental Care', desc: 'Complete dental care including orthodontics, implants, and cosmetic dentistry.', specialists: '8+', beds: null },
-    { color: 'from-rose-500 to-rose-600', textColor: 'text-rose-100', bg: 'bg-rose-50', icon: 'fa-procedures', name: 'General Surgery', subtitle: 'Surgical Care', desc: 'Comprehensive surgical services including minimally invasive procedures.', specialists: '10+', beds: null },
-    { color: 'from-lime-500 to-lime-600', textColor: 'text-lime-100', bg: 'bg-lime-50', icon: 'fa-prescription-bottle', name: 'Oncology', subtitle: 'Cancer Care', desc: 'Advanced cancer treatment with chemotherapy, radiation, and immunotherapy.', specialists: '9+', beds: null },
+    { 
+        color: 'from-blue-600 to-indigo-700', 
+        textColor: 'text-blue-100', 
+        bg: 'bg-blue-50', 
+        icon: 'fa-heartbeat', 
+        name: 'Cardiology', 
+        subtitle: 'Every heartbeat matters — we protect it.', 
+        desc: 'The Cardiology Department at AMZ Hospital Ltd. provides comprehensive heart care—from prevention and diagnosis to advanced treatment.', 
+        specialists: '12+', 
+        beds: '45',
+        available247: true 
+    },
+    { 
+        color: 'from-emerald-500 to-teal-600', 
+        textColor: 'text-emerald-100', 
+        bg: 'bg-emerald-50', 
+        icon: 'fa-user-md', 
+        name: 'Medicine', 
+        subtitle: 'Right diagnosis begins with the right doctor.', 
+        desc: 'Providing patient-centered care for a wide range of acute and chronic medical conditions with a focus on internal wellness.', 
+        specialists: '4+', 
+        beds: '20' 
+    },
+    { 
+        color: 'from-purple-500 to-fuchsia-600', 
+        textColor: 'text-purple-100', 
+        bg: 'bg-purple-50', 
+        icon: 'fa-female', 
+        name: 'Gynecology', 
+        subtitle: 'Your partner in health and motherhood.', 
+        desc: 'Dedicated to delivering comprehensive, compassionate, and evidence-based care for women at every stage of life.', 
+        specialists: '9+', 
+        beds: '30' 
+    },
+    { 
+        color: 'from-red-500 to-orange-600', 
+        textColor: 'text-red-100', 
+        bg: 'bg-red-50', 
+        icon: 'fa-microscope', 
+        name: 'Hepatobiliary', 
+        subtitle: 'Healthy digestion for a healthier life.', 
+        desc: 'Advanced surgical care for complex diseases of the liver, gallbladder, and pancreas using the latest surgical technology.', 
+        specialists: '8+', 
+        beds: '15' 
+    },
+    { 
+        color: 'from-amber-500 to-yellow-600', 
+        textColor: 'text-amber-100', 
+        bg: 'bg-amber-50', 
+        icon: 'fa-baby', 
+        name: 'Pediatrics', 
+        subtitle: 'Caring for today, building tomorrow.', 
+        desc: 'Dedicated to the health and well-being of infants, children, and adolescents with a gentle, child-friendly approach.', 
+        specialists: '6+', 
+        beds: '25' 
+    },
+    { 
+        color: 'from-indigo-500 to-blue-700', 
+        textColor: 'text-indigo-100', 
+        bg: 'bg-indigo-50', 
+        icon: 'fa-procedures', 
+        name: 'Surgery', 
+        subtitle: 'Precision surgery with minimal scars.', 
+        desc: 'Specializing in Laparoscopic and Laser solutions for a wide range of conditions to ensure faster recovery times.', 
+        specialists: '7+', 
+        beds: '40' 
+    }
 ]
 
 // ── Doctors ────────────────────────────────────────────────────
@@ -302,10 +359,10 @@ onUnmounted(() => stopAuto())
         <div class="container mx-auto px-4">
             <div class="grid lg:grid-cols-2 gap-12 items-center">
                 <div class="relative">
-                    <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&h=600&fit=crop"
+                    <img src="https://amzhospitalbd.com/storage/AMZ.jpg?w=800&h=600&fit=crop"
                         alt="AMZ Hospital Building" class="rounded-2xl shadow-2xl w-full" loading="lazy" />
                     <div class="absolute -bottom-6 -right-6 bg-blue-800 text-white p-8 rounded-2xl shadow-xl">
-                        <div class="text-5xl font-bold">25+</div>
+                        <div class="text-5xl font-bold">7+</div>
                         <div class="text-sm">Years of Excellence</div>
                     </div>
                 </div>
@@ -315,10 +372,10 @@ onUnmounted(() => stopAuto())
                     </div>
                     <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Welcome to AMZ Hospital Bangladesh</h2>
                     <p class="text-lg text-gray-600 mb-6 leading-relaxed">
-                        AMZ Hospital is a premier healthcare institution in Bangladesh, committed to providing world-class medical services with compassion and excellence.
+                        Since 2018, AMZ Hospital Ltd., measured its success by counting of lives been saved, hopes been restored, and care been delivered with quality service & professionalism. 
                     </p>
                     <p class="text-gray-600 mb-8 leading-relaxed">
-                        Our state-of-the-art facilities, combined with our team of highly qualified medical professionals, ensure that every patient receives the highest standard of care.
+                        It was founded by a team of visionary clinicians, leaders from civil society and different discipline with a shared vision of reducing health care inequalities.
                     </p>
                     <div class="grid sm:grid-cols-2 gap-4 mb-8">
                         <div v-for="feat in ['24/7 Emergency Care', 'Expert Specialists', 'Modern Equipment', 'Patient-Centered Care']" :key="feat"
@@ -334,7 +391,7 @@ onUnmounted(() => stopAuto())
                     </div>
                     <a href="#appointment"
                         class="inline-flex items-center bg-gradient-to-r from-blue-800 to-sky-500 text-white px-8 py-4 rounded-lg font-semibold hover:shadow-xl transition-all transform hover:scale-105">
-                        <i class="fas fa-calendar-check mr-2"></i>Book an Appointment
+                        <i class="fas fa-book-open mr-2"></i> Read More
                     </a>
                 </div>
             </div>
@@ -375,65 +432,83 @@ onUnmounted(() => stopAuto())
     </section>
 
     <!-- ── DEPARTMENTS ──────────────────────────────────── -->
-    <section id="departments" role="region" aria-label="Medical departments" class="py-20 bg-gradient-to-b from-white to-blue-50">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Our Specialized Departments</h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">12 specialized departments with expert physicians, modern equipment, and patient-centered care</p>
-            </div>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div v-for="dept in departments" :key="dept.name"
-                    class="group bg-white border-2 border-gray-100 rounded-2xl overflow-hidden hover:shadow-2xl hover:border-blue-800 transition-all duration-300 transform hover:-translate-y-2 relative">
-                    <div :class="`bg-gradient-to-br ${dept.color} p-6`">
-                        <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center mb-4">
-                            <i :class="`fas ${dept.icon} text-white text-3xl`"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold text-white mb-1">{{ dept.name }}</h3>
-                        <p :class="`${dept.textColor} text-sm`">{{ dept.subtitle }}</p>
+<section id="departments" class="py-24 bg-slate-50 relative overflow-hidden">
+    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-200 to-transparent"></div>
+    
+    <div class="container mx-auto px-4 relative z-10">
+        <div class="text-center mb-16 scroll-reveal">
+            <span class="text-blue-600 font-bold uppercase tracking-[0.2em] text-xs mb-3 block">Medical Excellence</span>
+            <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-6 tracking-tight">Specialized Departments</h2>
+            <div class="w-20 h-1.5 bg-blue-600 mx-auto rounded-full"></div>
+            <p class="mt-6 text-slate-500 max-w-2xl mx-auto text-lg leading-relaxed">
+                World-class medical expertise paired with state-of-the-art technology to provide the highest standard of care.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+            <div v-for="dept in departments" :key="dept.name"
+                class="group flex flex-col h-full bg-white rounded-[2rem] overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-blue-200/50 transition-all duration-500 border border-slate-100 relative scroll-reveal">
+                
+                <div :class="`bg-gradient-to-br ${dept.color} p-10 relative overflow-hidden` ">
+                    <div class="absolute -right-6 -top-6 w-32 h-32 bg-white/10 rounded-full blur-3xl group-hover:bg-white/20 transition-colors"></div>
+                    
+                    <div class="w-16 h-16 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center mb-8 shadow-inner border border-white/20 group-hover:rotate-6 transition-transform duration-500">
+                        <i :class="`fas ${dept.icon} text-white text-3xl transition-transform duration-500 group-hover:scale-110` "></i>
                     </div>
-                    <div class="p-6">
-                        <p class="text-gray-600 mb-4 leading-relaxed">{{ dept.desc }}</p>
-                        <div v-if="dept.services" class="mb-4">
-                            <h4 class="text-sm font-bold text-gray-900 mb-2 flex items-center">
-                                <i class="fas fa-check-circle text-blue-800 mr-2"></i>Services Offered:
-                            </h4>
-                            <ul class="space-y-1 text-sm text-gray-600">
-                                <li v-for="s in dept.services" :key="s" class="flex items-start">
-                                    <i class="fas fa-chevron-right text-blue-800 mr-2 mt-1 text-xs"></i><span>{{ s }}</span>
-                                </li>
-                            </ul>
-                        </div>
-                        <div :class="[
-                            `grid gap-4 mb-4 p-4 ${dept.bg} rounded-lg`,
-                            dept.beds ? 'grid-cols-2' : 'grid-cols-1'
-                        ]">
-                            <div>
-                                <p class="text-xs text-gray-600 mb-1">Specialists</p>
-                                <p class="font-bold text-blue-800">{{ dept.specialists }} Doctors</p>
+                    
+                    <h3 class="text-2xl font-bold text-white mb-2 tracking-tight">{{ dept.name }}</h3>
+                    <p :class="`${dept.textColor} text-sm font-medium leading-snug line-clamp-1 opacity-80 uppercase tracking-wide` ">
+                        {{ dept.subtitle }}
+                    </p>
+                </div>
+
+                <div class="p-10 flex flex-col flex-grow">
+                    <p class="text-slate-500 mb-10 line-clamp-3 text-base leading-relaxed min-h-[4.5rem]">
+                        {{ dept.desc }}
+                    </p>
+
+                    <div class="mt-auto flex flex-col gap-8">
+                        <div class="flex items-center justify-between border-b border-slate-50 pb-6">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center">
+                                    <i class="fas fa-user-doctor text-blue-600 text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Expert Team</p>
+                                    <p class="text-sm font-bold text-slate-800">{{ dept.specialists }} Specialists</p>
+                                </div>
                             </div>
-                            <div v-if="dept.beds">
-                                <p class="text-xs text-gray-600 mb-1">Beds Available</p>
-                                <p class="font-bold text-blue-800">{{ dept.beds }} Beds</p>
+                            <div class="flex items-center text-[10px] font-bold text-emerald-600 uppercase tracking-widest bg-emerald-50 px-3 py-1 rounded-full">
+                                <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-2 animate-pulse"></span>
+                                Active
                             </div>
                         </div>
+
                         <a href="#appointment"
-                            class="block w-full bg-gradient-to-r from-blue-800 to-sky-500 text-white text-center py-3 rounded-lg font-semibold hover:shadow-lg transition">
-                            <i class="fas fa-calendar-check mr-2"></i>Book Appointment
+                            class="group/btn relative flex items-center justify-between w-full px-7 py-4 rounded-2xl border-2 border-slate-900 text-slate-900 font-bold transition-all duration-300 hover:bg-slate-900 hover:text-white overflow-hidden active:scale-95">
+                            <span class="relative z-10 uppercase tracking-widest text-xs">Read More</span>
+                            <div class="relative z-10 flex items-center justify-center w-8 h-8 rounded-full bg-slate-100 text-slate-900 transition-all duration-300 group-hover/btn:bg-white/20 group-hover/btn:text-white">
+                                <i class="fas fa-arrow-right text-[10px] transition-transform duration-300 group-hover/btn:translate-x-1"></i>
+                            </div>
                         </a>
                     </div>
-                    <div v-if="dept.available247"
-                        class="absolute top-4 right-4 bg-emerald-500 px-3 py-1 rounded-full text-white text-xs font-semibold flex items-center shadow-lg">
-                        <span class="w-2 h-2 bg-white rounded-full mr-2 animate-pulse"></span>Available 24/7
-                    </div>
+                </div>
+
+                <div v-if="dept.available247"
+                    class="absolute top-6 right-6 bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full text-[10px] text-white font-bold border border-white/20 uppercase tracking-widest">
+                    Emergency 24/7
                 </div>
             </div>
-            <div class="text-center mt-12">
-                <a href="#departments" class="inline-flex items-center text-blue-800 font-semibold hover:text-sky-500 transition-colors">
-                    View All Departments <i class="fas fa-arrow-right ml-2"></i>
-                </a>
-            </div>
         </div>
-    </section>
+        
+        <div class="mt-20 text-center">
+            <a href="#departments" class="inline-flex items-center group text-blue-800 font-bold tracking-widest uppercase text-sm">
+                View All Medical Units 
+                <span class="ml-4 w-12 h-px bg-blue-800 transition-all group-hover:w-20"></span>
+            </a>
+        </div>
+    </div>
+</section>
 
     <!-- ── DOCTORS ───────────────────────────────────────── -->
     <section id="doctors" role="region" aria-label="Our doctors" class="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
