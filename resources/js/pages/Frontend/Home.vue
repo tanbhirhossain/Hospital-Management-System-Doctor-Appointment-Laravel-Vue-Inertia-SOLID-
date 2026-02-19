@@ -1,5 +1,6 @@
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
+import AppointmentBookingWizard from '@/components/frontend/AppointmentBookingWizard.vue'
 import FrontendLayout from '@/layouts/FrontendLayout.vue'
 
 defineOptions({ layout: FrontendLayout })
@@ -48,6 +49,9 @@ const prevSlide = () => { currentSlide.value = (currentSlide.value - 1 + slides.
 
 const startAuto = () => { autoSlideInterval = setInterval(nextSlide, 5000) }
 const stopAuto = () => clearInterval(autoSlideInterval)
+let sectionObserver: IntersectionObserver | null = null
+let counterObserver: IntersectionObserver | null = null
+const smoothScrollHandlers: Array<{ anchor: Element; handler: EventListener }> = []
 
 // ── Quick Info Cards ─────────────────────────────────────────
 const quickCards = [
@@ -133,21 +137,63 @@ const departments = [
 
 // ── Doctors ────────────────────────────────────────────────────
 const doctors = [
-    { color: 'from-blue-400 to-blue-600', name: 'Dr. Ahmed Rahman', specialty: 'Cardiologist', degree: 'MBBS, MD (Cardiology)', exp: '15+' },
-    { color: 'from-emerald-400 to-emerald-600', name: 'Dr. Fatima Khan', specialty: 'Neurologist', degree: 'MBBS, MD (Neurology)', exp: '12+' },
-    { color: 'from-purple-400 to-purple-600', name: 'Dr. Kamal Hossain', specialty: 'Orthopedic Surgeon', degree: 'MBBS, MS (Orthopedics)', exp: '18+' },
-    { color: 'from-pink-400 to-pink-600', name: 'Dr. Sultana Begum', specialty: 'Gynecologist', degree: 'MBBS, FCPS (Gynecology)', exp: '10+' },
+    { color: 'from-blue-400 to-blue-600', name: 'Dr. Ahmedul Kabir', specialty: 'Medicine', degree: 'MBBS, FCPS, FACP, FRCP', exp: '15+', photo: 'https://amzhospitalbd.com/storage/doctors/April2024/H2qkQbIjHRLFzvPwoNEt.jpg' },
+    { color: 'from-emerald-400 to-emerald-600', name: 'Dr. Mohammad Sayem', specialty: 'Medicine', degree: 'MBBS (Dhaka), FCPS (Medicine), MRCP (London) MRCPE (Edinburgh), MACP (USA)', exp: '10+', photo: 'https://amzhospitalbd.com/storage/doctors/April2024/rXuniLQlfVt3OmQ6Ntw8.jpg' },
+    { color: 'from-purple-400 to-purple-600', name: 'Professor Dr. Mohammad Nashir Uddin', specialty: 'Plastic, Aesthetic & Laser Surgery', degree: 'MS (Plastic Surgery), FCPS (Surgery), FRCS (UK)', exp: '15+', photo: 'https://amzhospitalbd.com/storage/doctors/April2024/vtlYUwFUzX8gFsQLcsqJ.png' },
+    { color: 'from-pink-400 to-pink-600', name: 'Professor Dr. Jesmine Banu', specialty: 'Gynecologist', degree: 'MBBS, MS (Obs. & GYN), Gynecology, Obstetrics Infertility Specialist & Laparoscopic Surgeon', exp: '20+', photo:'https://amzhospitalbd.com/storage/doctors/July2025/7Fq2bPofzv2z2c2Zz91s.jpg' },
 ]
 
 // ── Gallery ────────────────────────────────────────────────────
 const activeFilter = ref('all')
 const galleryItems = [
-    { category: 'infrastructure', img: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&h=600&fit=crop', badge: 'Infrastructure', badgeColor: 'bg-blue-800', title: 'Main Hospital Building', desc: 'Modern 10-story facility' },
-    { category: 'facilities', img: 'https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=800&h=600&fit=crop', badge: 'Facilities', badgeColor: 'bg-red-500', title: '24/7 Emergency Room', desc: 'Advanced trauma care' },
-    { category: 'equipment', img: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&h=600&fit=crop', badge: 'Equipment', badgeColor: 'bg-emerald-500', title: 'Modern Operating Theater', desc: 'State-of-the-art surgical suite' },
-    { category: 'facilities', img: 'https://images.unsplash.com/photo-1512678080530-7760d81faba6?w=800&h=600&fit=crop', badge: 'Facilities', badgeColor: 'bg-purple-600', title: 'Intensive Care Unit (ICU)', desc: 'Critical care monitoring' },
-    { category: 'departments', img: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&h=600&fit=crop', badge: 'Departments', badgeColor: 'bg-cyan-600', title: 'Private Patient Room', desc: 'Comfortable accommodation' },
-    { category: 'equipment', img: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?w=800&h=600&fit=crop', badge: 'Equipment', badgeColor: 'bg-orange-600', title: 'Diagnostic Laboratory', desc: 'Advanced testing facilities' },
+    { 
+        category: 'infrastructure', 
+        img: 'https://amzhospitalbd.com/storage/AMZ.jpg?w=800&h=600&fit=crop', 
+        badge: 'Infrastructure', 
+        badgeColor: 'bg-blue-800', 
+        title: 'AMZ Hospital Building', 
+        desc: 'ISO-certified 100-bed multi-story facility in Uttar Badda.' 
+    },
+    { 
+        category: 'facilities', 
+        img: 'https://amzhospitalbd.com/storage/galleries/May2024/uAobdzOLYOrhAGXeCQe1.jpg?w=800&h=600&fit=crop', 
+        badge: 'Facilities', 
+        badgeColor: 'bg-red-500', 
+        title: '24/7 Emergency Care', 
+        desc: 'Round-the-clock emergency and trauma services with ambulance support.' 
+    },
+    { 
+        category: 'equipment', 
+        img: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&h=600&fit=crop', 
+        badge: 'Equipment', 
+        badgeColor: 'bg-emerald-500', 
+        title: 'Advanced Cath-Lab', 
+        desc: 'Modern cardiac intervention unit for Angiogram and Angioplasty.' 
+    },
+    { 
+        category: 'facilities', 
+        img: 'https://images.unsplash.com/photo-1512678080530-7760d81faba6?w=800&h=600&fit=crop', 
+        badge: 'Facilities', 
+        badgeColor: 'bg-purple-600', 
+        title: 'Critical Care Units', 
+        desc: 'Well-equipped ICU, NICU, CCU, and HDU for specialized monitoring.' 
+    },
+    { 
+        category: 'departments', 
+        img: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&h=600&fit=crop', 
+        badge: 'Departments', 
+        badgeColor: 'bg-cyan-600', 
+        title: 'Fertility & Research Center', 
+        desc: 'Premier Center of Excellence for IVF and infertility treatments.' 
+    },
+    { 
+        category: 'equipment', 
+        img: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?w=800&h=600&fit=crop', 
+        badge: 'Equipment', 
+        badgeColor: 'bg-orange-600', 
+        title: 'Diagnostic & Radio Imaging', 
+        desc: 'Category-A lab with MRI, CT Scan, and digital X-ray capabilities.' 
+    },
 ]
 
 const filters = ['all', 'infrastructure', 'facilities', 'equipment', 'departments']
@@ -192,6 +238,7 @@ const testimonials = [
     { initials: 'TU', bg: 'from-amber-500 to-amber-600', cardBg: 'from-amber-50', name: 'Tanvir Uddin', short: 'Appointment process was smooth, and waiting time was reasonable.', full: ' Staff guided me politely, and the doctor gave practical advice with clear medicine instructions. Overall, a dependable experience.' },
     { initials: 'FP', bg: 'from-rose-500 to-rose-600', cardBg: 'from-rose-50', name: 'Farzana Parvin', short: 'Excellent maternal care and supportive nursing staff throughout.', full: ' The doctors checked in regularly, answered questions patiently, and ensured comfort before and after procedures.' },
 ]
+const doubledTestimonials = [...testimonials, ...testimonials]
 
 const expandedTestimonials = ref({})
 const toggleTestimonial = (i) => { expandedTestimonials.value[i] = !expandedTestimonials.value[i] }
@@ -207,18 +254,19 @@ const statValues = ref(stats.map(() => 0))
 let counterAnimated = false
 
 // ── Partners ────────────────────────────────────────────────────
-const partners = ['bata.com', 'bracbank.com', 'robi.com.bd', 'daraz.com.bd', 'citybank.com.bd', 'grameenphone.com', 'akij.net', 'squaregroup.com']
+const partners = [
+  { name: 'AB Bank', logo: 'https://amzhospitalbd.com/storage/corporate-partners/March2024/9Y2oTmRomsnbfdh3cG50.png' },
+  { name: 'Ekushe TV', logo: 'https://amzhospitalbd.com/storage/corporate-partners/March2024/SLboYCDAU6ngOHkQ0TxA.png' },
+  { name: 'ICON', logo: 'https://amzhospitalbd.com/storage/corporate-partners/March2024/stFeEleAssgKAwC97aeC.png' },
+  { name: 'Brac', logo: 'https://amzhospitalbd.com/storage/corporate-partners/March2024/TtikDkxa6iYuaaMoRyBg.png' },
+  { name: 'Huwaei', logo: 'https://amzhospitalbd.com/storage/corporate-partners/March2024/9XfI0DamcAjt2JgjgV3T.png' },
+  // ... add the rest
+]
 const doubledPartners = [...partners, ...partners]
 
 // ── Appointment Form ────────────────────────────────────────────
-const form = ref({ name: '', phone: '', email: '', department: '', date: '', time: '', message: '' })
-const formSuccess = ref(false)
-
-const submitForm = () => {
-    formSuccess.value = true
-    form.value = { name: '', phone: '', email: '', department: '', date: '', time: '', message: '' }
-    setTimeout(() => { formSuccess.value = false }, 5000)
-}
+const appointmentAvailableWeekdays = [0, 1, 2, 3, 4, 6]
+const appointmentBlockedDates = []
 
 // ── Newsletter ─────────────────────────────────────────────────
 const newsletterEmail = ref('')
@@ -234,19 +282,24 @@ onMounted(() => {
     startAuto()
 
     // Scroll animations (IntersectionObserver)
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate-in')
-                observer.unobserve(entry.target)
-            }
-        })
-    }, { threshold: 0.1 })
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReducedMotion) {
+        document.querySelectorAll('.scroll-reveal').forEach((el) => el.classList.add('animate-in'))
+    } else {
+        sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in')
+                    sectionObserver?.unobserve(entry.target)
+                }
+            })
+        }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' })
 
-    document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el))
+        document.querySelectorAll('.scroll-reveal').forEach((el) => sectionObserver?.observe(el))
+    }
 
     // Counter animation
-    const counterObserver = new IntersectionObserver((entries) => {
+    counterObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting && !counterAnimated) {
                 counterAnimated = true
@@ -273,7 +326,7 @@ onMounted(() => {
 
     // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', (e) => {
+        const handler: EventListener = (e) => {
             const href = anchor.getAttribute('href')
             if (href && href !== '#' && href.length > 1) {
                 const target = document.querySelector(href)
@@ -282,16 +335,23 @@ onMounted(() => {
                     window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' })
                 }
             }
-        })
+        }
+        anchor.addEventListener('click', handler)
+        smoothScrollHandlers.push({ anchor, handler })
     })
 })
 
-onUnmounted(() => stopAuto())
+onUnmounted(() => {
+    stopAuto()
+    sectionObserver?.disconnect()
+    counterObserver?.disconnect()
+    smoothScrollHandlers.forEach(({ anchor, handler }) => anchor.removeEventListener('click', handler))
+})
 </script>
 
 <template>
     <!-- ── HERO SLIDER ───────────────────────────────────── -->
-    <section id="home" role="region" aria-label="Hero section" class="relative">
+    <section id="home" role="region" aria-label="Hero section" class="relative scroll-reveal reveal-home fade-in-0 zoom-in-95 duration-700">
         <div class="relative h-[500px] md:h-[600px] lg:h-[700px] overflow-hidden">
             <div v-for="(slide, i) in slides" :key="i"
                 class="absolute inset-0 transition-opacity duration-1000"
@@ -335,11 +395,11 @@ onUnmounted(() => stopAuto())
     </section>
 
     <!-- ── QUICK INFO CARDS ──────────────────────────────── -->
-    <section class="py-0 relative -mt-16 z-40">
+    <section class="py-0 relative -mt-16 z-40 scroll-reveal reveal-quick fade-in-0 slide-in-from-bottom-8 duration-700">
         <div class="container mx-auto px-4">
-            <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
+            <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-6 stagger-grid">
                 <div v-for="card in quickCards" :key="card.title"
-                    :class="`bg-gradient-to-br ${card.gradient} text-white rounded-xl p-6 shadow-2xl border border-white/30 backdrop-blur-lg transition-all transform hover:-translate-y-2`">
+                    :class="`premium-sheen bg-gradient-to-br ${card.gradient} text-white rounded-xl p-6 shadow-2xl border border-white/30 backdrop-blur-lg transition-all transform hover:-translate-y-2`">
                     <div class="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center mb-4">
                         <i :class="`fas ${card.icon} text-2xl`"></i>
                     </div>
@@ -355,7 +415,7 @@ onUnmounted(() => stopAuto())
     </section>
 
     <!-- ── ABOUT ─────────────────────────────────────────── -->
-    <section id="about" role="region" aria-label="About us" class="py-20 bg-white">
+    <section id="about" role="region" aria-label="About us" class="py-20 bg-white scroll-reveal reveal-about fade-in-0 slide-in-from-left-12 duration-700">
         <div class="container mx-auto px-4">
             <div class="grid lg:grid-cols-2 gap-12 items-center">
                 <div class="relative">
@@ -399,7 +459,7 @@ onUnmounted(() => stopAuto())
     </section>
 
     <!-- ── WHY CHOOSE US ────────────────────────────────── -->
-    <section class="py-20 bg-gradient-to-br from-blue-50 to-indigo-50">
+    <section class="py-20 bg-gradient-to-br from-blue-50 to-indigo-50 scroll-reveal reveal-why fade-in-0 slide-in-from-bottom-10 duration-700">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
                 <div class="inline-block bg-white text-blue-800 px-4 py-2 rounded-full text-sm font-semibold mb-4 shadow-sm">
@@ -408,7 +468,7 @@ onUnmounted(() => stopAuto())
                 <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Why AMZ Hospital is Your Best Choice</h2>
                 <p class="text-xl text-gray-600 max-w-3xl mx-auto">We are committed to providing exceptional healthcare with advanced facilities and experienced professionals</p>
             </div>
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 stagger-grid">
                 <div v-for="(feat, i) in [
                     { color: 'from-blue-500 to-blue-600', icon: 'fa-user-md', title: 'Qualified Doctors', desc: 'Our medical team consists of highly qualified and experienced doctors from renowned institutions' },
                     { color: 'from-emerald-500 to-emerald-600', icon: 'fa-hospital-alt', title: 'Modern Facilities', desc: 'State-of-the-art infrastructure with the latest medical equipment and technology' },
@@ -419,7 +479,7 @@ onUnmounted(() => stopAuto())
                     { color: 'from-indigo-500 to-indigo-600', icon: 'fa-shield-alt', title: 'Safety Standards', desc: 'Strict adherence to international safety and hygiene protocols' },
                     { color: 'from-teal-500 to-teal-600', icon: 'fa-dollar-sign', title: 'Affordable Pricing', desc: 'Quality healthcare at competitive prices with flexible payment options' },
                 ]" :key="feat.title"
-                    class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2">
+                    class="premium-sheen bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2">
                     <div :class="`w-16 h-16 bg-gradient-to-br ${feat.color} rounded-xl flex items-center justify-center mb-6`"
                         style="animation: float 3s ease-in-out infinite" :style="`animation-delay: ${i * 0.2}s`">
                         <i :class="`fas ${feat.icon} text-white text-3xl`"></i>
@@ -432,108 +492,111 @@ onUnmounted(() => stopAuto())
     </section>
 
     <!-- ── DEPARTMENTS ──────────────────────────────────── -->
-<section id="departments" class="py-24 bg-slate-50 relative overflow-hidden">
-    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-200 to-transparent"></div>
-    
-    <div class="container mx-auto px-4 relative z-10">
-        <div class="text-center mb-16 scroll-reveal">
-            <span class="text-blue-600 font-bold uppercase tracking-[0.2em] text-xs mb-3 block">Medical Excellence</span>
-            <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-6 tracking-tight">Specialized Departments</h2>
-            <div class="w-20 h-1.5 bg-blue-600 mx-auto rounded-full"></div>
-            <p class="mt-6 text-slate-500 max-w-2xl mx-auto text-lg leading-relaxed">
-                World-class medical expertise paired with state-of-the-art technology to provide the highest standard of care.
-            </p>
-        </div>
+    <section id="departments" class="py-24 bg-slate-50 relative overflow-hidden scroll-reveal reveal-departments fade-in-0 slide-in-from-bottom-8 duration-700">
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-200 to-transparent"></div>
+        
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center mb-16 scroll-reveal">
+                <span class="text-blue-600 font-bold uppercase tracking-[0.2em] text-xs mb-3 block">Medical Excellence</span>
+                <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-6 tracking-tight">Specialized Departments</h2>
+                <div class="w-20 h-1.5 bg-blue-600 mx-auto rounded-full"></div>
+                <p class="mt-6 text-slate-500 max-w-2xl mx-auto text-lg leading-relaxed">
+                    World-class medical expertise paired with state-of-the-art technology to provide the highest standard of care.
+                </p>
+            </div>
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-            <div v-for="dept in departments" :key="dept.name"
-                class="group flex flex-col h-full bg-white rounded-[2rem] overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-blue-200/50 transition-all duration-500 border border-slate-100 relative scroll-reveal">
-                
-                <div :class="`bg-gradient-to-br ${dept.color} p-10 relative overflow-hidden` ">
-                    <div class="absolute -right-6 -top-6 w-32 h-32 bg-white/10 rounded-full blur-3xl group-hover:bg-white/20 transition-colors"></div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <div v-for="dept in departments" :key="dept.name"
+                    class="premium-sheen group flex flex-col h-full bg-white rounded-[2rem] overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-blue-200/50 transition-all duration-500 border border-slate-100 relative scroll-reveal">
                     
-                    <div class="w-16 h-16 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center mb-8 shadow-inner border border-white/20 group-hover:rotate-6 transition-transform duration-500">
-                        <i :class="`fas ${dept.icon} text-white text-3xl transition-transform duration-500 group-hover:scale-110` "></i>
-                    </div>
-                    
-                    <h3 class="text-2xl font-bold text-white mb-2 tracking-tight">{{ dept.name }}</h3>
-                    <p :class="`${dept.textColor} text-sm font-medium leading-snug line-clamp-1 opacity-80 uppercase tracking-wide` ">
-                        {{ dept.subtitle }}
-                    </p>
-                </div>
-
-                <div class="p-10 flex flex-col flex-grow">
-                    <p class="text-slate-500 mb-10 line-clamp-3 text-base leading-relaxed min-h-[4.5rem]">
-                        {{ dept.desc }}
-                    </p>
-
-                    <div class="mt-auto flex flex-col gap-8">
-                        <div class="flex items-center justify-between border-b border-slate-50 pb-6">
-                            <div class="flex items-center space-x-3">
-                                <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center">
-                                    <i class="fas fa-user-doctor text-blue-600 text-sm"></i>
-                                </div>
-                                <div>
-                                    <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Expert Team</p>
-                                    <p class="text-sm font-bold text-slate-800">{{ dept.specialists }} Specialists</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center text-[10px] font-bold text-emerald-600 uppercase tracking-widest bg-emerald-50 px-3 py-1 rounded-full">
-                                <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-2 animate-pulse"></span>
-                                Active
-                            </div>
+                    <div :class="`bg-gradient-to-br ${dept.color} p-10 relative overflow-hidden` ">
+                        <div class="absolute -right-6 -top-6 w-32 h-32 bg-white/10 rounded-full blur-3xl group-hover:bg-white/20 transition-colors"></div>
+                        
+                        <div class="w-16 h-16 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center mb-8 shadow-inner border border-white/20 group-hover:rotate-6 transition-transform duration-500">
+                            <i :class="`fas ${dept.icon} text-white text-3xl transition-transform duration-500 group-hover:scale-110` "></i>
                         </div>
-
-                        <a href="#appointment"
-                            class="group/btn relative flex items-center justify-between w-full px-7 py-4 rounded-2xl border-2 border-slate-900 text-slate-900 font-bold transition-all duration-300 hover:bg-slate-900 hover:text-white overflow-hidden active:scale-95">
-                            <span class="relative z-10 uppercase tracking-widest text-xs">Read More</span>
-                            <div class="relative z-10 flex items-center justify-center w-8 h-8 rounded-full bg-slate-100 text-slate-900 transition-all duration-300 group-hover/btn:bg-white/20 group-hover/btn:text-white">
-                                <i class="fas fa-arrow-right text-[10px] transition-transform duration-300 group-hover/btn:translate-x-1"></i>
-                            </div>
-                        </a>
+                        
+                        <h3 class="text-2xl font-bold text-white mb-2 tracking-tight">{{ dept.name }}</h3>
+                        <p :class="`${dept.textColor} text-sm font-medium leading-snug line-clamp-1 opacity-80 uppercase tracking-wide` ">
+                            {{ dept.subtitle }}
+                        </p>
                     </div>
-                </div>
 
-                <div v-if="dept.available247"
-                    class="absolute top-6 right-6 bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full text-[10px] text-white font-bold border border-white/20 uppercase tracking-widest">
-                    Emergency 24/7
+                    <div class="p-10 flex flex-col flex-grow">
+                        <p class="text-slate-500 mb-10 line-clamp-3 text-base leading-relaxed min-h-[4.5rem]">
+                            {{ dept.desc }}
+                        </p>
+
+                        <div class="mt-auto flex flex-col gap-8">
+                            <div class="flex items-center justify-between border-b border-slate-50 pb-6">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center">
+                                        <i class="fas fa-user-doctor text-blue-600 text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Expert Team</p>
+                                        <p class="text-sm font-bold text-slate-800">{{ dept.specialists }} Specialists</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center text-[10px] font-bold text-emerald-600 uppercase tracking-widest bg-emerald-50 px-3 py-1 rounded-full">
+                                    <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-2 animate-pulse"></span>
+                                    Active
+                                </div>
+                            </div>
+
+                            <a href="#appointment"
+                                class="group/btn relative flex items-center justify-between w-full px-7 py-4 rounded-2xl border-2 border-slate-900 text-slate-900 font-bold transition-all duration-300 hover:bg-slate-900 hover:text-white overflow-hidden active:scale-95">
+                                <span class="relative z-10 uppercase tracking-widest text-xs">Read More</span>
+                                <div class="relative z-10 flex items-center justify-center w-8 h-8 rounded-full bg-slate-100 text-slate-900 transition-all duration-300 group-hover/btn:bg-white/20 group-hover/btn:text-white">
+                                    <i class="fas fa-arrow-right text-[10px] transition-transform duration-300 group-hover/btn:translate-x-1"></i>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div v-if="dept.available247"
+                        class="absolute top-6 right-6 bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full text-[10px] text-white font-bold border border-white/20 uppercase tracking-widest">
+                        Emergency 24/7
+                    </div>
                 </div>
             </div>
+            
+            <div class="mt-20 text-center">
+                <a href="#departments" class="inline-flex items-center group text-blue-800 font-bold tracking-widest uppercase text-sm">
+                    View All Medical Units 
+                    <span class="ml-4 w-12 h-px bg-blue-800 transition-all group-hover:w-20"></span>
+                </a>
+            </div>
         </div>
-        
-        <div class="mt-20 text-center">
-            <a href="#departments" class="inline-flex items-center group text-blue-800 font-bold tracking-widest uppercase text-sm">
-                View All Medical Units 
-                <span class="ml-4 w-12 h-px bg-blue-800 transition-all group-hover:w-20"></span>
-            </a>
-        </div>
-    </div>
-</section>
+    </section>
 
     <!-- ── DOCTORS ───────────────────────────────────────── -->
-    <section id="doctors" role="region" aria-label="Our doctors" class="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
+    <section id="doctors" role="region" aria-label="Our doctors" class="py-20 bg-gradient-to-br from-gray-50 to-blue-50 scroll-reveal reveal-doctors fade-in-0 slide-in-from-right-10 duration-700">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
                 <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Meet Our Expert Doctors</h2>
                 <p class="text-xl text-gray-600 max-w-3xl mx-auto">Highly qualified and experienced medical professionals dedicated to your health</p>
             </div>
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div v-for="doc in doctors" :key="doc.name"
-                    class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2">
-                    <div :class="`h-64 bg-gradient-to-br ${doc.color} flex items-center justify-center`">
-                        <i class="fas fa-user-md text-white text-8xl"></i>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-gray-900 mb-1">{{ doc.name }}</h3>
-                        <p class="text-sm text-blue-800 font-semibold mb-3">{{ doc.specialty }}</p>
-                        <p class="text-sm text-gray-600 mb-4">{{ doc.degree }}<br />{{ doc.exp }} Years Experience</p>
-                        <a href="#appointment"
-                            class="block w-full bg-blue-800 text-white text-center py-2.5 rounded-lg font-semibold hover:bg-sky-500 transition-colors">
-                            Book Appointment
-                        </a>
-                    </div>
-                </div>
-            </div>
+<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 stagger-grid">
+    <div v-for="doc in doctors" :key="doc.name"
+        class="premium-sheen bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2">
+        
+        <div class="h-64 overflow-hidden bg-gray-100 flex items-center justify-center">
+            <img v-if="doc.photo" :src="doc.photo" :alt="doc.name" class="w-full h-full object-cover" />
+            <i v-else class="fas fa-user-md text-gray-400 text-6xl"></i>
+        </div>
+
+        <div class="p-6">
+            <h3 class="text-xl font-bold text-gray-900 mb-1">{{ doc.name }}</h3>
+            <p class="text-sm text-blue-800 font-semibold mb-3">{{ doc.specialty }}</p>
+            <p class="text-sm text-gray-600 mb-4">{{ doc.degree }}<br />{{ doc.exp }} Years Experience</p>
+            <a href="#appointment"
+                class="block w-full bg-blue-800 text-white text-center py-2.5 rounded-lg font-semibold hover:bg-sky-500 transition-colors">
+                Book Appointment
+            </a>
+        </div>
+    </div>
+</div>
             <div class="text-center mt-12">
                 <a href="#doctors"
                     class="inline-flex items-center bg-white text-blue-800 px-8 py-4 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all transform hover:scale-105">
@@ -544,7 +607,7 @@ onUnmounted(() => stopAuto())
     </section>
 
     <!-- ── GALLERY ───────────────────────────────────────── -->
-    <section id="gallery" role="region" aria-label="Hospital gallery" class="py-20 bg-white">
+    <section id="gallery" role="region" aria-label="Hospital gallery" class="py-20 bg-white scroll-reveal reveal-gallery fade-in-0 zoom-in-95 duration-700">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
                 <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Hospital Gallery</h2>
@@ -560,7 +623,7 @@ onUnmounted(() => stopAuto())
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div v-for="item in filteredGallery()" :key="item.title"
                     class="group cursor-pointer">
-                    <div class="relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300">
+                    <div class="premium-sheen relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300">
                         <img :src="item.img" :alt="item.title"
                             class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" />
                         <div class="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -579,15 +642,15 @@ onUnmounted(() => stopAuto())
     </section>
 
     <!-- ── SERVICES ──────────────────────────────────────── -->
-    <section id="services" role="region" aria-label="Healthcare services" class="py-20 bg-white">
+    <section id="services" role="region" aria-label="Healthcare services" class="py-20 bg-white scroll-reveal reveal-services fade-in-0 slide-in-from-bottom-8 duration-700">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
                 <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Comprehensive Healthcare Services</h2>
                 <p class="text-xl text-gray-600 max-w-3xl mx-auto">Complete medical care with advanced facilities and expert professionals</p>
             </div>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 stagger-grid">
                 <div v-for="svc in servicesList" :key="svc.title"
-                    :class="`bg-gradient-to-br ${svc.bg} to-white border-2 border-gray-100 rounded-2xl p-8 hover:border-blue-800 hover:shadow-xl transition`">
+                    :class="`premium-sheen bg-gradient-to-br ${svc.bg} to-white border-2 border-gray-100 rounded-2xl p-8 hover:border-blue-800 hover:shadow-xl transition`">
                     <i :class="`fas ${svc.icon} text-5xl text-blue-800 mb-4`"></i>
                     <h3 class="text-2xl font-bold text-gray-900 mb-3">{{ svc.title }}</h3>
                     <p class="text-gray-600 mb-4">{{ svc.desc }}</p>
@@ -602,15 +665,15 @@ onUnmounted(() => stopAuto())
     </section>
 
     <!-- ── HEALTH PACKAGES ───────────────────────────────── -->
-    <section id="health-packages" role="region" aria-label="Health packages" class="py-20 bg-gradient-to-b from-slate-50 to-white">
+    <section id="health-packages" role="region" aria-label="Health packages" class="py-20 bg-gradient-to-b from-slate-50 to-white scroll-reveal reveal-packages fade-in-0 slide-in-from-bottom-8 duration-700">
         <div class="container mx-auto px-4">
             <div class="text-center mb-14">
                 <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Health Packages</h2>
                 <p class="text-xl text-gray-600 max-w-3xl mx-auto">Affordable preventive checkup plans designed for individuals, women, seniors, and families.</p>
             </div>
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 stagger-grid">
                 <article v-for="pkg in packages" :key="pkg.title"
-                    class="bg-white rounded-2xl p-6 border border-slate-200 shadow-md hover:shadow-xl transition">
+                    class="premium-sheen bg-white rounded-2xl p-6 border border-slate-200 shadow-md hover:shadow-xl transition">
                     <div :class="`w-12 h-12 rounded-lg ${pkg.bg} ${pkg.color} flex items-center justify-center mb-4`">
                         <i :class="`fas ${pkg.icon}`"></i>
                     </div>
@@ -625,15 +688,15 @@ onUnmounted(() => stopAuto())
     </section>
 
     <!-- ── CENTRE OF EXCELLENCE ─────────────────────────── -->
-    <section id="center-of-excellence" role="region" aria-label="Center Of Excellence" class="py-20 bg-gradient-to-br from-slate-50 to-blue-50">
+    <section id="center-of-excellence" role="region" aria-label="Center Of Excellence" class="py-20 bg-gradient-to-br from-slate-50 to-blue-50 scroll-reveal reveal-centers fade-in-0 slide-in-from-bottom-8 duration-700">
         <div class="container mx-auto px-4">
             <div class="text-center mb-14">
                 <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Center Of Excellence</h2>
                 <p class="text-xl text-gray-600 max-w-3xl mx-auto">Advanced multidisciplinary centers delivering focused, high-quality care.</p>
             </div>
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 stagger-grid">
                 <article v-for="center in centers" :key="center.id" :id="center.id"
-                    class="bg-white rounded-2xl p-6 border border-slate-100 shadow-md hover:shadow-xl transition-all">
+                    class="premium-sheen bg-white rounded-2xl p-6 border border-slate-100 shadow-md hover:shadow-xl transition-all">
                     <div :class="`w-12 h-12 rounded-lg ${center.bg} ${center.color} flex items-center justify-center mb-4`">
                         <i :class="`fas ${center.icon}`"></i>
                     </div>
@@ -652,14 +715,14 @@ onUnmounted(() => stopAuto())
 
     <!-- ── APPOINTMENT ───────────────────────────────────── -->
     <section id="appointment" role="region" aria-label="Book appointment"
-        class="py-20 bg-gradient-to-br from-blue-800 to-sky-500 text-white relative overflow-hidden">
+        class="py-20 bg-gradient-to-br from-blue-800 to-sky-500 text-white relative overflow-hidden premium-shine-section scroll-reveal reveal-appointment fade-in-0 zoom-in-95 duration-700">
         <div class="absolute inset-0 opacity-10">
             <div class="absolute top-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
             <div class="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
         </div>
-        <div class="container mx-auto px-4 relative z-10">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <div>
+        <div class="container mx-auto max-w-[1500px] px-4 relative z-10">
+            <div class="grid lg:grid-cols-12 gap-10 items-start">
+                <div class="lg:col-span-5">
                     <div class="inline-block bg-white/20 px-4 py-2 rounded-full text-sm font-semibold mb-4">
                         <i class="fas fa-calendar-check mr-2"></i>Book Your Appointment
                     </div>
@@ -682,104 +745,56 @@ onUnmounted(() => stopAuto())
                     </div>
                 </div>
 
-                <!-- Form -->
-                <div class="bg-white rounded-2xl p-8 shadow-2xl">
-                    <h3 class="text-2xl font-bold text-gray-900 mb-6">Book Appointment</h3>
-                    <div v-if="formSuccess" class="mb-4 text-green-600 font-semibold text-center bg-green-50 py-3 rounded-lg">
-                        ✅ Thank you! Your appointment has been requested. We will contact you soon.
-                    </div>
-                    <form @submit.prevent="submitForm" class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Full Name *</label>
-                            <input v-model="form.name" type="text" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-transparent transition"
-                                placeholder="Enter your name" />
-                        </div>
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-2">Phone Number *</label>
-                                <input v-model="form.phone" type="tel" required
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-transparent transition"
-                                    placeholder="01XXXXXXXXX" />
-                            </div>
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
-                                <input v-model="form.email" type="email"
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-transparent transition"
-                                    placeholder="your@email.com" />
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Select Department *</label>
-                            <select v-model="form.department" required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-transparent transition">
-                                <option value="">Choose Department</option>
-                                <option v-for="dept in ['Cardiology','Neurology','Orthopedics','Pediatrics','Gynecology','Ophthalmology','Pulmonology','General Medicine']" :key="dept">{{ dept }}</option>
-                            </select>
-                        </div>
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-2">Preferred Date *</label>
-                                <input v-model="form.date" type="date" required
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-transparent transition" />
-                            </div>
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-2">Preferred Time *</label>
-                                <input v-model="form.time" type="time" required
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-transparent transition" />
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Message (Optional)</label>
-                            <textarea v-model="form.message" rows="3"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-800 focus:border-transparent transition"
-                                placeholder="Any specific requirements..."></textarea>
-                        </div>
-                        <button type="submit"
-                            class="w-full bg-gradient-to-r from-blue-800 to-sky-500 text-white py-4 rounded-lg font-bold text-lg hover:shadow-xl transition-all transform hover:scale-105">
-                            <i class="fas fa-calendar-check mr-2"></i>Confirm Appointment
-                        </button>
-                    </form>
+                <div class="lg:col-span-7">
+                    <AppointmentBookingWizard
+                        :available-weekdays="appointmentAvailableWeekdays"
+                        :blocked-dates="appointmentBlockedDates"
+                    />
                 </div>
             </div>
         </div>
     </section>
 
     <!-- ── TESTIMONIALS ──────────────────────────────────── -->
-    <section id="testimonials" role="region" aria-label="Patient testimonials" class="py-20 bg-white">
+    <section id="testimonials" role="region" aria-label="Patient testimonials" class="py-20 bg-white scroll-reveal reveal-testimonials fade-in-0 slide-in-from-bottom-8 duration-700">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
                 <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">What Our Patients Say</h2>
                 <p class="text-xl text-gray-600 max-w-3xl mx-auto">Real experiences from patients who trusted us with their healthcare</p>
             </div>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <article v-for="(t, i) in testimonials" :key="t.name"
-                    :class="`bg-gradient-to-br ${t.cardBg} to-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition`">
-                    <div class="flex items-center mb-6">
-                        <div :class="`w-16 h-16 bg-gradient-to-br ${t.bg} rounded-full flex items-center justify-center text-white text-2xl font-bold mr-4`">
-                            {{ t.initials }}
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-gray-900">{{ t.name }}</h4>
-                            <div class="flex text-yellow-400 text-sm">
-                                <i v-for="s in 5" :key="s" class="fas fa-star"></i>
+            <div class="overflow-hidden" style="mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);">
+                <div class="flex items-stretch gap-6" style="width: max-content; animation: marquee 34s linear infinite;">
+                    <article
+                        v-for="(t, i) in doubledTestimonials"
+                        :key="`${t.name}-${i}`"
+                        :class="`premium-sheen premium-sheen-auto flex-shrink-0 w-[320px] sm:w-[360px] bg-gradient-to-br ${t.cardBg} to-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition`"
+                    >
+                        <div class="flex items-center mb-6">
+                            <div :class="`w-16 h-16 bg-gradient-to-br ${t.bg} rounded-full flex items-center justify-center text-white text-2xl font-bold mr-4`">
+                                {{ t.initials }}
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900">{{ t.name }}</h4>
+                                <div class="flex text-yellow-400 text-sm">
+                                    <i v-for="s in 5" :key="s" class="fas fa-star"></i>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <p class="text-gray-600 italic">
-                        {{ t.short }}
-                        <span v-if="expandedTestimonials[i]">{{ t.full }}</span>
-                    </p>
-                    <button @click="toggleTestimonial(i)" class="mt-4 text-sm font-semibold text-blue-800 hover:text-sky-500">
-                        {{ expandedTestimonials[i] ? 'Show less' : 'Read more' }}
-                    </button>
-                </article>
+                        <p class="text-gray-600 italic">
+                            {{ t.short }}
+                            <span v-if="expandedTestimonials[i]">{{ t.full }}</span>
+                        </p>
+                        <button @click="toggleTestimonial(i)" class="mt-4 text-sm font-semibold text-blue-800 hover:text-sky-500">
+                            {{ expandedTestimonials[i] ? 'Show less' : 'Read more' }}
+                        </button>
+                    </article>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- ── STATISTICS ────────────────────────────────────── -->
-    <section id="stats-section" class="py-20 bg-gradient-to-r from-blue-800 to-sky-500 text-white">
+    <section id="stats-section" class="py-20 bg-gradient-to-r from-blue-800 to-sky-500 text-white premium-shine-section scroll-reveal fade-in-0 slide-in-from-bottom-8 duration-700">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
                 <div v-for="(stat, i) in stats" :key="stat.label">
@@ -793,14 +808,14 @@ onUnmounted(() => stopAuto())
     </section>
 
     <!-- ── NEWSLETTER + PARTNERS ─────────────────────────── -->
-    <section id="newsletter-partners" class="py-20 bg-gradient-to-b from-white to-slate-50">
+    <section id="newsletter-partners" class="py-20 bg-gradient-to-b from-white to-slate-50 scroll-reveal reveal-newsletter fade-in-0 zoom-in-95 duration-700">
         <div class="container mx-auto px-4">
             <div class="max-w-5xl mx-auto mb-14">
                 <div class="relative rounded-3xl p-[1px] shadow-2xl"
                     style="background: linear-gradient(to right, #1e40af, #0ea5e9, #10b981);">
                     <div class="rounded-3xl bg-white p-6 md:p-8">
                         <div class="grid lg:grid-cols-2 gap-6 items-stretch">
-                            <div class="rounded-2xl bg-gradient-to-br from-blue-800 to-sky-500 text-white p-6 md:p-8">
+                            <div class="premium-sheen rounded-2xl bg-gradient-to-br from-blue-800 to-sky-500 text-white p-6 md:p-8">
                                 <div class="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center mb-4">
                                     <i class="fas fa-envelope-open-text text-xl"></i>
                                 </div>
@@ -813,7 +828,7 @@ onUnmounted(() => stopAuto())
                                     <span class="px-3 py-1 rounded-full bg-white/20">Instant updates</span>
                                 </div>
                             </div>
-                            <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5 md:p-6 flex flex-col justify-center">
+                            <div class="premium-sheen rounded-2xl border border-slate-200 bg-slate-50 p-5 md:p-6 flex flex-col justify-center">
                                 <p class="text-sm text-slate-600 mb-3 font-medium">Enter your email to join our subscriber list.</p>
                                 <div v-if="newsletterSuccess" class="text-green-600 font-semibold text-center py-3 mb-3">
                                     ✅ Subscribed successfully. Thank you!
@@ -839,10 +854,11 @@ onUnmounted(() => stopAuto())
                     <p class="text-sm uppercase tracking-wider text-slate-500 font-semibold">Our Corporate Partners</p>
                 </div>
                 <div class="overflow-hidden" style="mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);">
-                    <div class="flex items-center gap-4 animate-marquee" style="width: max-content; animation: marquee 26s linear infinite;">
-                        <div v-for="(partner, i) in doubledPartners" :key="`${partner}-${i}`"
-                            class="flex-shrink-0 w-[150px] h-[74px] border border-slate-200 rounded-2xl bg-white p-3 flex items-center justify-center shadow-lg">
-                            <img :src="`https://logo.clearbit.com/${partner}`" :alt="partner"
+                    <div class="flex min-w-max items-center gap-4" style="animation: marquee 26s linear infinite; will-change: transform;">
+                        <div v-for="(partner, i) in doubledPartners" :key="`${partner.name}-${i}`"
+                            class="premium-sheen flex-shrink-0 w-[150px] h-[74px] border border-slate-200 rounded-2xl bg-white p-3 flex items-center justify-center shadow-lg">
+                            <img :src="partner.logo" 
+                                :alt="partner.name"
                                 class="w-full h-full object-contain grayscale hover:grayscale-0 transition-all" />
                         </div>
                     </div>
@@ -852,21 +868,21 @@ onUnmounted(() => stopAuto())
     </section>
 
     <!-- ── CONTACT ────────────────────────────────────────── -->
-    <section id="contact" role="region" aria-label="Contact information" class="py-20 bg-white">
+    <section id="contact" role="region" aria-label="Contact information" class="py-20 bg-white scroll-reveal reveal-contact fade-in-0 slide-in-from-bottom-8 duration-700">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
                 <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Contact Information</h2>
                 <p class="text-xl text-gray-600 max-w-3xl mx-auto">Visit us or reach out for any inquiries about our services</p>
             </div>
-            <div class="grid lg:grid-cols-3 gap-8 mb-12">
-                <div class="bg-gradient-to-br from-blue-50 to-white rounded-2xl p-8 shadow-lg text-center hover:shadow-xl transition">
+            <div class="grid lg:grid-cols-3 gap-8 mb-12 stagger-grid">
+                <div class="premium-sheen bg-gradient-to-br from-blue-50 to-white rounded-2xl p-8 shadow-lg text-center hover:shadow-xl transition">
                     <div class="w-16 h-16 bg-blue-800 rounded-full flex items-center justify-center mx-auto mb-4">
                         <i class="fas fa-map-marker-alt text-white text-2xl"></i>
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-3">Visit Us</h3>
                     <p class="text-gray-600">123 Medical Center Road<br>Dhaka 1205, Bangladesh</p>
                 </div>
-                <div class="bg-gradient-to-br from-green-50 to-white rounded-2xl p-8 shadow-lg text-center hover:shadow-xl transition">
+                <div class="premium-sheen bg-gradient-to-br from-green-50 to-white rounded-2xl p-8 shadow-lg text-center hover:shadow-xl transition">
                     <div class="w-16 h-16 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
                         <i class="fas fa-phone-alt text-white text-2xl"></i>
                     </div>
@@ -876,7 +892,7 @@ onUnmounted(() => stopAuto())
                         General: <a href="tel:+8801234567890" class="text-blue-800 hover:underline">+880 123 456 7890</a>
                     </p>
                 </div>
-                <div class="bg-gradient-to-br from-purple-50 to-white rounded-2xl p-8 shadow-lg text-center hover:shadow-xl transition">
+                <div class="premium-sheen bg-gradient-to-br from-purple-50 to-white rounded-2xl p-8 shadow-lg text-center hover:shadow-xl transition">
                     <div class="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
                         <i class="fas fa-envelope text-white text-2xl"></i>
                     </div>
@@ -900,9 +916,188 @@ onUnmounted(() => stopAuto())
 </template>
 
 <style>
+/* Premium reveal base */
+.premium-sheen,
+.premium-card {
+    position: relative;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s ease, border-color 0.35s ease;
+    will-change: transform;
+}
+
+.premium-sheen::before,
+.premium-card::before {
+    content: '';
+    position: absolute;
+    top: -120%;
+    left: -30%;
+    width: 45%;
+    height: 340%;
+    pointer-events: none;
+    z-index: 2;
+    opacity: 0;
+    transform: rotate(16deg);
+    background: linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0) 25%,
+        rgba(255, 255, 255, 0.32) 50%,
+        rgba(255, 255, 255, 0) 75%
+    );
+}
+
+.premium-sheen:hover::before,
+.premium-sheen:focus-within::before,
+.premium-card:hover::before,
+.premium-card:focus-within::before {
+    opacity: 1;
+    animation: premiumShine 1.05s ease;
+}
+
+.premium-sheen-auto::before {
+    animation: premiumShineAuto 6.8s ease-in-out infinite;
+}
+
+#testimonials .premium-sheen-auto:nth-child(2)::before { animation-delay: 0.9s; }
+#testimonials .premium-sheen-auto:nth-child(3)::before { animation-delay: 1.8s; }
+#testimonials .premium-sheen-auto:nth-child(4)::before { animation-delay: 2.7s; }
+#testimonials .premium-sheen-auto:nth-child(5)::before { animation-delay: 3.6s; }
+#testimonials .premium-sheen-auto:nth-child(6)::before { animation-delay: 4.5s; }
+
+.premium-shine-section::before,
+.premium-shine-section::after {
+    content: '';
+    position: absolute;
+    top: -120%;
+    left: -35%;
+    width: 42%;
+    height: 340%;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+    mix-blend-mode: screen;
+    background: linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0) 22%,
+        rgba(255, 255, 255, 0.22) 48%,
+        rgba(255, 255, 255, 0.56) 52%,
+        rgba(255, 255, 255, 0.22) 56%,
+        rgba(255, 255, 255, 0) 82%
+    );
+}
+
+.premium-shine-section::before {
+    animation: sectionShineSweep 6.5s cubic-bezier(0.22, 0.7, 0.25, 1) infinite;
+}
+
+.premium-shine-section::after {
+    width: 32%;
+    left: -48%;
+    opacity: 0.35;
+    animation: sectionShineSweep 8.2s cubic-bezier(0.2, 0.78, 0.24, 1) infinite 1.2s;
+}
+
+.scroll-reveal {
+    opacity: 0;
+    transform: translate3d(0, 56px, 0) scale(0.98);
+    filter: blur(8px);
+    transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 1s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform, opacity, filter;
+}
+
+.scroll-reveal.animate-in {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+}
+
+.reveal-home { transform: scale(1.05); filter: brightness(0.88) saturate(1.05); }
+.reveal-home.animate-in { transform: scale(1); filter: brightness(1) saturate(1); }
+
+.reveal-quick { transform: translate3d(0, 28px, 0) perspective(1200px) rotateX(7deg); }
+.reveal-about { transform: translate3d(-42px, 18px, 0) scale(0.97); }
+.reveal-why { transform: translate3d(0, 38px, 0) scale(0.96) skewY(-1deg); }
+.reveal-departments { transform: translate3d(0, 34px, 0) scale(0.98); }
+.reveal-doctors { transform: translate3d(28px, 26px, 0) scale(0.97); }
+.reveal-gallery { transform: translate3d(0, 42px, 0) scale(0.985) rotateX(5deg); }
+.reveal-services { transform: translate3d(0, 48px, 0) scale(0.97); }
+.reveal-packages { transform: translate3d(0, 38px, 0) scale(0.985) rotateZ(-0.8deg); }
+.reveal-centers { transform: translate3d(0, 34px, 0) scale(0.97); }
+.reveal-appointment { transform: translate3d(0, 24px, 0) scale(0.99); filter: brightness(0.92) saturate(0.9); }
+.reveal-appointment.animate-in { filter: brightness(1) saturate(1); }
+.reveal-testimonials { transform: translate3d(0, 46px, 0) scale(0.975); }
+.reveal-newsletter { transform: translate3d(0, 40px, 0) scale(0.975); }
+.reveal-contact { transform: translate3d(0, 36px, 0) scale(0.985); }
+
+.scroll-reveal .stagger-grid > * {
+    opacity: 0;
+    transform: translate3d(0, 26px, 0) scale(0.97);
+    filter: blur(4px);
+}
+
+.scroll-reveal.animate-in .stagger-grid > * {
+    animation: premiumStaggerIn 0.8s cubic-bezier(0.2, 0.9, 0.2, 1) forwards;
+}
+
+.scroll-reveal.animate-in .stagger-grid > *:nth-child(2) { animation-delay: 0.07s; }
+.scroll-reveal.animate-in .stagger-grid > *:nth-child(3) { animation-delay: 0.14s; }
+.scroll-reveal.animate-in .stagger-grid > *:nth-child(4) { animation-delay: 0.21s; }
+.scroll-reveal.animate-in .stagger-grid > *:nth-child(5) { animation-delay: 0.28s; }
+.scroll-reveal.animate-in .stagger-grid > *:nth-child(6) { animation-delay: 0.35s; }
+.scroll-reveal.animate-in .stagger-grid > *:nth-child(7) { animation-delay: 0.42s; }
+.scroll-reveal.animate-in .stagger-grid > *:nth-child(8) { animation-delay: 0.49s; }
+
+.reveal-doctors.animate-in .stagger-grid > *,
+.reveal-packages.animate-in .stagger-grid > *,
+.reveal-centers.animate-in .stagger-grid > * {
+    animation-name: premiumLiftRotateIn;
+}
+
+.reveal-gallery.animate-in .stagger-grid > *,
+.reveal-testimonials.animate-in .stagger-grid > * {
+    animation-name: premiumBloomIn;
+}
+
 @keyframes float {
     0%, 100% { transform: translateY(0px); }
     50% { transform: translateY(-10px); }
+}
+
+@keyframes premiumShine {
+    0% { left: -35%; }
+    100% { left: 130%; }
+}
+
+@keyframes premiumShineAuto {
+    0%, 12% { left: -35%; opacity: 0; }
+    18% { opacity: 1; }
+    34% { left: 130%; opacity: 0; }
+    100% { left: 130%; opacity: 0; }
+}
+
+@keyframes sectionShineSweep {
+    0% { transform: rotate(15deg) translateX(-8%); opacity: 0; }
+    8% { opacity: 0.18; }
+    32% { opacity: 0.46; }
+    58% { opacity: 0.14; }
+    100% { transform: rotate(15deg) translateX(430%); opacity: 0; }
+}
+
+@keyframes premiumStaggerIn {
+    0% { opacity: 0; transform: translate3d(0, 26px, 0) scale(0.96); filter: blur(4px); }
+    100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); filter: blur(0); }
+}
+
+@keyframes premiumLiftRotateIn {
+    0% { opacity: 0; transform: translate3d(0, 30px, 0) rotateX(8deg) scale(0.95); filter: blur(4px); }
+    100% { opacity: 1; transform: translate3d(0, 0, 0) rotateX(0) scale(1); filter: blur(0); }
+}
+
+@keyframes premiumBloomIn {
+    0% { opacity: 0; transform: translate3d(0, 22px, 0) scale(0.92); filter: blur(6px) saturate(0.8); }
+    100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); filter: blur(0) saturate(1); }
 }
 
 @keyframes marquee {
@@ -917,6 +1112,35 @@ onUnmounted(() => stopAuto())
 
 body {
     animation: pageFadeIn 0.7s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .scroll-reveal,
+    .scroll-reveal .stagger-grid > *,
+    .scroll-reveal.animate-in .stagger-grid > * {
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .premium-sheen::before {
+        opacity: 0 !important;
+        animation: none !important;
+        transform: none !important;
+    }
+
+    .premium-shine-section::before,
+    .premium-shine-section::after {
+        opacity: 0 !important;
+        animation: none !important;
+        transform: none !important;
+    }
+
+    html {
+        scroll-behavior: auto;
+    }
 }
 
 ::-webkit-scrollbar { width: 10px; }
