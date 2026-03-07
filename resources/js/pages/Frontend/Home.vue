@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { computed, ref, onMounted, onUnmounted } from 'vue'
 import AppointmentBookingWizard from '@/components/frontend/AppointmentBookingWizard.vue'
 import FrontendLayout from '@/layouts/FrontendLayout.vue'
 
@@ -262,7 +262,19 @@ const partners = [
   { name: 'Huwaei', logo: 'https://amzhospitalbd.com/storage/corporate-partners/March2024/9XfI0DamcAjt2JgjgV3T.png' },
   // ... add the rest
 ]
-const doubledPartners = [...partners, ...partners]
+const MIN_PARTNERS_ON_SCREEN = 9
+const partnersForMarquee = computed(() => {
+    if (!partners.length) return []
+    if (partners.length >= MIN_PARTNERS_ON_SCREEN) return partners.slice(0, MIN_PARTNERS_ON_SCREEN)
+
+    const filledPartners = [...partners]
+    while (filledPartners.length < MIN_PARTNERS_ON_SCREEN) {
+        const missing = MIN_PARTNERS_ON_SCREEN - filledPartners.length
+        const repeatChunk = partners.slice(Math.max(0, partners.length - missing))
+        filledPartners.push(...repeatChunk)
+    }
+    return filledPartners.slice(0, MIN_PARTNERS_ON_SCREEN)
+})
 
 // ── Appointment Form ────────────────────────────────────────────
 const appointmentAvailableWeekdays = [0, 1, 2, 3, 4, 6]
@@ -853,13 +865,29 @@ onUnmounted(() => {
                 <div class="text-center mb-6">
                     <p class="text-sm uppercase tracking-wider text-slate-500 font-semibold">Our Corporate Partners</p>
                 </div>
-                <div class="overflow-hidden" style="mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);">
-                    <div class="flex min-w-max items-center gap-4" style="animation: marquee 26s linear infinite; will-change: transform;">
-                        <div v-for="(partner, i) in doubledPartners" :key="`${partner.name}-${i}`"
-                            class="premium-sheen flex-shrink-0 w-[150px] h-[74px] border border-slate-200 rounded-2xl bg-white p-3 flex items-center justify-center shadow-lg">
-                            <img :src="partner.logo" 
-                                :alt="partner.name"
-                                class="w-full h-full object-contain grayscale hover:grayscale-0 transition-all" />
+                <div class="partner-marquee-wrap overflow-hidden" style="mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);">
+                    <div class="partner-marquee-track">
+                        <div class="partner-marquee-group">
+                            <div
+                                v-for="(partner, i) in partnersForMarquee"
+                                :key="`${partner.name}-primary-${i}`"
+                                class="partner-logo-item premium-sheen border border-slate-200 rounded-2xl bg-white p-3 flex items-center justify-center shadow-lg">
+                                <img
+                                    :src="partner.logo"
+                                    :alt="partner.name"
+                                    class="w-full h-full object-contain grayscale hover:grayscale-0 transition-all" />
+                            </div>
+                        </div>
+                        <div class="partner-marquee-group" aria-hidden="true">
+                            <div
+                                v-for="(partner, i) in partnersForMarquee"
+                                :key="`${partner.name}-clone-${i}`"
+                                class="partner-logo-item premium-sheen border border-slate-200 rounded-2xl bg-white p-3 flex items-center justify-center shadow-lg">
+                                <img
+                                    :src="partner.logo"
+                                    :alt="partner.name"
+                                    class="w-full h-full object-contain grayscale hover:grayscale-0 transition-all" />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1098,6 +1126,29 @@ onUnmounted(() => {
 @keyframes premiumBloomIn {
     0% { opacity: 0; transform: translate3d(0, 22px, 0) scale(0.92); filter: blur(6px) saturate(0.8); }
     100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); filter: blur(0) saturate(1); }
+}
+
+.partner-marquee-wrap {
+    width: 100%;
+}
+
+.partner-marquee-track {
+    display: flex;
+    width: 200%;
+    animation: marquee 26s linear infinite;
+    will-change: transform;
+}
+
+.partner-marquee-group {
+    flex: 0 0 50%;
+    width: 50%;
+    display: grid;
+    grid-template-columns: repeat(9, minmax(0, 1fr));
+    gap: 0.75rem;
+}
+
+.partner-logo-item {
+    height: 74px;
 }
 
 @keyframes marquee {

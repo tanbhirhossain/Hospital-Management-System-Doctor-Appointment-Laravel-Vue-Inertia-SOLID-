@@ -162,203 +162,217 @@ const confirmBooking = () => {
 </script>
 
 <template>
-    <div class="w-full rounded-[1.6rem] border border-slate-200 bg-white p-3 shadow-[0_30px_70px_-45px_rgba(15,23,42,.55)] md:p-5">
-        <div class="mb-4 flex items-center justify-between gap-3 border-b border-slate-100 pb-3">
-            <div>
-                <p class="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-400">Appointment Desk</p>
-                <h3 class="text-xl font-black tracking-tight text-slate-900 md:text-2xl">Book Appointment</h3>
+    <div class="relative w-full overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white/95 p-4 shadow-[0_34px_80px_-42px_rgba(15,23,42,.6)] backdrop-blur-sm md:p-6">
+        <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(14,165,233,.12),transparent_36%),radial-gradient(circle_at_100%_100%,rgba(59,130,246,.1),transparent_38%)]"></div>
+        <div class="relative">
+            <header class="mb-5 rounded-2xl border border-slate-200 bg-gradient-to-r from-slate-50 to-white p-4">
+                <div class="mb-4 flex items-center justify-between gap-3">
+                    <div>
+                        <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Appointment Desk</p>
+                        <h3 class="text-xl font-black tracking-tight text-slate-900 md:text-2xl">Book Your Consultation</h3>
+                        <p class="text-xs text-slate-500 md:text-sm">Choose a department, select doctor, and confirm in 6 quick steps.</p>
+                    </div>
+                    <div class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-right shadow-sm">
+                        <p class="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-400">Progress</p>
+                        <p class="text-sm font-bold text-slate-900">{{ currentStep }}/{{ steps.length }}</p>
+                    </div>
+                </div>
+                <div class="h-2 rounded-full bg-slate-200/80">
+                    <div class="h-full rounded-full bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-700 transition-all duration-500" :style="{ width: progressWidth }"></div>
+                </div>
+            </header>
+
+            <div v-if="success" class="mb-4 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-700">
+                <i class="fas fa-check-circle mr-2"></i>Appointment request confirmed.
             </div>
-            <div class="rounded-xl bg-slate-50 px-3 py-2 text-right">
-                <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">Step</p>
-                <p class="text-sm font-semibold text-slate-900">{{ currentStep }}/{{ steps.length }}</p>
-            </div>
-        </div>
 
-        <div v-if="success" class="mb-4 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm font-semibold text-emerald-700">
-            <i class="fas fa-check-circle mr-2"></i>Appointment request confirmed.
-        </div>
-
-        <div class="grid gap-2 lg:grid-cols-12">
-            <aside class="rounded-xl border border-slate-200 bg-slate-50 p-3 lg:sticky lg:top-24 lg:col-span-2 lg:h-fit">
-                <div class="mb-3 h-1.5 rounded-full bg-slate-200">
-                    <div class="h-full rounded-full bg-gradient-to-r from-cyan-500 to-blue-700 transition-all duration-500" :style="{ width: progressWidth }"></div>
-                </div>
-                <div class="space-y-1.5">
-                    <div
-                        v-for="(step, index) in steps"
-                        :key="step.key"
-                        :class="[
-                            'flex items-center gap-2 rounded-lg px-2 py-2 text-sm',
-                            currentStep === index + 1
-                                ? 'bg-blue-50 text-blue-800'
-                                : currentStep > index + 1
-                                    ? 'bg-emerald-50 text-emerald-700'
-                                    : 'text-slate-600',
-                        ]"
-                    >
-                        <span class="grid h-5 w-5 place-items-center rounded-md bg-white text-[11px] font-bold">
-                            <i v-if="currentStep > index + 1" class="fas fa-check"></i>
-                            <span v-else>{{ index + 1 }}</span>
-                        </span>
-                        <span class="font-semibold">{{ step.label }}</span>
-                    </div>
-                </div>
-            </aside>
-
-            <section class="rounded-xl border border-slate-200 bg-white p-3 md:p-4 lg:col-span-6">
-                <div class="mb-3 rounded-lg bg-slate-50 px-3 py-2 text-sm font-semibold text-slate-700">
-                    {{ activeStep.label }}
-                </div>
-                <div class="max-h-[560px] overflow-y-auto pr-1">
-
-                <div v-if="currentStep === 1" class="grid gap-2 sm:grid-cols-2">
-                    <button
-                        v-for="dept in departments"
-                        :key="dept.id"
-                        type="button"
-                        @click="chooseDepartment(dept.id)"
-                        :class="[
-                            'rounded-xl border p-3 text-left transition',
-                            booking.department === dept.id ? 'border-blue-500 bg-blue-50' : 'border-slate-200 hover:border-slate-300',
-                        ]"
-                    >
-                        <div :class="`mb-2 inline-flex h-8 w-8 items-center justify-center rounded-md bg-gradient-to-br ${dept.tone} text-white`">
-                            <i :class="`fas ${dept.icon} text-xs`"></i>
-                        </div>
-                        <p class="text-sm font-semibold text-slate-900">{{ dept.name }}</p>
-                    </button>
-                </div>
-
-                <div v-else-if="currentStep === 2" class="space-y-2">
-                    <button
-                        v-for="doc in departmentDoctors"
-                        :key="doc.id"
-                        type="button"
-                        @click="booking.doctor = doc.id"
-                        :class="[
-                            'w-full rounded-xl border p-3 text-left transition',
-                            booking.doctor === doc.id ? 'border-blue-500 bg-blue-50' : 'border-slate-200 hover:border-slate-300',
-                        ]"
-                    >
-                        <p class="text-sm font-semibold text-slate-900">{{ doc.name }}</p>
-                        <p class="text-xs text-slate-600">{{ doc.title }} - {{ doc.exp }}</p>
-                    </button>
-                    <div v-if="!departmentDoctors.length" class="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-700">
-                        Select department first.
-                    </div>
-                </div>
-
-                <div v-else-if="currentStep === 3" class="rounded-xl border border-slate-200 bg-slate-50 p-3">
-                    <div class="mb-3 flex items-center justify-between">
-                        <button type="button" @click="prevMonth" class="grid h-8 w-8 place-items-center rounded-md border border-slate-200 bg-white text-slate-600"><i class="fas fa-chevron-left text-xs"></i></button>
-                        <p class="text-sm font-bold text-slate-900">{{ monthLabel }}</p>
-                        <button type="button" @click="nextMonth" class="grid h-8 w-8 place-items-center rounded-md border border-slate-200 bg-white text-slate-600"><i class="fas fa-chevron-right text-xs"></i></button>
-                    </div>
-                    <div class="grid grid-cols-7 gap-1 text-center text-[10px] font-bold text-slate-400">
-                        <span v-for="d in ['S', 'M', 'T', 'W', 'T', 'F', 'S']" :key="d">{{ d }}</span>
-                    </div>
-                    <div class="mt-1 grid grid-cols-7 gap-1">
-                        <div v-for="(day, idx) in calendarDays" :key="day ? day.toISOString() : `blank-${idx}`" class="aspect-square">
-                            <button
-                                v-if="day"
-                                type="button"
-                                @click="chooseDate(day)"
-                                :disabled="!isAvailableDate(day)"
-                                :class="[
-                                    'h-full w-full rounded-md border text-[11px] font-semibold',
-                                    booking.date === toIsoDate(day)
-                                        ? 'border-blue-600 bg-blue-600 text-white'
-                                        : isAvailableDate(day)
-                                            ? 'border-emerald-200 bg-emerald-50 text-emerald-700'
-                                            : 'cursor-not-allowed border-slate-100 bg-slate-100 text-slate-400',
-                                ]"
-                            >
-                                {{ day.getDate() }}
-                            </button>
-                            <div v-else class="h-full w-full"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div v-else-if="currentStep === 4">
-                    <div v-if="!availableSlots.length" class="rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-sm text-rose-700">
-                        No slots available for selected date.
-                    </div>
-                    <div v-else class="grid grid-cols-2 gap-2">
-                        <button
-                            v-for="slot in availableSlots"
-                            :key="slot"
-                            type="button"
-                            @click="booking.time = slot"
+            <div class="grid gap-3 lg:grid-cols-12">
+                <aside class="rounded-2xl border border-slate-200 bg-slate-50/85 p-3 lg:sticky lg:top-24 lg:col-span-3 lg:h-fit">
+                    <p class="mb-3 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-500">Journey</p>
+                    <div class="space-y-2">
+                        <div
+                            v-for="(step, index) in steps"
+                            :key="step.key"
                             :class="[
-                                'rounded-lg border px-3 py-2 text-sm font-semibold',
-                                booking.time === slot ? 'border-blue-600 bg-blue-50 text-blue-700' : 'border-slate-200 text-slate-700',
+                                'flex items-center gap-2 rounded-xl border px-2.5 py-2 text-sm transition',
+                                currentStep === index + 1
+                                    ? 'border-blue-200 bg-blue-50 text-blue-800'
+                                    : currentStep > index + 1
+                                        ? 'border-emerald-200 bg-emerald-50 text-emerald-700'
+                                        : 'border-slate-200 bg-white text-slate-600',
                             ]"
                         >
-                            {{ slot }}
+                            <span class="grid h-6 w-6 place-items-center rounded-lg border border-slate-200 bg-white text-[11px] font-bold">
+                                <i v-if="currentStep > index + 1" class="fas fa-check"></i>
+                                <span v-else>{{ index + 1 }}</span>
+                            </span>
+                            <span class="font-semibold">{{ step.label }}</span>
+                        </div>
+                    </div>
+                </aside>
+
+                <section class="rounded-2xl border border-slate-200 bg-white p-4 md:p-5 lg:col-span-6">
+                    <div class="mb-4 flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-3 py-2">
+                        <p class="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">Current Step</p>
+                        <p class="text-sm font-semibold text-slate-800">{{ activeStep.label }}</p>
+                    </div>
+                    <div class="max-h-[560px] overflow-y-auto pr-1">
+                        <div v-if="currentStep === 1" class="grid gap-2.5 sm:grid-cols-2">
+                            <button
+                                v-for="dept in departments"
+                                :key="dept.id"
+                                type="button"
+                                @click="chooseDepartment(dept.id)"
+                                :class="[
+                                    'group rounded-2xl border p-3 text-left transition',
+                                    booking.department === dept.id
+                                        ? 'border-blue-400 bg-blue-50 shadow-[0_12px_24px_-20px_rgba(59,130,246,.9)]'
+                                        : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50',
+                                ]"
+                            >
+                                <div :class="`mb-2 inline-flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br ${dept.tone} text-white shadow`">
+                                    <i :class="`fas ${dept.icon} text-sm`"></i>
+                                </div>
+                                <p class="text-sm font-semibold text-slate-900">{{ dept.name }}</p>
+                            </button>
+                        </div>
+
+                        <div v-else-if="currentStep === 2" class="space-y-2.5">
+                            <button
+                                v-for="doc in departmentDoctors"
+                                :key="doc.id"
+                                type="button"
+                                @click="booking.doctor = doc.id"
+                                :class="[
+                                    'w-full rounded-2xl border p-3 text-left transition',
+                                    booking.doctor === doc.id
+                                        ? 'border-blue-400 bg-blue-50 shadow-[0_12px_24px_-20px_rgba(59,130,246,.9)]'
+                                        : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50',
+                                ]"
+                            >
+                                <p class="text-sm font-semibold text-slate-900">{{ doc.name }}</p>
+                                <p class="text-xs text-slate-600">{{ doc.title }} - {{ doc.exp }}</p>
+                            </button>
+                            <div v-if="!departmentDoctors.length" class="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-700">
+                                Select department first.
+                            </div>
+                        </div>
+
+                        <div v-else-if="currentStep === 3" class="rounded-2xl border border-slate-200 bg-slate-50 p-3">
+                            <div class="mb-3 flex items-center justify-between">
+                                <button type="button" @click="prevMonth" class="grid h-8 w-8 place-items-center rounded-lg border border-slate-200 bg-white text-slate-600"><i class="fas fa-chevron-left text-xs"></i></button>
+                                <p class="text-sm font-bold text-slate-900">{{ monthLabel }}</p>
+                                <button type="button" @click="nextMonth" class="grid h-8 w-8 place-items-center rounded-lg border border-slate-200 bg-white text-slate-600"><i class="fas fa-chevron-right text-xs"></i></button>
+                            </div>
+                            <div class="grid grid-cols-7 gap-1 text-center text-[10px] font-bold text-slate-400">
+                                <span v-for="d in ['S', 'M', 'T', 'W', 'T', 'F', 'S']" :key="d">{{ d }}</span>
+                            </div>
+                            <div class="mt-1 grid grid-cols-7 gap-1">
+                                <div v-for="(day, idx) in calendarDays" :key="day ? day.toISOString() : `blank-${idx}`" class="aspect-square">
+                                    <button
+                                        v-if="day"
+                                        type="button"
+                                        @click="chooseDate(day)"
+                                        :disabled="!isAvailableDate(day)"
+                                        :class="[
+                                            'h-full w-full rounded-md border text-[11px] font-semibold',
+                                            booking.date === toIsoDate(day)
+                                                ? 'border-blue-600 bg-blue-600 text-white'
+                                                : isAvailableDate(day)
+                                                    ? 'border-emerald-200 bg-emerald-50 text-emerald-700'
+                                                    : 'cursor-not-allowed border-slate-100 bg-slate-100 text-slate-400',
+                                        ]"
+                                    >
+                                        {{ day.getDate() }}
+                                    </button>
+                                    <div v-else class="h-full w-full"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div v-else-if="currentStep === 4">
+                            <div v-if="!availableSlots.length" class="rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-sm text-rose-700">
+                                No slots available for selected date.
+                            </div>
+                            <div v-else class="grid grid-cols-2 gap-2.5">
+                                <button
+                                    v-for="slot in availableSlots"
+                                    :key="slot"
+                                    type="button"
+                                    @click="booking.time = slot"
+                                    :class="[
+                                        'rounded-xl border px-3 py-2 text-sm font-semibold',
+                                        booking.time === slot ? 'border-blue-600 bg-blue-50 text-blue-700' : 'border-slate-200 bg-white text-slate-700',
+                                    ]"
+                                >
+                                    {{ slot }}
+                                </button>
+                            </div>
+                        </div>
+
+                        <div v-else-if="currentStep === 5" class="space-y-2.5">
+                            <div>
+                                <label class="mb-1 block text-xs font-bold uppercase tracking-wide text-slate-500">Patient Name *</label>
+                                <input v-model="booking.name" type="text" class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />
+                            </div>
+                            <div>
+                                <label class="mb-1 block text-xs font-bold uppercase tracking-wide text-slate-500">Phone *</label>
+                                <input v-model="booking.phone" type="tel" class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />
+                            </div>
+                            <div>
+                                <label class="mb-1 block text-xs font-bold uppercase tracking-wide text-slate-500">Email</label>
+                                <input v-model="booking.email" type="email" class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />
+                            </div>
+                            <div>
+                                <label class="mb-1 block text-xs font-bold uppercase tracking-wide text-slate-500">Problems</label>
+                                <textarea v-model="booking.problem" rows="3" class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"></textarea>
+                            </div>
+                        </div>
+
+                        <div v-else class="rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-3">
+                            <p class="text-sm font-semibold text-emerald-800">Ready to confirm this booking.</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 flex items-center justify-between gap-2 border-t border-slate-100 pt-3">
+                        <button type="button" @click="goBack" :disabled="currentStep === 1" class="rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 disabled:opacity-40">Back</button>
+                        <button
+                            v-if="currentStep < steps.length"
+                            type="button"
+                            @click="goNext"
+                            :disabled="!canContinue"
+                            class="rounded-xl bg-gradient-to-r from-cyan-600 to-blue-700 px-5 py-2 text-sm font-semibold text-white shadow-[0_12px_22px_-14px_rgba(3,105,161,.95)] transition hover:brightness-105 disabled:opacity-50"
+                        >
+                            Continue
+                        </button>
+                        <button
+                            v-else
+                            type="button"
+                            @click="confirmBooking"
+                            class="rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 px-5 py-2 text-sm font-semibold text-white shadow-[0_12px_22px_-14px_rgba(5,150,105,.95)] transition hover:brightness-105"
+                        >
+                            Confirm Booking
                         </button>
                     </div>
-                </div>
+                </section>
 
-                <div v-else-if="currentStep === 5" class="space-y-2.5">
-                    <div>
-                        <label class="mb-1 block text-xs font-bold uppercase tracking-wide text-slate-500">Patient Name *</label>
-                        <input v-model="booking.name" type="text" class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none focus:border-blue-500" />
+                <aside class="rounded-2xl border border-slate-200 bg-slate-50/90 p-3 lg:sticky lg:top-24 lg:col-span-3 lg:h-fit">
+                    <div class="mb-3 flex items-center justify-between">
+                        <p class="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-500">Live Review</p>
+                        <span class="rounded-lg bg-blue-100 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-blue-700">Realtime</span>
                     </div>
-                    <div>
-                        <label class="mb-1 block text-xs font-bold uppercase tracking-wide text-slate-500">Phone *</label>
-                        <input v-model="booking.phone" type="tel" class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none focus:border-blue-500" />
+                    <div class="space-y-2 text-sm">
+                        <div class="rounded-xl border border-slate-200 bg-white px-3 py-2"><span class="text-slate-500">Department:</span> <span class="font-semibold text-slate-900">{{ selectedDepartment?.name || '-' }}</span></div>
+                        <div class="rounded-xl border border-slate-200 bg-white px-3 py-2"><span class="text-slate-500">Doctor:</span> <span class="font-semibold text-slate-900">{{ selectedDoctor?.name || '-' }}</span></div>
+                        <div class="rounded-xl border border-slate-200 bg-white px-3 py-2"><span class="text-slate-500">Date:</span> <span class="font-semibold text-slate-900">{{ formatDate(booking.date) }}</span></div>
+                        <div class="rounded-xl border border-slate-200 bg-white px-3 py-2"><span class="text-slate-500">Time:</span> <span class="font-semibold text-slate-900">{{ booking.time || '-' }}</span></div>
+                        <div class="rounded-xl border border-slate-200 bg-white px-3 py-2">
+                            <p><span class="text-slate-500">Patient:</span> <span class="font-semibold text-slate-900">{{ booking.name || '-' }}</span></p>
+                            <p class="text-xs text-slate-600">{{ booking.phone || '-' }}</p>
+                        </div>
                     </div>
-                    <div>
-                        <label class="mb-1 block text-xs font-bold uppercase tracking-wide text-slate-500">Email</label>
-                        <input v-model="booking.email" type="email" class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none focus:border-blue-500" />
-                    </div>
-                    <div>
-                        <label class="mb-1 block text-xs font-bold uppercase tracking-wide text-slate-500">Problems</label>
-                        <textarea v-model="booking.problem" rows="3" class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none focus:border-blue-500"></textarea>
-                    </div>
-                </div>
-
-                <div v-else class="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-3">
-                    <p class="text-sm font-semibold text-emerald-800">Ready to confirm this booking.</p>
-                </div>
-                </div>
-
-                <div class="mt-4 flex items-center justify-between gap-2 border-t border-slate-100 pt-3">
-                    <button type="button" @click="goBack" :disabled="currentStep === 1" class="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 disabled:opacity-40">Back</button>
-                    <button
-                        v-if="currentStep < steps.length"
-                        type="button"
-                        @click="goNext"
-                        :disabled="!canContinue"
-                        class="rounded-lg bg-gradient-to-r from-cyan-600 to-blue-700 px-5 py-2 text-sm font-semibold text-white disabled:opacity-50"
-                    >
-                        Continue
-                    </button>
-                    <button
-                        v-else
-                        type="button"
-                        @click="confirmBooking"
-                        class="rounded-lg bg-gradient-to-r from-emerald-500 to-teal-600 px-5 py-2 text-sm font-semibold text-white"
-                    >
-                        Confirm Booking
-                    </button>
-                </div>
-            </section>
-
-            <aside class="rounded-xl border border-slate-200 bg-slate-50 p-3 lg:sticky lg:top-24 lg:col-span-4 lg:h-fit">
-                <p class="mb-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-500">Live Review</p>
-                <div class="space-y-2 text-sm">
-                    <div class="rounded-lg bg-white px-3 py-2"><span class="text-slate-500">Department:</span> <span class="font-semibold text-slate-900">{{ selectedDepartment?.name || '-' }}</span></div>
-                    <div class="rounded-lg bg-white px-3 py-2"><span class="text-slate-500">Doctor:</span> <span class="font-semibold text-slate-900">{{ selectedDoctor?.name || '-' }}</span></div>
-                    <div class="rounded-lg bg-white px-3 py-2"><span class="text-slate-500">Date:</span> <span class="font-semibold text-slate-900">{{ formatDate(booking.date) }}</span></div>
-                    <div class="rounded-lg bg-white px-3 py-2"><span class="text-slate-500">Time:</span> <span class="font-semibold text-slate-900">{{ booking.time || '-' }}</span></div>
-                    <div class="rounded-lg bg-white px-3 py-2">
-                        <p><span class="text-slate-500">Patient:</span> <span class="font-semibold text-slate-900">{{ booking.name || '-' }}</span></p>
-                        <p class="text-xs text-slate-600">{{ booking.phone || '-' }}</p>
-                    </div>
-                </div>
-            </aside>
+                </aside>
+            </div>
         </div>
     </div>
 </template>
