@@ -55,11 +55,11 @@ const smoothScrollHandlers: Array<{ anchor: Element; handler: EventListener }> =
 
 // ── Quick Info Cards ─────────────────────────────────────────
 const quickCards = [
-    { gradient: 'from-[#1e40af]/85 to-[#0ea5e9]/75', icon: 'fa-user-md', title: 'Find Doctor', desc: 'Search specialists by department and expertise.', link: '#doctors', btnLabel: 'Explore', btnColor: 'text-[#1e40af]' },
-    { gradient: 'from-[#0ea5e9]/85 to-cyan-400/70', icon: 'fa-calendar-check', title: 'Book an Appointment', desc: 'Schedule your visit with our doctors quickly.', link: '#appointment', btnLabel: 'Book Now', btnColor: 'text-[#0ea5e9]' },
-    { gradient: 'from-[#10b981]/85 to-emerald-400/70', icon: 'fa-home', title: 'Home Sample Collection', desc: 'Book at-home diagnostic sample pickup service.', link: '#services', btnLabel: 'Request', btnColor: 'text-[#10b981]' },
-    { gradient: 'from-[#f59e0b]/85 to-amber-300/70', icon: 'fa-file-medical', title: 'Online Lab Report', desc: 'Access and download your lab reports online.', link: '#contact', btnLabel: 'View Report', btnColor: 'text-[#f59e0b]' },
-    { gradient: 'from-[#ef4444]/85 to-rose-400/70', icon: 'fa-map-marker-alt', title: 'Find Us', desc: 'Get directions and contact details instantly.', link: '#contact', btnLabel: 'Location', btnColor: 'text-[#ef4444]' },
+    { gradient: 'from-[#1f5db9] to-[#4ba9de]', icon: 'fa-user-md', title: 'Find Doctor', desc: 'Search specialists by department and expertise.', link: '#doctors', btnLabel: 'Explore', btnColor: 'text-[#1f5db9]' },
+    { gradient: 'from-[#24a6db] to-[#5cc6e0]', icon: 'fa-calendar-check', title: 'Book an Appointment', desc: 'Schedule your visit with our doctors quickly.', link: '#appointment', btnLabel: 'Book Now', btnColor: 'text-[#1a9ad6]' },
+    { gradient: 'from-[#1fb18f] to-[#6dd8bc]', icon: 'fa-home', title: 'Home Sample Collection', desc: 'Book at-home diagnostic sample pickup service.', link: '#services', btnLabel: 'Request', btnColor: 'text-[#1fa884]' },
+    { gradient: 'from-[#dda229] to-[#efd56d]', icon: 'fa-file-medical', title: 'Online Lab Report', desc: 'Access and download your lab reports online.', link: '#contact', btnLabel: 'View Report', btnColor: 'text-[#d89214]' },
+    { gradient: 'from-[#e56775] to-[#ef8f9b]', icon: 'fa-map-marker-alt', title: 'Find Us', desc: 'Get directions and contact details instantly.', link: '#contact', btnLabel: 'Location', btnColor: 'text-[#e25865]' },
 ]
 
 // ── Departments ───────────────────────────────────────────────
@@ -76,6 +76,7 @@ const departments = [
         desc: 'The Cardiology Department at AMZ Hospital Ltd. provides comprehensive heart care—from prevention and diagnosis to advanced treatment.', 
         specialists: '12+', 
         beds: '45',
+        image : 'https://amzhospitalbd.com/storage/departments/September2025/JOuOIapuAAiJNqpSRhHU.webp',
         available247: true 
     },
     { 
@@ -87,7 +88,9 @@ const departments = [
         subtitle: 'Right diagnosis begins with the right doctor.', 
         desc: 'Providing patient-centered care for a wide range of acute and chronic medical conditions with a focus on internal wellness.', 
         specialists: '4+', 
-        beds: '20' 
+        beds: '20',
+        image : 'https://amzhospitalbd.com/storage/departments/September2025/5y1N0lFan5dCe0oI6kbX.webp',
+
     },
     { 
         color: 'from-purple-500 to-fuchsia-600', 
@@ -98,7 +101,9 @@ const departments = [
         subtitle: 'Your partner in health and motherhood.', 
         desc: 'Dedicated to delivering comprehensive, compassionate, and evidence-based care for women at every stage of life.', 
         specialists: '9+', 
-        beds: '30' 
+        beds: '30',
+        image : 'https://amzhospitalbd.com/storage/departments/September2025/5y1N0lFan5dCe0oI6kbX.webp',
+
     },
     { 
         color: 'from-red-500 to-orange-600', 
@@ -109,7 +114,9 @@ const departments = [
         subtitle: 'Healthy digestion for a healthier life.', 
         desc: 'Advanced surgical care for complex diseases of the liver, gallbladder, and pancreas using the latest surgical technology.', 
         specialists: '8+', 
-        beds: '15' 
+        beds: '15',
+        image : 'https://amzhospitalbd.com/storage/departments/September2025/5y1N0lFan5dCe0oI6kbX.webp',
+
     },
     { 
         color: 'from-amber-500 to-yellow-600', 
@@ -120,7 +127,8 @@ const departments = [
         subtitle: 'Caring for today, building tomorrow.', 
         desc: 'Dedicated to the health and well-being of infants, children, and adolescents with a gentle, child-friendly approach.', 
         specialists: '6+', 
-        beds: '25' 
+        beds: '25',
+        image : 'https://amzhospitalbd.com/storage/departments/September2025/5y1N0lFan5dCe0oI6kbX.webp',
     },
     { 
         color: 'from-indigo-500 to-blue-700', 
@@ -131,7 +139,8 @@ const departments = [
         subtitle: 'Precision surgery with minimal scars.', 
         desc: 'Specializing in Laparoscopic and Laser solutions for a wide range of conditions to ensure faster recovery times.', 
         specialists: '7+', 
-        beds: '40' 
+        beds: '40',
+        image : 'https://amzhospitalbd.com/storage/departments/September2025/5y1N0lFan5dCe0oI6kbX.webp',
     }
 ]
 
@@ -256,7 +265,7 @@ const servicesList = [
     { bg: 'from-blue-50', icon: 'fa-ambulance', title: '24/7 Emergency Services', desc: 'Round-the-clock emergency medical care with rapid response team', items: ['Trauma Care', 'Intensive Care Unit', 'Emergency Surgery'] },
     { bg: 'from-green-50', icon: 'fa-x-ray', title: 'Diagnostic Services', desc: 'Advanced diagnostic facilities with latest technology', items: ['CT Scan & MRI', 'Ultrasound', 'Laboratory Tests'] },
     { bg: 'from-purple-50', icon: 'fa-procedures', title: 'Surgical Services', desc: 'Expert surgical care with modern operation theaters', items: ['General Surgery', 'Laparoscopic Surgery', 'Specialized Surgery'] },
-    { bg: 'from-red-50', icon: 'fa-heartbeat', title: 'Cardiac Care', desc: 'Comprehensive heart care and treatment services', items: ['ECG & Echo', 'Cardiac Catheterization', 'Heart Surgery'] },
+    { bg: 'from-red-50', icon: 'fa-utensils', title: 'Canteen Service', desc: 'Hygienic in-house canteen with fresh meals for patients, attendants, and visitors.', items: ['Patient Diet Meals', 'Attendant Meal Options', 'Tea & Refreshments'] },
     { bg: 'from-yellow-50', icon: 'fa-baby', title: 'Maternity Services', desc: 'Complete care for mothers and newborns', items: ['Prenatal Care', 'Delivery Services', 'NICU'] },
     { bg: 'from-pink-50', icon: 'fa-pills', title: 'Pharmacy Services', desc: '24/7 pharmacy with all essential medicines', items: ['Prescription Medicines', 'OTC Medications', 'Home Delivery'] },
 ]
@@ -503,14 +512,15 @@ onUnmounted(() => {
         <div class="container mx-auto px-4">
             <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-6 stagger-grid">
                 <div v-for="card in quickCards" :key="card.title"
-                    :class="`premium-sheen bg-gradient-to-br ${card.gradient} text-white rounded-xl p-6 shadow-2xl border border-white/30 backdrop-blur-lg transition-all transform hover:-translate-y-2`">
-                    <div class="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center mb-4">
-                        <i :class="`fas ${card.icon} text-2xl`"></i>
+                    :class="`premium-sheen bg-gradient-to-br ${card.gradient} text-white/95 rounded-xl p-6 shadow-xl border border-white/30 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl`"
+                    style="opacity: 0.92;">
+                    <div class="w-14 h-14 bg-white/22 rounded-full flex items-center justify-center mb-5">
+                        <i :class="`fas ${card.icon} text-2xl text-white`"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-2">{{ card.title }}</h3>
-                    <p class="mb-4 text-sm text-white/90">{{ card.desc }}</p>
+                    <h3 class="text-xl leading-tight font-extrabold mb-2">{{ card.title }}</h3>
+                    <p class="mb-5 text-[15px] text-white/90">{{ card.desc }}</p>
                     <a :href="card.link"
-                        :class="`inline-flex items-center bg-white ${card.btnColor} px-4 py-2 rounded-lg font-semibold text-sm hover:shadow-lg transition`">
+                        :class="`inline-flex items-center bg-white/95 ${card.btnColor} px-4 py-2 rounded-lg font-bold text-xs hover:shadow-lg transition`">
                         {{ card.btnLabel }}
                     </a>
                 </div>
@@ -570,18 +580,18 @@ onUnmounted(() => {
                     <i class="fas fa-award mr-2"></i>Why Choose Us
                 </div>
                 <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Why AMZ Hospital is Your Best Choice</h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">We are committed to providing exceptional healthcare with advanced facilities and experienced professionals</p>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Patients choose AMZ for reliability, transparency, faster access, and a safer care experience from admission to follow-up.</p>
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 stagger-grid">
                 <div v-for="(feat, i) in [
-                    { color: 'from-blue-500 to-blue-600', icon: 'fa-user-md', title: 'Qualified Doctors', desc: 'Our medical team consists of highly qualified and experienced doctors from renowned institutions' },
-                    { color: 'from-emerald-500 to-emerald-600', icon: 'fa-hospital-alt', title: 'Modern Facilities', desc: 'State-of-the-art infrastructure with the latest medical equipment and technology' },
-                    { color: 'from-red-500 to-red-600', icon: 'fa-ambulance', title: 'Emergency Care', desc: '24/7 emergency services with rapid response team and advanced life support' },
-                    { color: 'from-purple-500 to-purple-600', icon: 'fa-hand-holding-medical', title: 'Patient Care', desc: 'Compassionate care with personalized treatment plans for every patient' },
-                    { color: 'from-yellow-500 to-yellow-600', icon: 'fa-microscope', title: 'Advanced Diagnostics', desc: 'Comprehensive diagnostic services with cutting-edge laboratory facilities' },
-                    { color: 'from-pink-500 to-pink-600', icon: 'fa-heartbeat', title: 'Specialized Care', desc: 'Multiple specialty departments for comprehensive healthcare services' },
-                    { color: 'from-indigo-500 to-indigo-600', icon: 'fa-shield-alt', title: 'Safety Standards', desc: 'Strict adherence to international safety and hygiene protocols' },
-                    { color: 'from-teal-500 to-teal-600', icon: 'fa-dollar-sign', title: 'Affordable Pricing', desc: 'Quality healthcare at competitive prices with flexible payment options' },
+                    { color: 'from-blue-500 to-blue-600', icon: 'fa-award', title: 'Trusted Outcomes', desc: 'Consistent treatment quality with strong clinical governance and senior specialist oversight.' },
+                    { color: 'from-emerald-500 to-emerald-600', icon: 'fa-calendar-check', title: 'Fast Appointments', desc: 'Streamlined booking and coordinated scheduling to reduce waiting and delays.' },
+                    { color: 'from-red-500 to-red-600', icon: 'fa-shield-heart', title: 'Patient Safety First', desc: 'Strict infection-control protocols, safety checklists, and monitored care pathways.' },
+                    { color: 'from-purple-500 to-purple-600', icon: 'fa-comments', title: 'Clear Communication', desc: 'Doctors explain diagnosis and options in plain language before every key decision.' },
+                    { color: 'from-yellow-500 to-yellow-600', icon: 'fa-file-waveform', title: 'Digital Reports', desc: 'Faster test report access and smoother follow-up through digital sharing workflows.' },
+                    { color: 'from-pink-500 to-pink-600', icon: 'fa-people-roof', title: 'Family-Centered Support', desc: 'Care teams guide patients and families throughout treatment, discharge, and recovery.' },
+                    { color: 'from-indigo-500 to-indigo-600', icon: 'fa-file-invoice-dollar', title: 'Transparent Billing', desc: 'Clear package details and cost visibility to avoid confusion during care.' },
+                    { color: 'from-teal-500 to-teal-600', icon: 'fa-headset', title: '24/7 Help Desk', desc: 'Round-the-clock support for urgent guidance, admissions, and service coordination.' },
                 ]" :key="feat.title"
                     class="premium-sheen bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2">
                     <div :class="`w-16 h-16 bg-gradient-to-br ${feat.color} rounded-xl flex items-center justify-center mb-6`"
@@ -610,19 +620,25 @@ onUnmounted(() => {
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-                <div v-for="dept in departments" :key="dept.name"
+                <div v-for="dept in departments" :key="dept.name" 
                     class="premium-sheen group relative flex h-full flex-col overflow-hidden rounded-3xl border border-slate-200/70 bg-white shadow-lg transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-200/50 scroll-reveal">
 
-                    <div :class="`bg-gradient-to-br ${dept.color} relative overflow-hidden p-8`">
+                    <div class="relative overflow-hidden p-8">
+                        <img
+                            :src="dept.image || 'https://amzhospitalbd.com/storage/AMZ.jpg'"
+                            alt="Department background"
+                            class="absolute inset-0 h-full w-full object-cover object-right"
+                        />
+                        <div :class="`absolute inset-0 bg-gradient-to-br ${dept.color} opacity-70`"></div>
                         <div class="absolute -right-14 -top-10 h-40 w-40 rounded-full bg-white/10 blur-3xl transition-all duration-500 group-hover:bg-white/25"></div>
                         <div class="absolute bottom-0 left-0 h-px w-full bg-white/25"></div>
 
-                        <div class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl border border-white/25 bg-white/20 shadow-inner backdrop-blur-md transition-transform duration-500 group-hover:rotate-6">
+                        <div class="relative z-10 mb-6 flex h-16 w-16 items-center justify-center rounded-2xl border border-white/25 bg-white/20 shadow-inner backdrop-blur-md transition-transform duration-500 group-hover:rotate-6">
                             <i :class="`fas ${dept.icon} text-3xl text-white transition-transform duration-500 group-hover:scale-110`"></i>
                         </div>
 
-                        <h3 class="mb-2 text-2xl font-black tracking-tight text-white">{{ dept.name }}</h3>
-                        <p :class="`${dept.textColor} text-sm leading-snug opacity-90 line-clamp-2`">
+                        <h3 class="relative z-10 mb-2 text-2xl font-black tracking-tight text-white">{{ dept.name }}</h3>
+                        <p :class="`${dept.textColor} relative z-10 text-sm leading-snug opacity-90 line-clamp-2`">
                             {{ dept.subtitle }}
                         </p>
                     </div>
@@ -632,14 +648,10 @@ onUnmounted(() => {
                             {{ dept.desc }}
                         </p>
 
-                        <div class="mb-7 grid grid-cols-2 gap-3">
+                        <div class="mb-7 grid grid-cols-1 gap-3">
                             <div class="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2">
                                 <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">Specialists</p>
                                 <p class="mt-1 text-sm font-extrabold text-slate-800">{{ dept.specialists }}</p>
-                            </div>
-                            <div class="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2">
-                                <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">Beds</p>
-                                <p class="mt-1 text-sm font-extrabold text-slate-800">{{ dept.beds }}</p>
                             </div>
                         </div>
 
@@ -746,7 +758,7 @@ onUnmounted(() => {
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
                 <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Comprehensive Healthcare Services</h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Complete medical care with advanced facilities and expert professionals</p>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">From emergency response to diagnostics, surgery, maternity, pharmacy, and recovery support in one integrated system.</p>
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 stagger-grid">
                 <div v-for="svc in servicesList" :key="svc.title"
@@ -1078,6 +1090,7 @@ onUnmounted(() => {
 
 <style>
 /* Premium reveal base */
+
 .premium-sheen,
 .premium-card {
     position: relative;
@@ -1323,6 +1336,8 @@ onUnmounted(() => {
 .partner-logo-item {
     height: 74px;
 }
+
+
 
 @keyframes marquee {
     0% { transform: translateX(0); }

@@ -81,7 +81,7 @@ onUnmounted(() => {
                             Departments
                             <i class="fas fa-chevron-down text-xs"></i>
                         </button>
-                        <div class="desktop-submenu absolute top-full left-1/2 -translate-x-1/2 translate-y-3 opacity-0 invisible pointer-events-none transition-all duration-200 z-60"
+                        <div class="desktop-submenu-right absolute top-full left-0 translate-y-3 opacity-0 invisible pointer-events-none transition-all duration-200 z-60"
                             style="width: min(1120px, calc(100vw - 2rem));">
                             <div class="bg-white rounded-2xl shadow-2xl border border-slate-100 p-6">
                                 <div class="grid grid-cols-12 gap-6 items-stretch">
@@ -90,13 +90,18 @@ onUnmounted(() => {
                                             class="w-full h-full object-cover" />
                                     </div>
                                     <div class="col-span-8 py-1">
-                                        <p class="text-xs uppercase tracking-wide text-slate-500 mb-3">Our Departments</p>
+                                        <p class="text-xs uppercase tracking-wide text-slate-500 mb-2">Our Departments</p>
+                                        <p class="text-sm text-slate-600 mb-4">Specialized clinical units led by experienced consultants, modern diagnostics, and coordinated patient-first treatment pathways.</p>
                                         <div class="grid grid-cols-3 gap-x-4 gap-y-1">
                                             <a v-for="dept in megaDepartments" :key="dept" href="#departments"
                                                 class="block text-slate-700 font-medium rounded-lg px-2 py-1 text-sm hover:text-blue-800 hover:bg-blue-50 transition-all">
                                                 {{ dept }}
                                             </a>
                                         </div>
+                                        <a href="#departments"
+                                            class="mt-4 inline-flex items-center bg-gradient-to-r from-blue-800 to-sky-500 text-white px-4 py-2 rounded-lg font-semibold text-sm hover:shadow-lg transition-all">
+                                            View All Departments <i class="fas fa-arrow-right ml-2"></i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
