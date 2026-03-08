@@ -74,3 +74,5 @@ defineOptions({ name: 'FrontendLayout' })
         <div id="aria-announcements" role="status" aria-live="polite" aria-atomic="true" class="sr-only"></div>
     </div>
 </template>
+
+

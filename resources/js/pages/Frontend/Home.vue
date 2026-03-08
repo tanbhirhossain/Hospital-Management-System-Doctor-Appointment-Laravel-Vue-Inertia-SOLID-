@@ -55,11 +55,11 @@ const smoothScrollHandlers: Array<{ anchor: Element; handler: EventListener }> =
 
 // ── Quick Info Cards ─────────────────────────────────────────
 const quickCards = [
-    { gradient: 'from-blue-800/85 to-sky-500/75', icon: 'fa-user-md', title: 'Find Doctor', desc: 'Search specialists by department and expertise.', link: '#doctors', btnLabel: 'Explore', btnColor: 'text-blue-800' },
-    { gradient: 'from-sky-500/85 to-cyan-400/70', icon: 'fa-calendar-check', title: 'Book an Appointment', desc: 'Schedule your visit with our doctors quickly.', link: '#appointment', btnLabel: 'Book Now', btnColor: 'text-sky-500' },
-    { gradient: 'from-emerald-500/85 to-emerald-400/70', icon: 'fa-home', title: 'Home Sample Collection', desc: 'Book at-home diagnostic sample pickup service.', link: '#services', btnLabel: 'Request', btnColor: 'text-emerald-500' },
-    { gradient: 'from-amber-500/85 to-amber-300/70', icon: 'fa-file-medical', title: 'Online Lab Report', desc: 'Access and download your lab reports online.', link: '#contact', btnLabel: 'View Report', btnColor: 'text-amber-500' },
-    { gradient: 'from-red-500/85 to-rose-400/70', icon: 'fa-map-marker-alt', title: 'Find Us', desc: 'Get directions and contact details instantly.', link: '#contact', btnLabel: 'Location', btnColor: 'text-red-500' },
+    { gradient: 'from-[#1e40af]/85 to-[#0ea5e9]/75', icon: 'fa-user-md', title: 'Find Doctor', desc: 'Search specialists by department and expertise.', link: '#doctors', btnLabel: 'Explore', btnColor: 'text-[#1e40af]' },
+    { gradient: 'from-[#0ea5e9]/85 to-cyan-400/70', icon: 'fa-calendar-check', title: 'Book an Appointment', desc: 'Schedule your visit with our doctors quickly.', link: '#appointment', btnLabel: 'Book Now', btnColor: 'text-[#0ea5e9]' },
+    { gradient: 'from-[#10b981]/85 to-emerald-400/70', icon: 'fa-home', title: 'Home Sample Collection', desc: 'Book at-home diagnostic sample pickup service.', link: '#services', btnLabel: 'Request', btnColor: 'text-[#10b981]' },
+    { gradient: 'from-[#f59e0b]/85 to-amber-300/70', icon: 'fa-file-medical', title: 'Online Lab Report', desc: 'Access and download your lab reports online.', link: '#contact', btnLabel: 'View Report', btnColor: 'text-[#f59e0b]' },
+    { gradient: 'from-[#ef4444]/85 to-rose-400/70', icon: 'fa-map-marker-alt', title: 'Find Us', desc: 'Get directions and contact details instantly.', link: '#contact', btnLabel: 'Location', btnColor: 'text-[#ef4444]' },
 ]
 
 // ── Departments ───────────────────────────────────────────────
@@ -144,6 +144,58 @@ const doctors = [
 ]
 
 // ── Gallery ────────────────────────────────────────────────────
+const scheduleDoctors = [
+    { id: 1, name: 'Dr. Ahmedul Kabir', specialty: 'Medicine' },
+    { id: 2, name: 'Dr. Mohammad Sayem', specialty: 'Medicine' },
+    { id: 3, name: 'Professor Dr. Mohammad Nashir Uddin', specialty: 'Plastic, Aesthetic & Laser Surgery' },
+    { id: 4, name: 'Professor Dr. Jesmine Banu', specialty: 'Gynecology' },
+]
+
+const doctorTimeSchedules = [
+    { doctor_id: 1, day: 'sat', start_time: '09:00', end_time: '12:00' },
+    { doctor_id: 1, day: 'mon', start_time: '17:00', end_time: '20:00' },
+    { doctor_id: 1, day: 'wed', start_time: '09:00', end_time: '12:00' },
+    { doctor_id: 2, day: 'sun', start_time: '10:00', end_time: '13:00' },
+    { doctor_id: 2, day: 'tue', start_time: '16:00', end_time: '19:00' },
+    { doctor_id: 2, day: 'thu', start_time: '10:00', end_time: '13:00' },
+    { doctor_id: 3, day: 'sat', start_time: '14:00', end_time: '18:00' },
+    { doctor_id: 3, day: 'mon', start_time: '14:00', end_time: '18:00' },
+    { doctor_id: 3, day: 'thu', start_time: '14:00', end_time: '18:00' },
+    { doctor_id: 4, day: 'sun', start_time: '09:30', end_time: '12:30' },
+    { doctor_id: 4, day: 'tue', start_time: '09:30', end_time: '12:30' },
+    { doctor_id: 4, day: 'fri', start_time: '10:00', end_time: '12:00' },
+]
+
+const scheduleDays = ['sat', 'sun', 'mon', 'tue', 'wed', 'thu', 'fri'] as const
+const dayLabel: Record<(typeof scheduleDays)[number], string> = {
+    sat: 'Saturday',
+    sun: 'Sunday',
+    mon: 'Monday',
+    tue: 'Tuesday',
+    wed: 'Wednesday',
+    thu: 'Thursday',
+    fri: 'Friday',
+}
+
+const to12Hour = (time: string) => {
+    const [h, m] = time.split(':').map(Number)
+    const hour = h % 12 || 12
+    const meridiem = h >= 12 ? 'PM' : 'AM'
+    return `${hour}:${String(m).padStart(2, '0')} ${meridiem}`
+}
+
+const groupedDoctorSchedules = computed(() =>
+    scheduleDoctors.map((doctor) => ({
+        ...doctor,
+        days: scheduleDays.map((day) => {
+            const slots = doctorTimeSchedules
+                .filter((entry) => entry.doctor_id === doctor.id && entry.day === day)
+                .map((entry) => `${to12Hour(entry.start_time)} - ${to12Hour(entry.end_time)}`)
+            return { day, label: dayLabel[day], slots }
+        }),
+    })),
+)
+
 const activeFilter = ref('all')
 const galleryItems = [
     { 
@@ -230,6 +282,42 @@ const centers = [
 ]
 
 // ── Testimonials ───────────────────────────────────────────────
+const blogPosts = [
+    {
+        id: 'heart-care',
+        category: 'Cardiology',
+        title: '7 Daily Habits That Keep Your Heart Healthy',
+        excerpt: 'Simple lifestyle changes that reduce cardiac risk and improve long-term heart health outcomes.',
+        date: 'March 05, 2026',
+        readTime: '5 min read',
+        author: 'Dr. Farhan Rahman',
+        img: 'https://images.unsplash.com/photo-1559757175-08c8e6f3f5f5?w=1200&h=700&fit=crop',
+        href: '#',
+    },
+    {
+        id: 'womens-wellness',
+        category: 'Women Wellness',
+        title: 'When To Visit a Gynecologist: Key Warning Signs',
+        excerpt: 'Know the common symptoms that should not be ignored and when specialist care is recommended.',
+        date: 'March 02, 2026',
+        readTime: '6 min read',
+        author: 'Dr. Ruba Ahmed',
+        img: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=1200&h=700&fit=crop',
+        href: '#',
+    },
+    {
+        id: 'child-care',
+        category: 'Pediatrics',
+        title: 'How to Build Strong Immunity in Children',
+        excerpt: 'Practical nutrition, sleep, and vaccination guidance to support healthy childhood development.',
+        date: 'February 28, 2026',
+        readTime: '4 min read',
+        author: 'Dr. Ayaan Hasan',
+        img: 'https://images.unsplash.com/photo-1576765608866-5b51046452be?w=1200&h=700&fit=crop',
+        href: '#',
+    },
+]
+
 const testimonials = [
     { initials: 'AH', bg: 'from-blue-800 to-sky-500', cardBg: 'from-blue-50', name: 'Abdul Hamid', short: 'Excellent hospital with caring staff and very professional doctors.', full: ' The facilities are modern, and the care quality was consistently high from admission to discharge. Highly recommended for trusted healthcare.' },
     { initials: 'RB', bg: 'from-emerald-500 to-emerald-600', cardBg: 'from-green-50', name: 'Rahima Begum', short: 'I received excellent care during my stay and felt supported.', full: ' The nursing team was attentive, and doctors explained each step clearly so my family and I stayed confident throughout treatment.' },
@@ -366,13 +454,17 @@ onUnmounted(() => {
     <section id="home" role="region" aria-label="Hero section" class="relative scroll-reveal reveal-home fade-in-0 zoom-in-95 duration-700">
         <div class="relative h-[500px] md:h-[600px] lg:h-[700px] overflow-hidden">
             <div v-for="(slide, i) in slides" :key="i"
-                class="absolute inset-0 transition-opacity duration-1000"
-                :class="i === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'">
-                <div :class="`absolute inset-0 bg-gradient-to-r ${slide.gradient} to-transparent z-10`"></div>
-                <img :src="slide.img" :alt="slide.alt" class="w-full h-full object-cover" loading="eager" />
+                class="hero-slide absolute inset-0"
+                :class="i === currentSlide ? 'opacity-100 z-20 pointer-events-auto' : 'opacity-0 z-0 pointer-events-none'">
+                <div :class="`absolute inset-0 bg-gradient-to-r ${slide.gradient} to-transparent z-10 transition-opacity duration-1000`"></div>
+                <img :src="slide.img" :alt="slide.alt"
+                    class="hero-slide-image w-full h-full object-cover"
+                    :class="i === currentSlide ? 'hero-image-active' : 'hero-image-inactive'"
+                    loading="eager" />
                 <div class="absolute inset-0 z-20 flex items-center">
                     <div class="container mx-auto px-4">
-                        <div class="max-w-3xl text-white">
+                        <div class="hero-slide-content max-w-3xl text-white"
+                            :class="i === currentSlide ? 'hero-content-active' : 'hero-content-inactive'">
                             <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">{{ slide.title }}</h2>
                             <p class="text-lg md:text-xl mb-8 text-gray-100">{{ slide.desc }}</p>
                             <div class="flex flex-col sm:flex-row gap-4">
@@ -519,55 +611,49 @@ onUnmounted(() => {
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
                 <div v-for="dept in departments" :key="dept.name"
-                    class="premium-sheen group flex flex-col h-full bg-white rounded-[2rem] overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-blue-200/50 transition-all duration-500 border border-slate-100 relative scroll-reveal">
-                    
-                    <div :class="`bg-gradient-to-br ${dept.color} p-10 relative overflow-hidden` ">
-                        <div class="absolute -right-6 -top-6 w-32 h-32 bg-white/10 rounded-full blur-3xl group-hover:bg-white/20 transition-colors"></div>
-                        
-                        <div class="w-16 h-16 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center mb-8 shadow-inner border border-white/20 group-hover:rotate-6 transition-transform duration-500">
-                            <i :class="`fas ${dept.icon} text-white text-3xl transition-transform duration-500 group-hover:scale-110` "></i>
+                    class="premium-sheen group relative flex h-full flex-col overflow-hidden rounded-3xl border border-slate-200/70 bg-white shadow-lg transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-200/50 scroll-reveal">
+
+                    <div :class="`bg-gradient-to-br ${dept.color} relative overflow-hidden p-8`">
+                        <div class="absolute -right-14 -top-10 h-40 w-40 rounded-full bg-white/10 blur-3xl transition-all duration-500 group-hover:bg-white/25"></div>
+                        <div class="absolute bottom-0 left-0 h-px w-full bg-white/25"></div>
+
+                        <div class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl border border-white/25 bg-white/20 shadow-inner backdrop-blur-md transition-transform duration-500 group-hover:rotate-6">
+                            <i :class="`fas ${dept.icon} text-3xl text-white transition-transform duration-500 group-hover:scale-110`"></i>
                         </div>
-                        
-                        <h3 class="text-2xl font-bold text-white mb-2 tracking-tight">{{ dept.name }}</h3>
-                        <p :class="`${dept.textColor} text-sm font-medium leading-snug line-clamp-1 opacity-80 uppercase tracking-wide` ">
+
+                        <h3 class="mb-2 text-2xl font-black tracking-tight text-white">{{ dept.name }}</h3>
+                        <p :class="`${dept.textColor} text-sm leading-snug opacity-90 line-clamp-2`">
                             {{ dept.subtitle }}
                         </p>
                     </div>
 
-                    <div class="p-10 flex flex-col flex-grow">
-                        <p class="text-slate-500 mb-10 line-clamp-3 text-base leading-relaxed min-h-[4.5rem]">
+                    <div class="flex flex-grow flex-col p-8">
+                        <p class="mb-8 min-h-[4.5rem] line-clamp-3 text-base leading-relaxed text-slate-600">
                             {{ dept.desc }}
                         </p>
 
-                        <div class="mt-auto flex flex-col gap-8">
-                            <div class="flex items-center justify-between border-b border-slate-50 pb-6">
-                                <div class="flex items-center space-x-3">
-                                    <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center">
-                                        <i class="fas fa-user-doctor text-blue-600 text-sm"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Expert Team</p>
-                                        <p class="text-sm font-bold text-slate-800">{{ dept.specialists }} Specialists</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center text-[10px] font-bold text-emerald-600 uppercase tracking-widest bg-emerald-50 px-3 py-1 rounded-full">
-                                    <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-2 animate-pulse"></span>
-                                    Active
-                                </div>
+                        <div class="mb-7 grid grid-cols-2 gap-3">
+                            <div class="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2">
+                                <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">Specialists</p>
+                                <p class="mt-1 text-sm font-extrabold text-slate-800">{{ dept.specialists }}</p>
                             </div>
-
-                            <a href="#appointment"
-                                class="group/btn relative flex items-center justify-between w-full px-7 py-4 rounded-2xl border-2 border-slate-900 text-slate-900 font-bold transition-all duration-300 hover:bg-slate-900 hover:text-white overflow-hidden active:scale-95">
-                                <span class="relative z-10 uppercase tracking-widest text-xs">Read More</span>
-                                <div class="relative z-10 flex items-center justify-center w-8 h-8 rounded-full bg-slate-100 text-slate-900 transition-all duration-300 group-hover/btn:bg-white/20 group-hover/btn:text-white">
-                                    <i class="fas fa-arrow-right text-[10px] transition-transform duration-300 group-hover/btn:translate-x-1"></i>
-                                </div>
-                            </a>
+                            <div class="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2">
+                                <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">Beds</p>
+                                <p class="mt-1 text-sm font-extrabold text-slate-800">{{ dept.beds }}</p>
+                            </div>
                         </div>
+
+                        <a href="#appointment"
+                            class="group/btn mt-auto inline-flex items-center justify-between rounded-2xl bg-gradient-to-r from-slate-900 to-blue-900 px-5 py-3.5 text-white shadow-lg shadow-blue-900/20 transition-all duration-300 hover:from-blue-800 hover:to-sky-600 hover:shadow-xl hover:shadow-sky-300/40 active:scale-[0.98]">
+                            <span class="text-xs font-bold uppercase tracking-[0.16em]">Read More</span>
+                            <span class="ml-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/20 transition-all duration-300 group-hover/btn:translate-x-1 group-hover/btn:bg-white/30">
+                                <i class="fas fa-arrow-right text-[11px]"></i>
+                            </span>
+                        </a>
                     </div>
 
                     <div v-if="dept.available247"
-                        class="absolute top-6 right-6 bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full text-[10px] text-white font-bold border border-white/20 uppercase tracking-widest">
+                        class="absolute right-5 top-5 rounded-full border border-white/30 bg-white/20 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-white backdrop-blur-md">
                         Emergency 24/7
                     </div>
                 </div>
@@ -589,26 +675,26 @@ onUnmounted(() => {
                 <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Meet Our Expert Doctors</h2>
                 <p class="text-xl text-gray-600 max-w-3xl mx-auto">Highly qualified and experienced medical professionals dedicated to your health</p>
             </div>
-<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 stagger-grid">
-    <div v-for="doc in doctors" :key="doc.name"
-        class="premium-sheen bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2">
-        
-        <div class="h-64 overflow-hidden bg-gray-100 flex items-center justify-center">
-            <img v-if="doc.photo" :src="doc.photo" :alt="doc.name" class="w-full h-full object-cover" />
-            <i v-else class="fas fa-user-md text-gray-400 text-6xl"></i>
-        </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 stagger-grid">
+                <div v-for="doc in doctors" :key="doc.name"
+                    class="premium-sheen bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2">
+                    
+                    <div class="h-64 overflow-hidden bg-gray-100 flex items-center justify-center">
+                        <img v-if="doc.photo" :src="doc.photo" :alt="doc.name" class="w-full h-full object-cover" />
+                        <i v-else class="fas fa-user-md text-gray-400 text-6xl"></i>
+                    </div>
 
-        <div class="p-6">
-            <h3 class="text-xl font-bold text-gray-900 mb-1">{{ doc.name }}</h3>
-            <p class="text-sm text-blue-800 font-semibold mb-3">{{ doc.specialty }}</p>
-            <p class="text-sm text-gray-600 mb-4">{{ doc.degree }}<br />{{ doc.exp }} Years Experience</p>
-            <a href="#appointment"
-                class="block w-full bg-blue-800 text-white text-center py-2.5 rounded-lg font-semibold hover:bg-sky-500 transition-colors">
-                Book Appointment
-            </a>
-        </div>
-    </div>
-</div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-1">{{ doc.name }}</h3>
+                        <p class="text-sm text-blue-800 font-semibold mb-3">{{ doc.specialty }}</p>
+                        <p class="text-sm text-gray-600 mb-4">{{ doc.degree }}<br />{{ doc.exp }} Years Experience</p>
+                        <a href="#appointment"
+                            class="block w-full bg-blue-800 text-white text-center py-2.5 rounded-lg font-semibold hover:bg-sky-500 transition-colors">
+                            Book Appointment
+                        </a>
+                    </div>
+                </div>
+            </div>
             <div class="text-center mt-12">
                 <a href="#doctors"
                     class="inline-flex items-center bg-white text-blue-800 px-8 py-4 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all transform hover:scale-105">
@@ -619,6 +705,8 @@ onUnmounted(() => {
     </section>
 
     <!-- ── GALLERY ───────────────────────────────────────── -->
+
+
     <section id="gallery" role="region" aria-label="Hospital gallery" class="py-20 bg-white scroll-reveal reveal-gallery fade-in-0 zoom-in-95 duration-700">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
@@ -815,6 +903,51 @@ onUnmounted(() => {
                     </div>
                     <p class="text-lg text-white/90">{{ stat.label }}</p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── BLOG ───────────────────────────────────────────── -->
+    <section id="blog" role="region" aria-label="Latest blog posts" class="py-20 bg-white scroll-reveal reveal-blog fade-in-0 slide-in-from-bottom-8 duration-700">
+        <div class="container mx-auto px-4">
+            <div class="mb-14 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+                <div>
+                    <p class="text-xs font-bold uppercase tracking-[0.2em] text-sky-600">Health Journal</p>
+                    <h2 class="mt-2 text-4xl md:text-5xl font-bold text-gray-900">Latest Blog & Health Insights</h2>
+                    <p class="mt-3 max-w-3xl text-lg text-gray-600">Practical medical guidance, prevention tips, and wellness updates from AMZ specialists.</p>
+                </div>
+                <a href="#blog" class="inline-flex items-center gap-2 rounded-xl border border-blue-200 bg-blue-50 px-5 py-3 text-sm font-semibold text-blue-800 transition hover:bg-blue-100">
+                    View All Posts <i class="fas fa-arrow-right text-xs"></i>
+                </a>
+            </div>
+
+            <div class="grid gap-7 md:grid-cols-2 lg:grid-cols-3 stagger-grid">
+                <article
+                    v-for="post in blogPosts"
+                    :key="post.id"
+                    class="premium-sheen overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg transition hover:-translate-y-1 hover:shadow-2xl"
+                >
+                    <div class="relative h-56 overflow-hidden">
+                        <img :src="post.img" :alt="post.title" class="h-full w-full object-cover transition duration-500 hover:scale-105" loading="lazy" />
+                        <span class="absolute left-4 top-4 rounded-full bg-blue-800 px-3 py-1 text-xs font-semibold text-white">
+                            {{ post.category }}
+                        </span>
+                    </div>
+                    <div class="p-6">
+                        <div class="mb-3 flex items-center gap-3 text-xs font-medium text-slate-500">
+                            <span><i class="fas fa-calendar-alt mr-1"></i>{{ post.date }}</span>
+                            <span><i class="fas fa-clock mr-1"></i>{{ post.readTime }}</span>
+                        </div>
+                        <h3 class="mb-2 text-xl font-bold text-gray-900">{{ post.title }}</h3>
+                        <p class="mb-5 text-sm leading-6 text-gray-600">{{ post.excerpt }}</p>
+                        <div class="flex items-center justify-between border-t border-slate-100 pt-4">
+                            <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">By {{ post.author }}</p>
+                            <a :href="post.href" class="text-sm font-semibold text-blue-800 transition hover:text-sky-500">
+                                Read Article <i class="fas fa-arrow-right ml-1 text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
             </div>
         </div>
     </section>
@@ -1049,6 +1182,7 @@ onUnmounted(() => {
 .reveal-why { transform: translate3d(0, 38px, 0) scale(0.96) skewY(-1deg); }
 .reveal-departments { transform: translate3d(0, 34px, 0) scale(0.98); }
 .reveal-doctors { transform: translate3d(28px, 26px, 0) scale(0.97); }
+.reveal-schedules { transform: translate3d(0, 34px, 0) scale(0.98); }
 .reveal-gallery { transform: translate3d(0, 42px, 0) scale(0.985) rotateX(5deg); }
 .reveal-services { transform: translate3d(0, 48px, 0) scale(0.97); }
 .reveal-packages { transform: translate3d(0, 38px, 0) scale(0.985) rotateZ(-0.8deg); }
@@ -1056,6 +1190,7 @@ onUnmounted(() => {
 .reveal-appointment { transform: translate3d(0, 24px, 0) scale(0.99); filter: brightness(0.92) saturate(0.9); }
 .reveal-appointment.animate-in { filter: brightness(1) saturate(1); }
 .reveal-testimonials { transform: translate3d(0, 46px, 0) scale(0.975); }
+.reveal-blog { transform: translate3d(0, 42px, 0) scale(0.98); }
 .reveal-newsletter { transform: translate3d(0, 40px, 0) scale(0.975); }
 .reveal-contact { transform: translate3d(0, 36px, 0) scale(0.985); }
 
@@ -1128,6 +1263,44 @@ onUnmounted(() => {
     100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); filter: blur(0) saturate(1); }
 }
 
+.hero-slide {
+    transition: opacity 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero-slide-image {
+    transform: scale(1.08);
+    filter: brightness(0.9) saturate(1.02);
+    transition: transform 1.15s cubic-bezier(0.22, 1, 0.36, 1), filter 1s ease;
+    will-change: transform, filter;
+}
+
+.hero-image-active {
+    animation: heroZoomInOut 6.8s ease-in-out infinite alternate;
+    filter: brightness(0.98) saturate(1.08);
+}
+
+.hero-image-inactive {
+    transform: scale(1.14);
+    filter: brightness(0.75) saturate(0.92);
+}
+
+.hero-slide-content {
+    transition: opacity 0.75s ease, transform 0.85s cubic-bezier(0.22, 1, 0.36, 1), filter 0.75s ease;
+    will-change: transform, opacity, filter;
+}
+
+.hero-content-active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+}
+
+.hero-content-inactive {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+    filter: blur(2px);
+}
+
 .partner-marquee-wrap {
     width: 100%;
 }
@@ -1161,6 +1334,12 @@ onUnmounted(() => {
     100% { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes heroZoomInOut {
+    0% { transform: scale(1.04) translate3d(0, 0, 0); }
+    50% { transform: scale(1.12) translate3d(-1.2%, -0.8%, 0); }
+    100% { transform: scale(1.06) translate3d(1%, 0.6%, 0); }
+}
+
 body {
     animation: pageFadeIn 0.7s ease-out;
 }
@@ -1187,6 +1366,13 @@ body {
         opacity: 0 !important;
         animation: none !important;
         transform: none !important;
+    }
+
+    .hero-slide,
+    .hero-slide-image,
+    .hero-slide-content {
+        transition: none !important;
+        animation: none !important;
     }
 
     html {

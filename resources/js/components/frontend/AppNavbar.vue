@@ -1,7 +1,10 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 
 const mobileMenuOpen = ref(false)
+const isFloating = ref(false)
+const navHeight = ref(0)
+const navRef = ref(null)
 
 const megaDepartments = [
     'Medicine', 'Oncology', 'Cardiology', 'Colorectal Surgery',
@@ -24,11 +27,38 @@ const toggleMobileMenu = () => {
 const closeMobileMenu = () => {
     mobileMenuOpen.value = false
 }
+
+const updateFloatingNav = () => {
+    isFloating.value = window.scrollY > 20
+    if (navRef.value && !navHeight.value) {
+        navHeight.value = navRef.value.offsetHeight
+    }
+}
+
+const updateNavHeight = () => {
+    if (navRef.value) {
+        navHeight.value = navRef.value.offsetHeight
+    }
+}
+
+onMounted(() => {
+    updateFloatingNav()
+    updateNavHeight()
+    window.addEventListener('scroll', updateFloatingNav, { passive: true })
+    window.addEventListener('resize', updateNavHeight)
+})
+
+onUnmounted(() => {
+    window.removeEventListener('scroll', updateFloatingNav)
+    window.removeEventListener('resize', updateNavHeight)
+})
 </script>
 
 <template>
-    <nav id="main-nav" role="navigation" aria-label="Main navigation"
-        class="bg-white shadow-md sticky top-0 z-50 transition-all duration-300">
+    <div :style="{ height: isFloating ? `${navHeight}px` : 'auto' }">
+        <nav ref="navRef" id="main-nav" role="navigation" aria-label="Main navigation"
+            class="bg-white shadow-md z-50 transition-all duration-300"
+            :class="isFloating ? 'fixed top-0 inset-x-0' : 'relative'">
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center py-4">
                 <!-- Logo -->
@@ -251,7 +281,8 @@ const closeMobileMenu = () => {
                 </div>
             </div>
         </div>
-    </nav>
+        </nav>
+    </div>
 </template>
 
 <style scoped>

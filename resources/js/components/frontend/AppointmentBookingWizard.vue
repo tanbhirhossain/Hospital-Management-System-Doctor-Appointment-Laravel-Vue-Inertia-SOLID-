@@ -29,6 +29,17 @@ const departments = [
     { id: 'gynecology', name: 'Gynecology', icon: 'fa-venus', tone: 'from-rose-600 to-pink-600' },
     { id: 'pediatrics', name: 'Pediatrics', icon: 'fa-baby', tone: 'from-amber-600 to-orange-600' },
     { id: 'surgery', name: 'Surgery', icon: 'fa-user-doctor', tone: 'from-indigo-700 to-violet-700' },
+    { id: 'gynecology', name: 'Gynecology', icon: 'fa-venus', tone: 'from-rose-600 to-pink-600' },
+    { id: 'pediatrics', name: 'Pediatrics', icon: 'fa-baby', tone: 'from-amber-600 to-orange-600' },
+    { id: 'surgery', name: 'Surgery', icon: 'fa-user-doctor', tone: 'from-indigo-700 to-violet-700' },
+    { id: 'cardiology', name: 'Cardiology', icon: 'fa-heart-pulse', tone: 'from-blue-700 to-sky-600' },
+    { id: 'medicine', name: 'Medicine', icon: 'fa-stethoscope', tone: 'from-emerald-700 to-teal-600' },
+    { id: 'gynecology', name: 'Gynecology', icon: 'fa-venus', tone: 'from-rose-600 to-pink-600' },
+    { id: 'pediatrics', name: 'Pediatrics', icon: 'fa-baby', tone: 'from-amber-600 to-orange-600' },
+    { id: 'surgery', name: 'Surgery', icon: 'fa-user-doctor', tone: 'from-indigo-700 to-violet-700' },
+    { id: 'gynecology', name: 'Gynecology', icon: 'fa-venus', tone: 'from-rose-600 to-pink-600' },
+    { id: 'pediatrics', name: 'Pediatrics', icon: 'fa-baby', tone: 'from-amber-600 to-orange-600' },
+    { id: 'surgery', name: 'Surgery', icon: 'fa-user-doctor', tone: 'from-indigo-700 to-violet-700' },
 ]
 
 const doctorsByDepartment: Record<string, Doctor[]> = {
@@ -162,9 +173,9 @@ const confirmBooking = () => {
 </script>
 
 <template>
-    <div class="relative w-full overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white/95 p-4 shadow-[0_34px_80px_-42px_rgba(15,23,42,.6)] backdrop-blur-sm md:p-6">
+    <div class="relative h-[500px] w-full overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white/95 p-4 shadow-[0_34px_80px_-42px_rgba(15,23,42,.6)] backdrop-blur-sm md:h-[680px] md:p-6">
         <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(14,165,233,.12),transparent_36%),radial-gradient(circle_at_100%_100%,rgba(59,130,246,.1),transparent_38%)]"></div>
-        <div class="relative">
+        <div class="relative flex h-full min-h-0 flex-col">
             <header class="mb-5 rounded-2xl border border-slate-200 bg-gradient-to-r from-slate-50 to-white p-4">
                 <div class="mb-4 flex items-center justify-between gap-3">
                     <div>
@@ -186,8 +197,8 @@ const confirmBooking = () => {
                 <i class="fas fa-check-circle mr-2"></i>Appointment request confirmed.
             </div>
 
-            <div class="grid gap-3 lg:grid-cols-12">
-                <aside class="rounded-2xl border border-slate-200 bg-slate-50/85 p-3 lg:sticky lg:top-24 lg:col-span-3 lg:h-fit">
+            <div class="grid min-h-0 flex-1 gap-3 lg:grid-cols-12">
+                <aside class="rounded-2xl border border-slate-200 bg-slate-50/85 p-3 lg:col-span-3 lg:h-full lg:overflow-y-auto">
                     <p class="mb-3 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-500">Journey</p>
                     <div class="space-y-2">
                         <div
@@ -211,12 +222,12 @@ const confirmBooking = () => {
                     </div>
                 </aside>
 
-                <section class="rounded-2xl border border-slate-200 bg-white p-4 md:p-5 lg:col-span-6">
+                <section class="rounded-2xl border border-slate-200 bg-white p-4 md:p-5 lg:col-span-6 lg:flex lg:min-h-0 lg:flex-col">
                     <div class="mb-4 flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-3 py-2">
                         <p class="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">Current Step</p>
                         <p class="text-sm font-semibold text-slate-800">{{ activeStep.label }}</p>
                     </div>
-                    <div class="max-h-[560px] overflow-y-auto pr-1">
+                    <div class="min-h-0 flex-1 overflow-y-auto pr-1">
                         <div v-if="currentStep === 1" class="grid gap-2.5 sm:grid-cols-2">
                             <button
                                 v-for="dept in departments"
@@ -313,19 +324,19 @@ const confirmBooking = () => {
                         <div v-else-if="currentStep === 5" class="space-y-2.5">
                             <div>
                                 <label class="mb-1 block text-xs font-bold uppercase tracking-wide text-slate-500">Patient Name *</label>
-                                <input v-model="booking.name" type="text" class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />
+                                <input v-model="booking.name" type="text" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 caret-slate-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />
                             </div>
                             <div>
                                 <label class="mb-1 block text-xs font-bold uppercase tracking-wide text-slate-500">Phone *</label>
-                                <input v-model="booking.phone" type="tel" class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />
+                                <input v-model="booking.phone" type="tel" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 caret-slate-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />
                             </div>
                             <div>
                                 <label class="mb-1 block text-xs font-bold uppercase tracking-wide text-slate-500">Email</label>
-                                <input v-model="booking.email" type="email" class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />
+                                <input v-model="booking.email" type="email" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 caret-slate-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100" />
                             </div>
                             <div>
                                 <label class="mb-1 block text-xs font-bold uppercase tracking-wide text-slate-500">Problems</label>
-                                <textarea v-model="booking.problem" rows="3" class="w-full rounded-xl border border-slate-300 px-3 py-2.5 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"></textarea>
+                                <textarea v-model="booking.problem" rows="3" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 caret-slate-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"></textarea>
                             </div>
                         </div>
 
@@ -356,7 +367,7 @@ const confirmBooking = () => {
                     </div>
                 </section>
 
-                <aside class="rounded-2xl border border-slate-200 bg-slate-50/90 p-3 lg:sticky lg:top-24 lg:col-span-3 lg:h-fit">
+                <aside class="rounded-2xl border border-slate-200 bg-slate-50/90 p-3 lg:col-span-3 lg:h-full lg:overflow-y-auto">
                     <div class="mb-3 flex items-center justify-between">
                         <p class="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-500">Live Review</p>
                         <span class="rounded-lg bg-blue-100 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-blue-700">Realtime</span>
