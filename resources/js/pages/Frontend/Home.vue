@@ -144,7 +144,6 @@ const departments = [
     }
 ]
 
-// ── Doctors ────────────────────────────────────────────────────
 const doctors = [
     { color: 'from-blue-400 to-blue-600', name: 'Dr. Ahmedul Kabir', specialty: 'Medicine', degree: 'MBBS, FCPS, FACP, FRCP', exp: '15+', photo: 'https://amzhospitalbd.com/storage/doctors/April2024/H2qkQbIjHRLFzvPwoNEt.jpg' },
     { color: 'from-emerald-400 to-emerald-600', name: 'Dr. Mohammad Sayem', specialty: 'Medicine', degree: 'MBBS (Dhaka), FCPS (Medicine), MRCP (London) MRCPE (Edinburgh), MACP (USA)', exp: '10+', photo: 'https://amzhospitalbd.com/storage/doctors/April2024/rXuniLQlfVt3OmQ6Ntw8.jpg' },
@@ -262,9 +261,9 @@ const filteredGallery = () => activeFilter.value === 'all' ? galleryItems : gall
 
 // ── Services ───────────────────────────────────────────────────
 const servicesList = [
-    { bg: 'from-blue-50', icon: 'fa-ambulance', title: '24/7 Emergency Services', desc: 'Round-the-clock emergency medical care with rapid response team', items: ['Trauma Care', 'Intensive Care Unit', 'Emergency Surgery'] },
-    { bg: 'from-green-50', icon: 'fa-x-ray', title: 'Diagnostic Services', desc: 'Advanced diagnostic facilities with latest technology', items: ['CT Scan & MRI', 'Ultrasound', 'Laboratory Tests'] },
-    { bg: 'from-purple-50', icon: 'fa-procedures', title: 'Surgical Services', desc: 'Expert surgical care with modern operation theaters', items: ['General Surgery', 'Laparoscopic Surgery', 'Specialized Surgery'] },
+    { bg: 'from-blue-50', icon: 'fa-ambulance', title: '24/7 Emergency Services', desc: 'Round-the-clock emergency medical care with rapid response team', items: ['Critical Care Unit', 'Intensive Care Unit', 'High Dependancy Unit'] },
+    { bg: 'from-green-50', icon: 'fa-x-ray', title: 'Diagnostic Services', desc: 'Advanced diagnostic facilities with latest technology', items: ['CT Scan & MRI', 'Ultrasound', 'Laboratory Tests', 'Cath Lab'] },
+    { bg: 'from-purple-50', icon: 'fa-procedures', title: 'Surgical Services', desc: 'Expert surgical care with modern operation theaters', items: ['General Surgery', 'Laparoscopic Surgery', 'Specialized Surgery', 'Laser Surgery'] },
     { bg: 'from-red-50', icon: 'fa-utensils', title: 'Canteen Service', desc: 'Hygienic in-house canteen with fresh meals for patients, attendants, and visitors.', items: ['Patient Diet Meals', 'Attendant Meal Options', 'Tea & Refreshments'] },
     { bg: 'from-yellow-50', icon: 'fa-baby', title: 'Maternity Services', desc: 'Complete care for mothers and newborns', items: ['Prenatal Care', 'Delivery Services', 'NICU'] },
     { bg: 'from-pink-50', icon: 'fa-pills', title: 'Pharmacy Services', desc: '24/7 pharmacy with all essential medicines', items: ['Prescription Medicines', 'OTC Medications', 'Home Delivery'] },
@@ -300,7 +299,7 @@ const blogPosts = [
         date: 'March 05, 2026',
         readTime: '5 min read',
         author: 'Dr. Farhan Rahman',
-        img: 'https://images.unsplash.com/photo-1559757175-08c8e6f3f5f5?w=1200&h=700&fit=crop',
+        img: 'https://images.unsplash.com/photo-1460672985063-6764ac8b9c74?w=1200&h=700&fit=crop',
         href: '#',
     },
     {
@@ -342,10 +341,10 @@ const toggleTestimonial = (i) => { expandedTestimonials.value[i] = !expandedTest
 
 // ── Stats Counter ──────────────────────────────────────────────
 const stats = [
-    { target: 10000, label: 'Patients Treated' },
-    { target: 150, label: 'Expert Doctors' },
-    { target: 25, label: 'Years Experience' },
-    { target: 500, label: 'Hospital Beds' },
+    { target: 300000, label: 'Patients Treated' },
+    { target: 79, label: 'Expert Doctors' },
+    { target: 7, label: 'Years Experience' },
+    { target: 100, label: 'Hospital Beds' },
 ]
 const statValues = ref(stats.map(() => 0))
 let counterAnimated = false
@@ -620,7 +619,7 @@ onUnmounted(() => {
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-                <div v-for="dept in departments" :key="dept.name" 
+                <div v-for="dept in departments" :key="dept.name"
                     class="premium-sheen group relative flex h-full flex-col overflow-hidden rounded-3xl border border-slate-200/70 bg-white shadow-lg transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-200/50 scroll-reveal">
 
                     <div class="relative overflow-hidden p-8">
@@ -1053,7 +1052,7 @@ onUnmounted(() => {
                         <i class="fas fa-map-marker-alt text-white text-2xl"></i>
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-3">Visit Us</h3>
-                    <p class="text-gray-600">123 Medical Center Road<br>Dhaka 1205, Bangladesh</p>
+                    <p class="text-gray-600">Cha- 80/3, Shadhinota Sarani, Progati Sarani Rd<br> Uttar Badda, Dhaka-1212</p>
                 </div>
                 <div class="premium-sheen bg-gradient-to-br from-green-50 to-white rounded-2xl p-8 shadow-lg text-center hover:shadow-xl transition">
                     <div class="w-16 h-16 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -1062,7 +1061,7 @@ onUnmounted(() => {
                     <h3 class="text-xl font-bold text-gray-900 mb-3">Call Us</h3>
                     <p class="text-gray-600">
                         Emergency: <a href="tel:10699" class="text-blue-800 font-bold hover:underline">10699</a><br>
-                        General: <a href="tel:+8801234567890" class="text-blue-800 hover:underline">+880 123 456 7890</a>
+                        General: <a href="tel:+8801234567890" class="text-blue-800 hover:underline">+880 184 733 1047</a>
                     </p>
                 </div>
                 <div class="premium-sheen bg-gradient-to-br from-purple-50 to-white rounded-2xl p-8 shadow-lg text-center hover:shadow-xl transition">
@@ -1400,3 +1399,5 @@ body {
 ::-webkit-scrollbar-thumb { background: #1e40af; border-radius: 5px; }
 ::-webkit-scrollbar-thumb:hover { background: #0ea5e9; }
 </style>
+
+

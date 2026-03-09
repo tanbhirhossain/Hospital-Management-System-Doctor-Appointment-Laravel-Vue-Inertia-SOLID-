@@ -173,17 +173,17 @@ const confirmBooking = () => {
 </script>
 
 <template>
-    <div class="relative h-[500px] w-full overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white/95 p-4 shadow-[0_34px_80px_-42px_rgba(15,23,42,.6)] backdrop-blur-sm md:h-[680px] md:p-6">
+    <div class="relative w-full overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white/95 p-4 shadow-[0_34px_80px_-42px_rgba(15,23,42,.6)] backdrop-blur-sm md:h-[680px] md:p-6">
         <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(14,165,233,.12),transparent_36%),radial-gradient(circle_at_100%_100%,rgba(59,130,246,.1),transparent_38%)]"></div>
-        <div class="relative flex h-full min-h-0 flex-col">
+        <div class="relative flex min-h-0 flex-col md:h-full">
             <header class="mb-5 rounded-2xl border border-slate-200 bg-gradient-to-r from-slate-50 to-white p-4">
-                <div class="mb-4 flex items-center justify-between gap-3">
+                <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                     <div>
                         <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">Appointment Desk</p>
                         <h3 class="text-xl font-black tracking-tight text-slate-900 md:text-2xl">Book Your Consultation</h3>
                         <p class="text-xs text-slate-500 md:text-sm">Choose a department, select doctor, and confirm in 6 quick steps.</p>
                     </div>
-                    <div class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-right shadow-sm">
+                    <div class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-right shadow-sm sm:w-auto">
                         <p class="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-400">Progress</p>
                         <p class="text-sm font-bold text-slate-900">{{ currentStep }}/{{ steps.length }}</p>
                     </div>
@@ -198,7 +198,7 @@ const confirmBooking = () => {
             </div>
 
             <div class="grid min-h-0 flex-1 gap-3 lg:grid-cols-12">
-                <aside class="rounded-2xl border border-slate-200 bg-slate-50/85 p-3 lg:col-span-3 lg:h-full lg:overflow-y-auto">
+                <aside class="hidden rounded-2xl border border-slate-200 bg-slate-50/85 p-3 lg:col-span-3 lg:block lg:h-full lg:overflow-y-auto">
                     <p class="mb-3 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-500">Journey</p>
                     <div class="space-y-2">
                         <div
@@ -345,7 +345,7 @@ const confirmBooking = () => {
                         </div>
                     </div>
 
-                    <div class="mt-4 flex items-center justify-between gap-2 border-t border-slate-100 pt-3">
+                    <div class="mt-4 flex flex-col gap-2 border-t border-slate-100 pt-3 sm:flex-row sm:items-center sm:justify-between">
                         <button type="button" @click="goBack" :disabled="currentStep === 1" class="rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 disabled:opacity-40">Back</button>
                         <button
                             v-if="currentStep < steps.length"

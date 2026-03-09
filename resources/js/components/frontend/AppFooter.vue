@@ -54,13 +54,13 @@
                     <ul class="space-y-4">
                         <li class="flex items-start">
                             <i class="fas fa-map-marker-alt text-sky-400 mt-1 mr-3"></i>
-                            <span class="text-gray-400">123 Medical Center Road<br>Dhaka 1205, Bangladesh</span>
+                            <span class="text-gray-400">Cha- 80/3, Shadhinota Sarani, Progati Sarani Rd Uttar Badda, Dhaka-1212</span>
                         </li>
                         <li class="flex items-start">
                             <i class="fas fa-phone-alt text-sky-400 mt-1 mr-3"></i>
                             <div>
                                 <a href="tel:10699" class="text-gray-400 hover:text-sky-400 transition-colors block font-bold">Emergency: 10699</a>
-                                <a href="tel:+8801234567890" class="text-gray-400 hover:text-sky-400 transition-colors block">+880 123 456 7890</a>
+                                <a href="tel:+8801234567890" class="text-gray-400 hover:text-sky-400 transition-colors block">+880 184 733 1047</a>
                             </div>
                         </li>
                         <li class="flex items-start">
