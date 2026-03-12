@@ -1,11 +1,11 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { computed, ref, onMounted, onUnmounted } from 'vue'
 import AppointmentBookingWizard from '@/components/frontend/AppointmentBookingWizard.vue'
 import FrontendLayout from '@/layouts/FrontendLayout.vue'
 
 defineOptions({ layout: FrontendLayout })
 
-// ── Hero Slider ──────────────────────────────────────────────
+// â”€â”€ Hero Slider â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const currentSlide = ref(0)
 let autoSlideInterval = null
 
@@ -53,7 +53,7 @@ let sectionObserver: IntersectionObserver | null = null
 let counterObserver: IntersectionObserver | null = null
 const smoothScrollHandlers: Array<{ anchor: Element; handler: EventListener }> = []
 
-// ── Quick Info Cards ─────────────────────────────────────────
+// â”€â”€ Quick Info Cards â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const quickCards = [
     { gradient: 'from-[#1f5db9] to-[#4ba9de]', icon: 'fa-user-md', title: 'Find Doctor', desc: 'Search specialists by department and expertise.', link: '#doctors', btnLabel: 'Explore', btnColor: 'text-[#1f5db9]' },
     { gradient: 'from-[#24a6db] to-[#5cc6e0]', icon: 'fa-calendar-check', title: 'Book an Appointment', desc: 'Schedule your visit with our doctors quickly.', link: '#appointment', btnLabel: 'Book Now', btnColor: 'text-[#1a9ad6]' },
@@ -62,7 +62,7 @@ const quickCards = [
     { gradient: 'from-[#e56775] to-[#ef8f9b]', icon: 'fa-map-marker-alt', title: 'Find Us', desc: 'Get directions and contact details instantly.', link: '#contact', btnLabel: 'Location', btnColor: 'text-[#e25865]' },
 ]
 
-// ── Departments ───────────────────────────────────────────────
+// â”€â”€ Departments â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     // { color: 'from-blue-500 to-blue-600', textColor: 'text-blue-100', bg: 'bg-blue-50', icon: 'fa-heartbeat', name: 'Cardiology', subtitle: 'Heart & Cardiovascular Care', desc: 'Comprehensive cardiac care with advanced diagnostic facilities, interventional cardiology, and cardiac surgery.', specialists: '12+', beds: '45', services: ['ECG & Echocardiography', 'Angioplasty & Stenting', 'Cardiac Surgery'], available247: true },
 
 const departments = [
@@ -72,8 +72,8 @@ const departments = [
         bg: 'bg-blue-50', 
         icon: 'fa-heartbeat', 
         name: 'Cardiology', 
-        subtitle: 'Every heartbeat matters — we protect it.', 
-        desc: 'The Cardiology Department at AMZ Hospital Ltd. provides comprehensive heart care—from prevention and diagnosis to advanced treatment.', 
+        subtitle: 'Every heartbeat matters â€” we protect it.', 
+        desc: 'The Cardiology Department at AMZ Hospital Ltd. provides comprehensive heart careâ€”from prevention and diagnosis to advanced treatment.', 
         specialists: '12+', 
         beds: '45',
         image : 'https://amzhospitalbd.com/storage/departments/September2025/JOuOIapuAAiJNqpSRhHU.webp',
@@ -151,314 +151,369 @@ const doctors = [
     { color: 'from-pink-400 to-pink-600', name: 'Professor Dr. Jesmine Banu', specialty: 'Gynecologist', degree: 'MBBS, MS (Obs. & GYN), Gynecology, Obstetrics Infertility Specialist & Laparoscopic Surgeon', exp: '20+', photo:'https://amzhospitalbd.com/storage/doctors/July2025/7Fq2bPofzv2z2c2Zz91s.jpg' },
 ]
 
-// ── Gallery ────────────────────────────────────────────────────
-const scheduleDoctors = [
-    { id: 1, name: 'Dr. Ahmedul Kabir', specialty: 'Medicine' },
-    { id: 2, name: 'Dr. Mohammad Sayem', specialty: 'Medicine' },
-    { id: 3, name: 'Professor Dr. Mohammad Nashir Uddin', specialty: 'Plastic, Aesthetic & Laser Surgery' },
-    { id: 4, name: 'Professor Dr. Jesmine Banu', specialty: 'Gynecology' },
+const leadershipMessages = [
+    {
+        name: 'Dr. Ahmedul Kabir',
+        role: 'Chairman',
+        title: 'Chairman Message',
+        photo: 'https://www.tbsnews.net/sites/default/files/styles/big_3/public/images/2021/11/11/ahmedul.jpg?w=800&h=900&fit=crop',
+        message: `Dear Valued Clients, Well-wishers and Neighbours Assalamu Alaikum,
+
+I extend my sincere gratitude for entrusting AMZ Hospital Ltd. with the treatment of your health and well-being. It is a 100-bed specialized hospital with 26 departments and a distinguished set of specialist doctors located at North Badda, Dhaka 1212. Your trust is the cornerstone of our commitment to providing exceptional care for you, your family, and your friends. Our dedicated healthcare team always works tirelessly to ensure your extreme comfort and speedy recovery.
+
+In this challenging world, especially on health care issues, your safety is always our top priority. We always implement the highest standards of hygiene and other related protocols. Our prominent and experienced specialists, medical staffs and administration are always ready for your service and we are honored to be your healthcare partner.
+
+Thank you for choosing AMZ Hospital Ltd. We are here for you in every step of your health care.`,
+    },
+    {
+        name: 'MD. Zulfiquear Ali Babul',
+        role: 'Managing Director',
+        title: 'A Note From Managing Director',
+        photo: 'https://amzhospitalbd.com/storage/Leaders/Md_sir.png?w=800&h=900&fit=crop',
+        message: `This is a great privilege for me and my team to present AMZ Hospital Ltd. at North Badda Dhaka,
+        
+We would like to express our deepest welcome and sincere greetings to our valuable patients for selecting AMZ Hospital Ltd. as their first choice for better treatment.
+
+For your kind appraisal, we would like to say that every member of AMZ Hospital, round-the-clock, is prepared to offer you the optimum patient's comfort, true happiness and financial ease through our well-experienced consultant physician and advanced medical technology. We always try to offer you the best service with social devotion to earn your utmost satisfaction.
+
+The main focus of our consultants, nurses and employees is to secure your life through enhanced quality of service, the best possible treatment management and highly skilled, devoted professionals. We firmly believe that, Insha'Allah, based on your best recommendations, AMZ Hospital will definitely expand its business confidence both domestically and abroad. I deeply acknowledge your resilient confidence in us.
+
+We think that perhaps this is the most important decision you have already made to safeguard your health care with the hospitality of our AMZ Hospital Ltd.`,
+    },
+    {
+        name: 'Dr Lima Rahman',
+        role: 'CEO',
+        title: 'A Message From CEO',
+        photo: 'https://amzhospitalbd.com/storage/Leaders/CEO.png?w=800&h=900&fit=crop',
+        message: `Dear Patients, Families, and Well-Wishers,
+
+It is my honor to welcome you to AMZ Hospital Ltd. and thank you for placing your confidence in our healthcare services. We are committed to delivering safe, compassionate, and quality medical care through a strong team of experienced specialists, nurses, and support professionals.
+
+At AMZ Hospital, we continuously work to improve patient experience by combining modern technology, ethical practices, and personalized attention. Every decision we take is guided by one purpose: to protect your health, dignity, and comfort at every stage of care.
+
+With your trust and prayers, we will continue strengthening our services and expanding our excellence for the people of Bangladesh and beyond. Thank you for being part of the AMZ Hospital family.`,
+    },
 ]
 
-const doctorTimeSchedules = [
-    { doctor_id: 1, day: 'sat', start_time: '09:00', end_time: '12:00' },
-    { doctor_id: 1, day: 'mon', start_time: '17:00', end_time: '20:00' },
-    { doctor_id: 1, day: 'wed', start_time: '09:00', end_time: '12:00' },
-    { doctor_id: 2, day: 'sun', start_time: '10:00', end_time: '13:00' },
-    { doctor_id: 2, day: 'tue', start_time: '16:00', end_time: '19:00' },
-    { doctor_id: 2, day: 'thu', start_time: '10:00', end_time: '13:00' },
-    { doctor_id: 3, day: 'sat', start_time: '14:00', end_time: '18:00' },
-    { doctor_id: 3, day: 'mon', start_time: '14:00', end_time: '18:00' },
-    { doctor_id: 3, day: 'thu', start_time: '14:00', end_time: '18:00' },
-    { doctor_id: 4, day: 'sun', start_time: '09:30', end_time: '12:30' },
-    { doctor_id: 4, day: 'tue', start_time: '09:30', end_time: '12:30' },
-    { doctor_id: 4, day: 'fri', start_time: '10:00', end_time: '12:00' },
-]
-
-const scheduleDays = ['sat', 'sun', 'mon', 'tue', 'wed', 'thu', 'fri'] as const
-const dayLabel: Record<(typeof scheduleDays)[number], string> = {
-    sat: 'Saturday',
-    sun: 'Sunday',
-    mon: 'Monday',
-    tue: 'Tuesday',
-    wed: 'Wednesday',
-    thu: 'Thursday',
-    fri: 'Friday',
+const leadershipExpanded = ref<Record<number, boolean>>({})
+const toggleLeadershipMessage = (index: number) => {
+    leadershipExpanded.value[index] = !leadershipExpanded.value[index]
+}
+const leadershipPreview = (message: string) => {
+    const firstParagraph = message.split('\n\n')[0]?.trim() ?? ''
+    return firstParagraph.length > 360 ? `${firstParagraph.slice(0, 360)}...` : firstParagraph
 }
 
-const to12Hour = (time: string) => {
-    const [h, m] = time.split(':').map(Number)
-    const hour = h % 12 || 12
-    const meridiem = h >= 12 ? 'PM' : 'AM'
-    return `${hour}:${String(m).padStart(2, '0')} ${meridiem}`
-}
 
-const groupedDoctorSchedules = computed(() =>
-    scheduleDoctors.map((doctor) => ({
-        ...doctor,
-        days: scheduleDays.map((day) => {
-            const slots = doctorTimeSchedules
-                .filter((entry) => entry.doctor_id === doctor.id && entry.day === day)
-                .map((entry) => `${to12Hour(entry.start_time)} - ${to12Hour(entry.end_time)}`)
-            return { day, label: dayLabel[day], slots }
-        }),
-    })),
-)
 
-const activeFilter = ref('all')
-const galleryItems = [
-    { 
-        category: 'infrastructure', 
-        img: 'https://amzhospitalbd.com/storage/AMZ.jpg?w=800&h=600&fit=crop', 
-        badge: 'Infrastructure', 
-        badgeColor: 'bg-blue-800', 
-        title: 'AMZ Hospital Building', 
-        desc: 'ISO-certified 100-bed multi-story facility in Uttar Badda.' 
-    },
-    { 
-        category: 'facilities', 
-        img: 'https://amzhospitalbd.com/storage/galleries/May2024/uAobdzOLYOrhAGXeCQe1.jpg?w=800&h=600&fit=crop', 
-        badge: 'Facilities', 
-        badgeColor: 'bg-red-500', 
-        title: '24/7 Emergency Care', 
-        desc: 'Round-the-clock emergency and trauma services with ambulance support.' 
-    },
-    { 
-        category: 'equipment', 
-        img: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&h=600&fit=crop', 
-        badge: 'Equipment', 
-        badgeColor: 'bg-emerald-500', 
-        title: 'Advanced Cath-Lab', 
-        desc: 'Modern cardiac intervention unit for Angiogram and Angioplasty.' 
-    },
-    { 
-        category: 'facilities', 
-        img: 'https://images.unsplash.com/photo-1512678080530-7760d81faba6?w=800&h=600&fit=crop', 
-        badge: 'Facilities', 
-        badgeColor: 'bg-purple-600', 
-        title: 'Critical Care Units', 
-        desc: 'Well-equipped ICU, NICU, CCU, and HDU for specialized monitoring.' 
-    },
-    { 
-        category: 'departments', 
-        img: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&h=600&fit=crop', 
-        badge: 'Departments', 
-        badgeColor: 'bg-cyan-600', 
-        title: 'Fertility & Research Center', 
-        desc: 'Premier Center of Excellence for IVF and infertility treatments.' 
-    },
-    { 
-        category: 'equipment', 
-        img: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?w=800&h=600&fit=crop', 
-        badge: 'Equipment', 
-        badgeColor: 'bg-orange-600', 
-        title: 'Diagnostic & Radio Imaging', 
-        desc: 'Category-A lab with MRI, CT Scan, and digital X-ray capabilities.' 
-    },
-]
+    // â”€â”€ Gallery â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    const scheduleDoctors = [
+        { id: 1, name: 'Dr. Ahmedul Kabir', specialty: 'Medicine' },
+        { id: 2, name: 'Dr. Mohammad Sayem', specialty: 'Medicine' },
+        { id: 3, name: 'Professor Dr. Mohammad Nashir Uddin', specialty: 'Plastic, Aesthetic & Laser Surgery' },
+        { id: 4, name: 'Professor Dr. Jesmine Banu', specialty: 'Gynecology' },
+    ]
 
-const filters = ['all', 'infrastructure', 'facilities', 'equipment', 'departments']
-const filteredGallery = () => activeFilter.value === 'all' ? galleryItems : galleryItems.filter(i => i.category === activeFilter.value)
+    const doctorTimeSchedules = [
+        { doctor_id: 1, day: 'sat', start_time: '09:00', end_time: '12:00' },
+        { doctor_id: 1, day: 'mon', start_time: '17:00', end_time: '20:00' },
+        { doctor_id: 1, day: 'wed', start_time: '09:00', end_time: '12:00' },
+        { doctor_id: 2, day: 'sun', start_time: '10:00', end_time: '13:00' },
+        { doctor_id: 2, day: 'tue', start_time: '16:00', end_time: '19:00' },
+        { doctor_id: 2, day: 'thu', start_time: '10:00', end_time: '13:00' },
+        { doctor_id: 3, day: 'sat', start_time: '14:00', end_time: '18:00' },
+        { doctor_id: 3, day: 'mon', start_time: '14:00', end_time: '18:00' },
+        { doctor_id: 3, day: 'thu', start_time: '14:00', end_time: '18:00' },
+        { doctor_id: 4, day: 'sun', start_time: '09:30', end_time: '12:30' },
+        { doctor_id: 4, day: 'tue', start_time: '09:30', end_time: '12:30' },
+        { doctor_id: 4, day: 'fri', start_time: '10:00', end_time: '12:00' },
+    ]
 
-// ── Services ───────────────────────────────────────────────────
-const servicesList = [
-    { bg: 'from-blue-50', icon: 'fa-ambulance', title: '24/7 Emergency Services', desc: 'Round-the-clock emergency medical care with rapid response team', items: ['Critical Care Unit', 'Intensive Care Unit', 'High Dependancy Unit'] },
-    { bg: 'from-green-50', icon: 'fa-x-ray', title: 'Diagnostic Services', desc: 'Advanced diagnostic facilities with latest technology', items: ['CT Scan & MRI', 'Ultrasound', 'Laboratory Tests', 'Cath Lab'] },
-    { bg: 'from-purple-50', icon: 'fa-procedures', title: 'Surgical Services', desc: 'Expert surgical care with modern operation theaters', items: ['General Surgery', 'Laparoscopic Surgery', 'Specialized Surgery', 'Laser Surgery'] },
-    { bg: 'from-red-50', icon: 'fa-utensils', title: 'Canteen Service', desc: 'Hygienic in-house canteen with fresh meals for patients, attendants, and visitors.', items: ['Patient Diet Meals', 'Attendant Meal Options', 'Tea & Refreshments'] },
-    { bg: 'from-yellow-50', icon: 'fa-baby', title: 'Maternity Services', desc: 'Complete care for mothers and newborns', items: ['Prenatal Care', 'Delivery Services', 'NICU'] },
-    { bg: 'from-pink-50', icon: 'fa-pills', title: 'Pharmacy Services', desc: '24/7 pharmacy with all essential medicines', items: ['Prescription Medicines', 'OTC Medications', 'Home Delivery'] },
-]
-
-// ── Health Packages ────────────────────────────────────────────
-const packages = [
-    { bg: 'bg-blue-100', color: 'text-blue-800', icon: 'fa-user-check', title: 'Basic Checkup', desc: 'General physician consultation, CBC, blood sugar, urine R/E, and ECG.', price: 'BDT 2,500' },
-    { bg: 'bg-pink-100', color: 'text-pink-700', icon: 'fa-heartbeat', title: 'Women Wellness', desc: 'Gyne consultation, thyroid profile, vitamin D, breast exam, and pelvic USG.', price: 'BDT 4,800' },
-    { bg: 'bg-emerald-100', color: 'text-emerald-700', icon: 'fa-user-shield', title: 'Senior Care', desc: 'Cardiac risk panel, chest X-ray, kidney profile, diabetic panel, and specialist review.', price: 'BDT 6,200' },
-    { bg: 'bg-amber-100', color: 'text-amber-700', icon: 'fa-users', title: 'Family Package', desc: 'Combined health screening for 2 adults including consultation and core labs.', price: 'BDT 8,900' },
-]
-
-// ── Centre of Excellence ───────────────────────────────────────
-const centers = [
-    { id: 'coe-fertility-research-center', bg: 'bg-blue-100', color: 'text-blue-800', icon: 'fa-flask', title: 'Fertility & Research Center', desc: 'Personalized fertility assessment, treatment planning, and research-driven care pathways.' },
-    { id: 'coe-hypospadias-center', bg: 'bg-emerald-100', color: 'text-emerald-700', icon: 'fa-user-shield', title: 'Hypospadias center', desc: 'Child-focused surgical correction with coordinated follow-up and family support.' },
-    { id: 'coe-laser-proctology-surgery-center', bg: 'bg-rose-100', color: 'text-rose-700', icon: 'fa-bolt', title: 'Laser & Proctology Surgery Center', desc: 'Modern laser-based proctology procedures with reduced pain and faster recovery.' },
-    { id: 'coe-plastic-aesthetic-laser-surgery-center', bg: 'bg-violet-100', color: 'text-violet-700', icon: 'fa-magic', title: 'Plastic, Aesthetic & Laser Surgery Center', desc: 'Reconstructive, cosmetic, and laser procedures tailored to patient goals.' },
-    { id: 'coe-primary-care-center', bg: 'bg-cyan-100', color: 'text-cyan-700', icon: 'fa-stethoscope', title: 'Primary Care Center', desc: 'Preventive, chronic, and family medicine services in one coordinated center.' },
-    { id: 'coe-stroke-neuro-rehabilitation-center', bg: 'bg-orange-100', color: 'text-orange-700', icon: 'fa-brain', title: 'Stroke & Neuro Rehabilitation Center', desc: 'Neuro recovery with physiotherapy, speech therapy, and multidisciplinary monitoring.' },
-    { id: 'coe-cancer-care-center', bg: 'bg-pink-100', color: 'text-pink-700', icon: 'fa-ribbon', title: 'Cancer Care Center', desc: 'Integrated oncology support from diagnosis to treatment and survivorship care.' },
-    { id: 'coe-hepatobiliary-pancreatic-surgery-center', bg: 'bg-lime-100', color: 'text-lime-700', icon: 'fa-procedures', title: 'Hepatobiliary & Pancreatic Surgery Center', desc: 'Advanced surgical management for complex liver, biliary, and pancreatic diseases.' },
-]
-
-// ── Testimonials ───────────────────────────────────────────────
-const blogPosts = [
-    {
-        id: 'heart-care',
-        category: 'Cardiology',
-        title: '7 Daily Habits That Keep Your Heart Healthy',
-        excerpt: 'Simple lifestyle changes that reduce cardiac risk and improve long-term heart health outcomes.',
-        date: 'March 05, 2026',
-        readTime: '5 min read',
-        author: 'Dr. Farhan Rahman',
-        img: 'https://images.unsplash.com/photo-1460672985063-6764ac8b9c74?w=1200&h=700&fit=crop',
-        href: '#',
-    },
-    {
-        id: 'womens-wellness',
-        category: 'Women Wellness',
-        title: 'When To Visit a Gynecologist: Key Warning Signs',
-        excerpt: 'Know the common symptoms that should not be ignored and when specialist care is recommended.',
-        date: 'March 02, 2026',
-        readTime: '6 min read',
-        author: 'Dr. Ruba Ahmed',
-        img: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=1200&h=700&fit=crop',
-        href: '#',
-    },
-    {
-        id: 'child-care',
-        category: 'Pediatrics',
-        title: 'How to Build Strong Immunity in Children',
-        excerpt: 'Practical nutrition, sleep, and vaccination guidance to support healthy childhood development.',
-        date: 'February 28, 2026',
-        readTime: '4 min read',
-        author: 'Dr. Ayaan Hasan',
-        img: 'https://images.unsplash.com/photo-1576765608866-5b51046452be?w=1200&h=700&fit=crop',
-        href: '#',
-    },
-]
-
-const testimonials = [
-    { initials: 'AH', bg: 'from-blue-800 to-sky-500', cardBg: 'from-blue-50', name: 'Abdul Hamid', short: 'Excellent hospital with caring staff and very professional doctors.', full: ' The facilities are modern, and the care quality was consistently high from admission to discharge. Highly recommended for trusted healthcare.' },
-    { initials: 'RB', bg: 'from-emerald-500 to-emerald-600', cardBg: 'from-green-50', name: 'Rahima Begum', short: 'I received excellent care during my stay and felt supported.', full: ' The nursing team was attentive, and doctors explained each step clearly so my family and I stayed confident throughout treatment.' },
-    { initials: 'MK', bg: 'from-purple-500 to-purple-600', cardBg: 'from-purple-50', name: 'Mahmud Khan', short: 'Top-notch medical facility with advanced equipment and fast service.', full: ' The emergency department handled my case quickly, and follow-up care was just as good. I am grateful for their professionalism.' },
-    { initials: 'SN', bg: 'from-cyan-500 to-cyan-600', cardBg: 'from-cyan-50', name: 'Shila Nasrin', short: 'Clean environment and excellent diagnostics at AMZ Hospital.', full: ' My reports were delivered quickly, and consultation was clear and reassuring. The whole process felt organized and patient-friendly.' },
-    { initials: 'TU', bg: 'from-amber-500 to-amber-600', cardBg: 'from-amber-50', name: 'Tanvir Uddin', short: 'Appointment process was smooth, and waiting time was reasonable.', full: ' Staff guided me politely, and the doctor gave practical advice with clear medicine instructions. Overall, a dependable experience.' },
-    { initials: 'FP', bg: 'from-rose-500 to-rose-600', cardBg: 'from-rose-50', name: 'Farzana Parvin', short: 'Excellent maternal care and supportive nursing staff throughout.', full: ' The doctors checked in regularly, answered questions patiently, and ensured comfort before and after procedures.' },
-]
-const doubledTestimonials = [...testimonials, ...testimonials]
-
-const expandedTestimonials = ref({})
-const toggleTestimonial = (i) => { expandedTestimonials.value[i] = !expandedTestimonials.value[i] }
-
-// ── Stats Counter ──────────────────────────────────────────────
-const stats = [
-    { target: 300000, label: 'Patients Treated' },
-    { target: 79, label: 'Expert Doctors' },
-    { target: 7, label: 'Years Experience' },
-    { target: 100, label: 'Hospital Beds' },
-]
-const statValues = ref(stats.map(() => 0))
-let counterAnimated = false
-
-// ── Partners ────────────────────────────────────────────────────
-const partners = [
-  { name: 'AB Bank', logo: 'https://amzhospitalbd.com/storage/corporate-partners/March2024/9Y2oTmRomsnbfdh3cG50.png' },
-  { name: 'Ekushe TV', logo: 'https://amzhospitalbd.com/storage/corporate-partners/March2024/SLboYCDAU6ngOHkQ0TxA.png' },
-  { name: 'ICON', logo: 'https://amzhospitalbd.com/storage/corporate-partners/March2024/stFeEleAssgKAwC97aeC.png' },
-  { name: 'Brac', logo: 'https://amzhospitalbd.com/storage/corporate-partners/March2024/TtikDkxa6iYuaaMoRyBg.png' },
-  { name: 'Huwaei', logo: 'https://amzhospitalbd.com/storage/corporate-partners/March2024/9XfI0DamcAjt2JgjgV3T.png' },
-  // ... add the rest
-]
-const MIN_PARTNERS_ON_SCREEN = 9
-const partnersForMarquee = computed(() => {
-    if (!partners.length) return []
-    if (partners.length >= MIN_PARTNERS_ON_SCREEN) return partners.slice(0, MIN_PARTNERS_ON_SCREEN)
-
-    const filledPartners = [...partners]
-    while (filledPartners.length < MIN_PARTNERS_ON_SCREEN) {
-        const missing = MIN_PARTNERS_ON_SCREEN - filledPartners.length
-        const repeatChunk = partners.slice(Math.max(0, partners.length - missing))
-        filledPartners.push(...repeatChunk)
+    const scheduleDays = ['sat', 'sun', 'mon', 'tue', 'wed', 'thu', 'fri'] as const
+    const dayLabel: Record<(typeof scheduleDays)[number], string> = {
+        sat: 'Saturday',
+        sun: 'Sunday',
+        mon: 'Monday',
+        tue: 'Tuesday',
+        wed: 'Wednesday',
+        thu: 'Thursday',
+        fri: 'Friday',
     }
-    return filledPartners.slice(0, MIN_PARTNERS_ON_SCREEN)
-})
 
-// ── Appointment Form ────────────────────────────────────────────
-const appointmentAvailableWeekdays = [0, 1, 2, 3, 4, 6]
-const appointmentBlockedDates = []
+    const to12Hour = (time: string) => {
+        const [h, m] = time.split(':').map(Number)
+        const hour = h % 12 || 12
+        const meridiem = h >= 12 ? 'PM' : 'AM'
+        return `${hour}:${String(m).padStart(2, '0')} ${meridiem}`
+    }
 
-// ── Newsletter ─────────────────────────────────────────────────
-const newsletterEmail = ref('')
-const newsletterSuccess = ref(false)
-const submitNewsletter = () => {
-    if (!newsletterEmail.value) return
-    newsletterSuccess.value = true
-    newsletterEmail.value = ''
-}
+    const groupedDoctorSchedules = computed(() =>
+        scheduleDoctors.map((doctor) => ({
+            ...doctor,
+            days: scheduleDays.map((day) => {
+                const slots = doctorTimeSchedules
+                    .filter((entry) => entry.doctor_id === doctor.id && entry.day === day)
+                    .map((entry) => `${to12Hour(entry.start_time)} - ${to12Hour(entry.end_time)}`)
+                return { day, label: dayLabel[day], slots }
+            }),
+        })),
+    )
 
-// ── Lifecycle ──────────────────────────────────────────────────
-onMounted(() => {
-    startAuto()
+    const activeFilter = ref('all')
+    const galleryItems = [
+        { 
+            category: 'infrastructure', 
+            img: 'https://amzhospitalbd.com/storage/AMZ.jpg?w=800&h=600&fit=crop', 
+            badge: 'Infrastructure', 
+            badgeColor: 'bg-blue-800', 
+            title: 'AMZ Hospital Building', 
+            desc: 'ISO-certified 100-bed multi-story facility in Uttar Badda.' 
+        },
+        { 
+            category: 'facilities', 
+            img: 'https://amzhospitalbd.com/storage/galleries/May2024/uAobdzOLYOrhAGXeCQe1.jpg?w=800&h=600&fit=crop', 
+            badge: 'Facilities', 
+            badgeColor: 'bg-red-500', 
+            title: '24/7 Emergency Care', 
+            desc: 'Round-the-clock emergency and trauma services with ambulance support.' 
+        },
+        { 
+            category: 'equipment', 
+            img: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&h=600&fit=crop', 
+            badge: 'Equipment', 
+            badgeColor: 'bg-emerald-500', 
+            title: 'Advanced Cath-Lab', 
+            desc: 'Modern cardiac intervention unit for Angiogram and Angioplasty.' 
+        },
+        { 
+            category: 'facilities', 
+            img: 'https://images.unsplash.com/photo-1512678080530-7760d81faba6?w=800&h=600&fit=crop', 
+            badge: 'Facilities', 
+            badgeColor: 'bg-purple-600', 
+            title: 'Critical Care Units', 
+            desc: 'Well-equipped ICU, NICU, CCU, and HDU for specialized monitoring.' 
+        },
+        { 
+            category: 'departments', 
+            img: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&h=600&fit=crop', 
+            badge: 'Departments', 
+            badgeColor: 'bg-cyan-600', 
+            title: 'Fertility & Research Center', 
+            desc: 'Premier Center of Excellence for IVF and infertility treatments.' 
+        },
+        { 
+            category: 'equipment', 
+            img: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?w=800&h=600&fit=crop', 
+            badge: 'Equipment', 
+            badgeColor: 'bg-orange-600', 
+            title: 'Diagnostic & Radio Imaging', 
+            desc: 'Category-A lab with MRI, CT Scan, and digital X-ray capabilities.' 
+        },
+    ]
 
-    // Scroll animations (IntersectionObserver)
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReducedMotion) {
-        document.querySelectorAll('.scroll-reveal').forEach((el) => el.classList.add('animate-in'))
-    } else {
-        sectionObserver = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-in')
-                    sectionObserver?.unobserve(entry.target)
+    const filters = ['all', 'infrastructure', 'facilities', 'equipment', 'departments']
+    const filteredGallery = () => activeFilter.value === 'all' ? galleryItems : galleryItems.filter(i => i.category === activeFilter.value)
+
+    // â”€â”€ Services â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    const servicesList = [
+        { bg: 'from-blue-50', icon: 'fa-ambulance', title: '24/7 Emergency Services', desc: 'Round-the-clock emergency medical care with rapid response team', items: ['Critical Care Unit', 'Intensive Care Unit', 'High Dependancy Unit', 'Dialysis'] },
+        { bg: 'from-green-50', icon: 'fa-x-ray', title: 'Diagnostic Services', desc: 'Advanced diagnostic facilities with latest technology', items: ['CT Scan & MRI', 'Ultrasound', 'Laboratory Tests', 'Cath Lab'] },
+        { bg: 'from-purple-50', icon: 'fa-procedures', title: 'Surgical Services', desc: 'Expert surgical care with modern operation theaters', items: ['General Surgery', 'Laparoscopic Surgery', 'Specialized Surgery', 'Laser Surgery'] },
+        { bg: 'from-red-50', icon: 'fa-utensils', title: 'Canteen Service', desc: 'Hygienic in-house canteen with fresh meals for patients, attendants, and visitors.', items: ['Patient Diet Meals', 'Attendant Meal Options', 'Tea & Refreshments'] },
+        { bg: 'from-yellow-50', icon: 'fa-baby', title: 'Maternity Services', desc: 'Complete care for mothers and newborns', items: ['Prenatal Care', 'Delivery Services', 'NICU'] },
+        { bg: 'from-pink-50', icon: 'fa-pills', title: 'Pharmacy Services', desc: '24/7 pharmacy with all essential medicines', items: [] },
+    ]
+
+    // â”€â”€ Health Packages â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    const packages = [
+        { bg: 'bg-blue-100', color: 'text-blue-800', icon: 'fa-user-check', title: 'Basic Checkup', desc: 'General physician consultation, CBC, blood sugar, urine R/E, and ECG.', price: 'BDT 2,500' },
+        { bg: 'bg-pink-100', color: 'text-pink-700', icon: 'fa-heartbeat', title: 'Women Wellness', desc: 'Gyne consultation, thyroid profile, vitamin D, breast exam, and pelvic USG.', price: 'BDT 4,800' },
+        { bg: 'bg-emerald-100', color: 'text-emerald-700', icon: 'fa-user-shield', title: 'Senior Care', desc: 'Cardiac risk panel, chest X-ray, kidney profile, diabetic panel, and specialist review.', price: 'BDT 6,200' },
+        { bg: 'bg-amber-100', color: 'text-amber-700', icon: 'fa-users', title: 'Family Package', desc: 'Combined health screening for 2 adults including consultation and core labs.', price: 'BDT 8,900' },
+    ]
+
+    // â”€â”€ Centre of Excellence â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    const centers = [
+        { id: 'coe-fertility-research-center', bg: 'bg-blue-100', color: 'text-blue-800', icon: 'fa-flask', title: 'Fertility & Research Center', desc: 'Personalized fertility assessment, treatment planning, and research-driven care pathways.' },
+        { id: 'coe-hypospadias-center', bg: 'bg-emerald-100', color: 'text-emerald-700', icon: 'fa-user-shield', title: 'Hypospadias center', desc: 'Child-focused surgical correction with coordinated follow-up and family support.' },
+        { id: 'coe-laser-proctology-surgery-center', bg: 'bg-rose-100', color: 'text-rose-700', icon: 'fa-bolt', title: 'Laser & Proctology Surgery Center', desc: 'Modern laser-based proctology procedures with reduced pain and faster recovery.' },
+        { id: 'coe-plastic-aesthetic-laser-surgery-center', bg: 'bg-violet-100', color: 'text-violet-700', icon: 'fa-magic', title: 'Plastic, Aesthetic & Laser Surgery Center', desc: 'Reconstructive, cosmetic, and laser procedures tailored to patient goals.' },
+        { id: 'coe-primary-care-center', bg: 'bg-cyan-100', color: 'text-cyan-700', icon: 'fa-stethoscope', title: 'Primary Care Center', desc: 'Preventive, chronic, and family medicine services in one coordinated center.' },
+        { id: 'coe-stroke-neuro-rehabilitation-center', bg: 'bg-orange-100', color: 'text-orange-700', icon: 'fa-brain', title: 'Stroke & Neuro Rehabilitation Center', desc: 'Neuro recovery with physiotherapy, speech therapy, and multidisciplinary monitoring.' },
+        { id: 'coe-cancer-care-center', bg: 'bg-pink-100', color: 'text-pink-700', icon: 'fa-ribbon', title: 'Cancer Care Center', desc: 'Integrated oncology support from diagnosis to treatment and survivorship care.' },
+        { id: 'coe-hepatobiliary-pancreatic-surgery-center', bg: 'bg-lime-100', color: 'text-lime-700', icon: 'fa-procedures', title: 'Hepatobiliary & Pancreatic Surgery Center', desc: 'Advanced surgical management for complex liver, biliary, and pancreatic diseases.' },
+    ]
+
+    // â”€â”€ Testimonials â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    const blogPosts = [
+        {
+            id: 'heart-care',
+            category: 'Cardiology',
+            title: '7 Daily Habits That Keep Your Heart Healthy',
+            excerpt: 'Simple lifestyle changes that reduce cardiac risk and improve long-term heart health outcomes.',
+            date: 'March 05, 2026',
+            readTime: '5 min read',
+            author: 'Dr. Farhan Rahman',
+            img: 'https://images.unsplash.com/photo-1460672985063-6764ac8b9c74?w=1200&h=700&fit=crop',
+            href: '#',
+        },
+        {
+            id: 'womens-wellness',
+            category: 'Women Wellness',
+            title: 'When To Visit a Gynecologist: Key Warning Signs',
+            excerpt: 'Know the common symptoms that should not be ignored and when specialist care is recommended.',
+            date: 'March 02, 2026',
+            readTime: '6 min read',
+            author: 'Dr. Ruba Ahmed',
+            img: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=1200&h=700&fit=crop',
+            href: '#',
+        },
+        {
+            id: 'child-care',
+            category: 'Pediatrics',
+            title: 'How to Build Strong Immunity in Children',
+            excerpt: 'Practical nutrition, sleep, and vaccination guidance to support healthy childhood development.',
+            date: 'February 28, 2026',
+            readTime: '4 min read',
+            author: 'Dr. Ayaan Hasan',
+            img: 'https://images.unsplash.com/photo-1576765608866-5b51046452be?w=1200&h=700&fit=crop',
+            href: '#',
+        },
+    ]
+
+    const testimonials = [
+        { initials: 'AH', bg: 'from-blue-800 to-sky-500', cardBg: 'from-blue-50', name: 'Abdul Hamid', short: 'Excellent hospital with caring staff and very professional doctors.', full: ' The facilities are modern, and the care quality was consistently high from admission to discharge. Highly recommended for trusted healthcare.' },
+        { initials: 'RB', bg: 'from-emerald-500 to-emerald-600', cardBg: 'from-green-50', name: 'Rahima Begum', short: 'I received excellent care during my stay and felt supported.', full: ' The nursing team was attentive, and doctors explained each step clearly so my family and I stayed confident throughout treatment.' },
+        { initials: 'MK', bg: 'from-purple-500 to-purple-600', cardBg: 'from-purple-50', name: 'Mahmud Khan', short: 'Top-notch medical facility with advanced equipment and fast service.', full: ' The emergency department handled my case quickly, and follow-up care was just as good. I am grateful for their professionalism.' },
+        { initials: 'SN', bg: 'from-cyan-500 to-cyan-600', cardBg: 'from-cyan-50', name: 'Shila Nasrin', short: 'Clean environment and excellent diagnostics at AMZ Hospital.', full: ' My reports were delivered quickly, and consultation was clear and reassuring. The whole process felt organized and patient-friendly.' },
+        { initials: 'TU', bg: 'from-amber-500 to-amber-600', cardBg: 'from-amber-50', name: 'Tanvir Uddin', short: 'Appointment process was smooth, and waiting time was reasonable.', full: ' Staff guided me politely, and the doctor gave practical advice with clear medicine instructions. Overall, a dependable experience.' },
+        { initials: 'FP', bg: 'from-rose-500 to-rose-600', cardBg: 'from-rose-50', name: 'Farzana Parvin', short: 'Excellent maternal care and supportive nursing staff throughout.', full: ' The doctors checked in regularly, answered questions patiently, and ensured comfort before and after procedures.' },
+    ]
+    const doubledTestimonials = [...testimonials, ...testimonials]
+
+    const expandedTestimonials = ref({})
+    const toggleTestimonial = (i) => { expandedTestimonials.value[i] = !expandedTestimonials.value[i] }
+
+    // â”€â”€ Stats Counter â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    const stats = [
+        { target: 300000, label: 'Patients Treated' },
+        { target: 79, label: 'Expert Doctors' },
+        { target: 7, label: 'Years Experience' },
+        { target: 100, label: 'Hospital Beds' },
+    ]
+    const statValues = ref(stats.map(() => 0))
+    let counterAnimated = false
+
+    // â”€â”€ Partners â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    const partners = [
+    { name: 'AB Bank', logo: 'https://amzhospitalbd.com/storage/corporate-partners/March2024/9Y2oTmRomsnbfdh3cG50.png' },
+    { name: 'Ekushe TV', logo: 'https://amzhospitalbd.com/storage/corporate-partners/March2024/SLboYCDAU6ngOHkQ0TxA.png' },
+    { name: 'ICON', logo: 'https://amzhospitalbd.com/storage/corporate-partners/March2024/stFeEleAssgKAwC97aeC.png' },
+    { name: 'Brac', logo: 'https://amzhospitalbd.com/storage/corporate-partners/March2024/TtikDkxa6iYuaaMoRyBg.png' },
+    { name: 'Huwaei', logo: 'https://amzhospitalbd.com/storage/corporate-partners/March2024/9XfI0DamcAjt2JgjgV3T.png' },
+    // ... add the rest
+    ]
+    const MIN_PARTNERS_ON_SCREEN = 9
+    const partnersForMarquee = computed(() => {
+        if (!partners.length) return []
+        if (partners.length >= MIN_PARTNERS_ON_SCREEN) return partners.slice(0, MIN_PARTNERS_ON_SCREEN)
+
+        const filledPartners = [...partners]
+        while (filledPartners.length < MIN_PARTNERS_ON_SCREEN) {
+            const missing = MIN_PARTNERS_ON_SCREEN - filledPartners.length
+            const repeatChunk = partners.slice(Math.max(0, partners.length - missing))
+            filledPartners.push(...repeatChunk)
+        }
+        return filledPartners.slice(0, MIN_PARTNERS_ON_SCREEN)
+    })
+
+    // â”€â”€ Appointment Form â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    const appointmentAvailableWeekdays = [0, 1, 2, 3, 4, 6]
+    const appointmentBlockedDates = []
+
+    // â”€â”€ Newsletter â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    const newsletterEmail = ref('')
+    const newsletterSuccess = ref(false)
+    const submitNewsletter = () => {
+        if (!newsletterEmail.value) return
+        newsletterSuccess.value = true
+        newsletterEmail.value = ''
+    }
+
+    // â”€â”€ Lifecycle â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    onMounted(() => {
+        startAuto()
+
+        // Scroll animations (IntersectionObserver)
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        if (prefersReducedMotion) {
+            document.querySelectorAll('.scroll-reveal').forEach((el) => el.classList.add('animate-in'))
+        } else {
+            sectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-in')
+                        sectionObserver?.unobserve(entry.target)
+                    }
+                })
+            }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' })
+
+            document.querySelectorAll('.scroll-reveal').forEach((el) => sectionObserver?.observe(el))
+        }
+
+        // Counter animation
+        counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !counterAnimated) {
+                    counterAnimated = true
+                    stats.forEach((stat, i) => {
+                        let current = 0
+                        const increment = stat.target / 120
+                        const tick = () => {
+                            current += increment
+                            if (current < stat.target) {
+                                statValues.value[i] = Math.ceil(current)
+                                requestAnimationFrame(tick)
+                            } else {
+                                statValues.value[i] = stat.target
+                            }
+                        }
+                        tick()
+                    })
                 }
             })
-        }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' })
+        }, { threshold: 0.5 })
 
-        document.querySelectorAll('.scroll-reveal').forEach((el) => sectionObserver?.observe(el))
-    }
+        const statsEl = document.getElementById('stats-section')
+        if (statsEl) counterObserver.observe(statsEl)
 
-    // Counter animation
-    counterObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting && !counterAnimated) {
-                counterAnimated = true
-                stats.forEach((stat, i) => {
-                    let current = 0
-                    const increment = stat.target / 120
-                    const tick = () => {
-                        current += increment
-                        if (current < stat.target) {
-                            statValues.value[i] = Math.ceil(current)
-                            requestAnimationFrame(tick)
-                        } else {
-                            statValues.value[i] = stat.target
-                        }
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            const handler: EventListener = (e) => {
+                const href = anchor.getAttribute('href')
+                if (href && href !== '#' && href.length > 1) {
+                    const target = document.querySelector(href)
+                    if (target) {
+                        e.preventDefault()
+                        window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' })
                     }
-                    tick()
-                })
-            }
-        })
-    }, { threshold: 0.5 })
-
-    const statsEl = document.getElementById('stats-section')
-    if (statsEl) counterObserver.observe(statsEl)
-
-    // Smooth scroll
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        const handler: EventListener = (e) => {
-            const href = anchor.getAttribute('href')
-            if (href && href !== '#' && href.length > 1) {
-                const target = document.querySelector(href)
-                if (target) {
-                    e.preventDefault()
-                    window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' })
                 }
             }
-        }
-        anchor.addEventListener('click', handler)
-        smoothScrollHandlers.push({ anchor, handler })
+            anchor.addEventListener('click', handler)
+            smoothScrollHandlers.push({ anchor, handler })
+        })
     })
-})
 
-onUnmounted(() => {
-    stopAuto()
-    sectionObserver?.disconnect()
-    counterObserver?.disconnect()
-    smoothScrollHandlers.forEach(({ anchor, handler }) => anchor.removeEventListener('click', handler))
-})
+    onUnmounted(() => {
+        stopAuto()
+        sectionObserver?.disconnect()
+        counterObserver?.disconnect()
+        smoothScrollHandlers.forEach(({ anchor, handler }) => anchor.removeEventListener('click', handler))
+    })
 </script>
 
 <template>
-    <!-- ── HERO SLIDER ───────────────────────────────────── -->
+    <!-- â”€â”€ HERO SLIDER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
     <section id="home" role="region" aria-label="Hero section" class="relative scroll-reveal reveal-home fade-in-0 zoom-in-95 duration-700">
         <div class="relative h-[500px] md:h-[600px] lg:h-[700px] overflow-hidden">
             <div v-for="(slide, i) in slides" :key="i"
@@ -506,7 +561,7 @@ onUnmounted(() => {
         </div>
     </section>
 
-    <!-- ── QUICK INFO CARDS ──────────────────────────────── -->
+    <!-- â”€â”€ QUICK INFO CARDS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
     <section class="py-0 relative -mt-16 z-40 scroll-reveal reveal-quick fade-in-0 slide-in-from-bottom-8 duration-700">
         <div class="container mx-auto px-4">
             <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-6 stagger-grid">
@@ -527,13 +582,22 @@ onUnmounted(() => {
         </div>
     </section>
 
-    <!-- ── ABOUT ─────────────────────────────────────────── -->
+    <!-- â”€â”€ ABOUT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
     <section id="about" role="region" aria-label="About us" class="py-20 bg-white scroll-reveal reveal-about fade-in-0 slide-in-from-left-12 duration-700">
         <div class="container mx-auto px-4">
             <div class="grid lg:grid-cols-2 gap-12 items-center">
                 <div class="relative">
-                    <img src="https://amzhospitalbd.com/storage/AMZ.jpg?w=800&h=600&fit=crop"
-                        alt="AMZ Hospital Building" class="rounded-2xl shadow-2xl w-full" loading="lazy" />
+                    <div class="relative w-full overflow-hidden rounded-2xl shadow-2xl bg-slate-900" style="padding-top: 56.25%;">
+                    <iframe
+                        class="absolute inset-0 h-full w-full"
+                        src="https://www.youtube.com/embed/CBQMG4-YHrs?si=jbzFDpgKXlvQUQdR&start=101&autoplay=1&mute=1&playsinline=1&vq=hd1080"
+                        title="YouTube video player"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen>
+                    </iframe>
+                    </div>
                     <div class="absolute -bottom-6 -right-6 bg-blue-800 text-white p-8 rounded-2xl shadow-xl">
                         <div class="text-5xl font-bold">7+</div>
                         <div class="text-sm">Years of Excellence</div>
@@ -543,7 +607,7 @@ onUnmounted(() => {
                     <div class="inline-block bg-blue-50 text-blue-800 px-4 py-2 rounded-full text-sm font-semibold mb-4">
                         <i class="fas fa-hospital mr-2"></i>About AMZ Hospital
                     </div>
-                    <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Welcome to AMZ Hospital Bangladesh</h2>
+                    <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Welcome to AMZ Hospital Ltd</h2>
                     <p class="text-lg text-gray-600 mb-6 leading-relaxed">
                         Since 2018, AMZ Hospital Ltd., measured its success by counting of lives been saved, hopes been restored, and care been delivered with quality service & professionalism. 
                     </p>
@@ -571,7 +635,7 @@ onUnmounted(() => {
         </div>
     </section>
 
-    <!-- ── WHY CHOOSE US ────────────────────────────────── -->
+    <!-- â”€â”€ WHY CHOOSE US â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
     <section class="py-20 bg-gradient-to-br from-blue-50 to-indigo-50 scroll-reveal reveal-why fade-in-0 slide-in-from-bottom-10 duration-700">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
@@ -604,7 +668,7 @@ onUnmounted(() => {
         </div>
     </section>
 
-    <!-- ── DEPARTMENTS ──────────────────────────────────── -->
+    <!-- â”€â”€ DEPARTMENTS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
     <section id="departments" class="py-24 bg-slate-50 relative overflow-hidden scroll-reveal reveal-departments fade-in-0 slide-in-from-bottom-8 duration-700">
         <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-200 to-transparent"></div>
         
@@ -679,8 +743,57 @@ onUnmounted(() => {
         </div>
     </section>
 
-    <!-- ── DOCTORS ───────────────────────────────────────── -->
-    <section id="doctors" role="region" aria-label="Our doctors" class="py-20 bg-gradient-to-br from-gray-50 to-blue-50 scroll-reveal reveal-doctors fade-in-0 slide-in-from-right-10 duration-700">
+    <!-- â”€â”€ CENTRE OF EXCELLENCE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <section id="center-of-excellence" role="region" aria-label="Center Of Excellence" class="py-20 bg-gradient-to-br from-slate-50 to-blue-50 scroll-reveal reveal-centers fade-in-0 slide-in-from-bottom-8 duration-700">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-14">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Center Of Excellence</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Advanced multidisciplinary centers delivering focused, high-quality care.</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 stagger-grid">
+                <article v-for="center in centers" :key="center.id" :id="center.id"
+                    class="premium-sheen bg-white rounded-2xl p-6 border border-slate-100 shadow-md hover:shadow-xl transition-all">
+                    <div :class="`w-12 h-12 rounded-lg ${center.bg} ${center.color} flex items-center justify-center mb-4`">
+                        <i :class="`fas ${center.icon}`"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900">{{ center.title }}</h3>
+                    <p class="text-sm text-gray-600 mt-2">{{ center.desc }}</p>
+                </article>
+            </div>
+            <div class="text-center mt-10">
+                <a href="#center-of-excellence"
+                    class="inline-flex items-center bg-gradient-to-r from-blue-800 to-sky-500 text-white px-8 py-3 rounded-lg font-semibold hover:shadow-xl transition-all">
+                    View All Center Of Excellence <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- â”€â”€ SERVICES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+    <section id="services" role="region" aria-label="Healthcare services" class="py-20 bg-white scroll-reveal reveal-services fade-in-0 slide-in-from-bottom-8 duration-700">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Comprehensive Healthcare Services</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">From emergency response to diagnostics, surgery, maternity, pharmacy, and recovery support in one integrated system.</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 stagger-grid">
+                <div v-for="svc in servicesList" :key="svc.title"
+                    :class="`premium-sheen bg-gradient-to-br ${svc.bg} to-white border-2 border-gray-100 rounded-2xl p-8 hover:border-blue-800 hover:shadow-xl transition`">
+                    <i :class="`fas ${svc.icon} text-5xl text-blue-800 mb-4`"></i>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">{{ svc.title }}</h3>
+                    <p class="text-gray-600 mb-4">{{ svc.desc }}</p>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li v-for="item in svc.items" :key="item" class="flex items-center">
+                            <i class="fas fa-check-circle text-emerald-500 mr-2"></i>{{ item }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- â”€â”€ DOCTORS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+   <!--<section id="doctors" role="region" aria-label="Our doctors" class="py-20 bg-gradient-to-br from-gray-50 to-blue-50 scroll-reveal reveal-doctors fade-in-0 slide-in-from-right-10 duration-700">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
                 <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Meet Our Expert Doctors</h2>
@@ -713,11 +826,54 @@ onUnmounted(() => {
                 </a>
             </div>
         </div>
+    </section> -->
+
+    <!-- Leadership -->
+    <section id="leadership" role="region" aria-label="Leadership messages" class="py-20 bg-gradient-to-b from-blue-50/60 via-white to-white scroll-reveal fade-in-0 slide-in-from-bottom-8 duration-700">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <p class="text-xs md:text-sm font-bold uppercase tracking-[0.2em] text-blue-700 mb-3">Our Leadership</p>
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Leadership Messages</h2>
+                <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">A message from the leaders guiding AMZ Hospital toward trusted, patient-focused care.</p>
+            </div>
+            <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
+                <article
+                    v-for="(leader, idx) in leadershipMessages"
+                    :key="leader.name"
+                    class="group premium-sheen rounded-3xl border border-blue-100 bg-white/95 shadow-xl shadow-blue-100/60 overflow-hidden backdrop-blur-sm">
+                    <div class="relative h-72 bg-slate-100">
+                        <img :src="leader.photo" :alt="leader.name" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                        <div class="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
+                        <p class="absolute left-4 bottom-4 inline-flex items-center rounded-full bg-white/95 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-blue-800">
+                            {{ leader.role }}
+                        </p>
+                    </div>
+                    <div class="p-6 md:p-7">
+                        <h3 class="text-2xl font-bold text-slate-900">{{ leader.name }}</h3>
+                        <p v-if="leader.title" class="mt-3 text-sm font-bold text-slate-800">{{ leader.title }}</p>
+                        <p
+                            v-if="!leadershipExpanded[idx]"
+                            class="mt-3 text-slate-600 leading-relaxed">
+                            {{ leadershipPreview(leader.message) }}
+                        </p>
+                        <p
+                            v-else
+                            class="mt-3 text-slate-600 leading-relaxed whitespace-pre-line max-h-[320px] overflow-y-auto pr-1">
+                            {{ leader.message }}
+                        </p>
+                        <button
+                            type="button"
+                            @click="toggleLeadershipMessage(idx)"
+                            class="mt-5 inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-4 py-2 text-xs md:text-sm font-semibold text-blue-800 transition hover:bg-blue-100">
+                            {{ leadershipExpanded[idx] ? 'Show Less' : 'Read Full Message' }}
+                        </button>
+                    </div>
+                </article>
+            </div>
+        </div>
     </section>
 
-    <!-- ── GALLERY ───────────────────────────────────────── -->
-
-
+    <!-- â”€â”€ GALLERY â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
     <section id="gallery" role="region" aria-label="Hospital gallery" class="py-20 bg-white scroll-reveal reveal-gallery fade-in-0 zoom-in-95 duration-700">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
@@ -752,30 +908,7 @@ onUnmounted(() => {
         </div>
     </section>
 
-    <!-- ── SERVICES ──────────────────────────────────────── -->
-    <section id="services" role="region" aria-label="Healthcare services" class="py-20 bg-white scroll-reveal reveal-services fade-in-0 slide-in-from-bottom-8 duration-700">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Comprehensive Healthcare Services</h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">From emergency response to diagnostics, surgery, maternity, pharmacy, and recovery support in one integrated system.</p>
-            </div>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 stagger-grid">
-                <div v-for="svc in servicesList" :key="svc.title"
-                    :class="`premium-sheen bg-gradient-to-br ${svc.bg} to-white border-2 border-gray-100 rounded-2xl p-8 hover:border-blue-800 hover:shadow-xl transition`">
-                    <i :class="`fas ${svc.icon} text-5xl text-blue-800 mb-4`"></i>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-3">{{ svc.title }}</h3>
-                    <p class="text-gray-600 mb-4">{{ svc.desc }}</p>
-                    <ul class="space-y-2 text-sm text-gray-600">
-                        <li v-for="item in svc.items" :key="item" class="flex items-center">
-                            <i class="fas fa-check-circle text-emerald-500 mr-2"></i>{{ item }}
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ── HEALTH PACKAGES ───────────────────────────────── -->
+    <!-- â”€â”€ HEALTH PACKAGES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
     <section id="health-packages" role="region" aria-label="Health packages" class="py-20 bg-gradient-to-b from-slate-50 to-white scroll-reveal reveal-packages fade-in-0 slide-in-from-bottom-8 duration-700">
         <div class="container mx-auto px-4">
             <div class="text-center mb-14">
@@ -798,33 +931,7 @@ onUnmounted(() => {
         </div>
     </section>
 
-    <!-- ── CENTRE OF EXCELLENCE ─────────────────────────── -->
-    <section id="center-of-excellence" role="region" aria-label="Center Of Excellence" class="py-20 bg-gradient-to-br from-slate-50 to-blue-50 scroll-reveal reveal-centers fade-in-0 slide-in-from-bottom-8 duration-700">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-14">
-                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Center Of Excellence</h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Advanced multidisciplinary centers delivering focused, high-quality care.</p>
-            </div>
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 stagger-grid">
-                <article v-for="center in centers" :key="center.id" :id="center.id"
-                    class="premium-sheen bg-white rounded-2xl p-6 border border-slate-100 shadow-md hover:shadow-xl transition-all">
-                    <div :class="`w-12 h-12 rounded-lg ${center.bg} ${center.color} flex items-center justify-center mb-4`">
-                        <i :class="`fas ${center.icon}`"></i>
-                    </div>
-                    <h3 class="font-bold text-gray-900">{{ center.title }}</h3>
-                    <p class="text-sm text-gray-600 mt-2">{{ center.desc }}</p>
-                </article>
-            </div>
-            <div class="text-center mt-10">
-                <a href="#center-of-excellence"
-                    class="inline-flex items-center bg-gradient-to-r from-blue-800 to-sky-500 text-white px-8 py-3 rounded-lg font-semibold hover:shadow-xl transition-all">
-                    View All Center Of Excellence <i class="fas fa-arrow-right ml-2"></i>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- ── APPOINTMENT ───────────────────────────────────── -->
+    <!-- â”€â”€ APPOINTMENT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
     <section id="appointment" role="region" aria-label="Book appointment"
         class="py-20 bg-gradient-to-br from-blue-800 to-sky-500 text-white relative overflow-hidden premium-shine-section scroll-reveal reveal-appointment fade-in-0 zoom-in-95 duration-700">
         <div class="absolute inset-0 opacity-10">
@@ -866,7 +973,7 @@ onUnmounted(() => {
         </div>
     </section>
 
-    <!-- ── TESTIMONIALS ──────────────────────────────────── -->
+    <!-- â”€â”€ TESTIMONIALS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
     <section id="testimonials" role="region" aria-label="Patient testimonials" class="py-20 bg-white scroll-reveal reveal-testimonials fade-in-0 slide-in-from-bottom-8 duration-700">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
@@ -878,7 +985,7 @@ onUnmounted(() => {
                     <article
                         v-for="(t, i) in doubledTestimonials"
                         :key="`${t.name}-${i}`"
-                        :class="`premium-sheen premium-sheen-auto flex-shrink-0 w-[320px] sm:w-[360px] bg-gradient-to-br ${t.cardBg} to-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition`"
+                        :class="`mb-4 premium-sheen premium-sheen-auto flex-shrink-0 w-[320px] sm:w-[360px] bg-gradient-to-br ${t.cardBg} to-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition`"
                     >
                         <div class="flex items-center mb-6">
                             <div :class="`w-16 h-16 bg-gradient-to-br ${t.bg} rounded-full flex items-center justify-center text-white text-2xl font-bold mr-4`">
@@ -904,7 +1011,7 @@ onUnmounted(() => {
         </div>
     </section>
 
-    <!-- ── STATISTICS ────────────────────────────────────── -->
+    <!-- â”€â”€ STATISTICS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
     <section id="stats-section" class="py-20 bg-gradient-to-r from-blue-800 to-sky-500 text-white premium-shine-section scroll-reveal fade-in-0 slide-in-from-bottom-8 duration-700">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
@@ -918,8 +1025,9 @@ onUnmounted(() => {
         </div>
     </section>
 
-    <!-- ── BLOG ───────────────────────────────────────────── -->
-    <section id="blog" role="region" aria-label="Latest blog posts" class="py-20 bg-white scroll-reveal reveal-blog fade-in-0 slide-in-from-bottom-8 duration-700">
+    <!-- â”€â”€ BLOG â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
+   
+   <!-- <section id="blog" role="region" aria-label="Latest blog posts" class="py-20 bg-white scroll-reveal reveal-blog fade-in-0 slide-in-from-bottom-8 duration-700">
         <div class="container mx-auto px-4">
             <div class="mb-14 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
                 <div>
@@ -961,9 +1069,9 @@ onUnmounted(() => {
                 </article>
             </div>
         </div>
-    </section>
+    </section>-->
 
-    <!-- ── NEWSLETTER + PARTNERS ─────────────────────────── -->
+    <!-- â”€â”€ NEWSLETTER + PARTNERS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
     <section id="newsletter-partners" class="py-20 bg-gradient-to-b from-white to-slate-50 scroll-reveal reveal-newsletter fade-in-0 zoom-in-95 duration-700">
         <div class="container mx-auto px-4">
             <div class="max-w-5xl mx-auto mb-14">
@@ -987,7 +1095,7 @@ onUnmounted(() => {
                             <div class="premium-sheen rounded-2xl border border-slate-200 bg-slate-50 p-5 md:p-6 flex flex-col justify-center">
                                 <p class="text-sm text-slate-600 mb-3 font-medium">Enter your email to join our subscriber list.</p>
                                 <div v-if="newsletterSuccess" class="text-green-600 font-semibold text-center py-3 mb-3">
-                                    ✅ Subscribed successfully. Thank you!
+                                    âœ… Subscribed successfully. Thank you!
                                 </div>
                                 <form @submit.prevent="submitNewsletter" class="space-y-3">
                                     <input v-model="newsletterEmail" type="email" required placeholder="name@email.com"
@@ -1039,7 +1147,7 @@ onUnmounted(() => {
         </div>
     </section>
 
-    <!-- ── CONTACT ────────────────────────────────────────── -->
+    <!-- â”€â”€ CONTACT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
     <section id="contact" role="region" aria-label="Contact information" class="py-20 bg-white scroll-reveal reveal-contact fade-in-0 slide-in-from-bottom-8 duration-700">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
@@ -1077,8 +1185,8 @@ onUnmounted(() => {
             </div>
             <div class="rounded-2xl overflow-hidden shadow-2xl h-96">
                 <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d233668.38703692693!2d90.25446292926457!3d23.780573258035956!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b8b087026b81%3A0x8fa563bbdd5904c2!2sDhaka!5e0!3m2!1sen!2sbd!4v1234567890123!5m2!1sen!2sbd"
-                    width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d912.7411925766279!2d90.42537456963056!3d23.78426882587095!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c7af2fcf1c87%3A0x3c70327ba1b06ef7!2sAMZ%20Hospital%20Ltd.!5e0!3m2!1sen!2sbd!4v1773125024838!5m2!1sen!2sbd"
+                    width="100%" height="100%" style="border:0;" allowfullscreen="false" loading="lazy"
                     referrerpolicy="no-referrer-when-downgrade"
                     class="grayscale hover:grayscale-0 transition duration-500">
                 </iframe>

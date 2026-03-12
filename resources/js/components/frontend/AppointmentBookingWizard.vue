@@ -155,8 +155,22 @@ const prevMonth = () => {
     monthCursor.value = new Date(monthCursor.value.getFullYear(), monthCursor.value.getMonth() - 1, 1)
 }
 const nextMonth = () => { monthCursor.value = new Date(monthCursor.value.getFullYear(), monthCursor.value.getMonth() + 1, 1) }
-const chooseDepartment = (id: string) => { booking.value.department = id; booking.value.doctor = '' }
-const chooseDate = (date: Date) => { if (isAvailableDate(date)) { booking.value.date = toIsoDate(date); booking.value.time = '' } }
+const chooseDepartment = (id: string) => {
+    booking.value.department = id
+    booking.value.doctor = ''
+    if (currentStep.value === 1) goNext()
+}
+const chooseDoctor = (id: string) => {
+    booking.value.doctor = id
+    if (currentStep.value === 2) goNext()
+}
+const chooseDate = (date: Date) => {
+    if (isAvailableDate(date)) {
+        booking.value.date = toIsoDate(date)
+        booking.value.time = ''
+        if (currentStep.value === 3) goNext()
+    }
+}
 const goBack = () => { if (currentStep.value > 1) currentStep.value -= 1 }
 const goNext = () => { if (canContinue.value && currentStep.value < steps.length) currentStep.value += 1 }
 
@@ -253,7 +267,7 @@ const confirmBooking = () => {
                                 v-for="doc in departmentDoctors"
                                 :key="doc.id"
                                 type="button"
-                                @click="booking.doctor = doc.id"
+                                @click="chooseDoctor(doc.id)"
                                 :class="[
                                     'w-full rounded-2xl border p-3 text-left transition',
                                     booking.doctor === doc.id

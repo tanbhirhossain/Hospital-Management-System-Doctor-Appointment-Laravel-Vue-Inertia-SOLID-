@@ -139,6 +139,42 @@ onUnmounted(() => {
                         </div>
                     </div>
 
+                    <!-- Mega Menu: Research -->
+                    <div class="desktop-menu-item relative">
+                        <button type="button"
+                            class="text-gray-700 hover:text-blue-800 transition-colors font-medium inline-flex items-center gap-2">
+                            Research
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </button>
+                        <div class="desktop-submenu-right absolute top-full right-0 translate-y-3 opacity-0 invisible pointer-events-none transition-all duration-200 z-60"
+                            style="width: min(860px, calc(100vw - 2rem));">
+                            <div class="bg-white rounded-2xl shadow-2xl border border-slate-100 p-6">
+                                <div class="grid grid-cols-12 gap-6 items-stretch">
+                                    <div class="col-span-4 rounded-xl overflow-hidden" style="min-height: 300px;">
+                                        <img src="https://amzhospitalbd.com/storage/AMZ.jpg" alt="Research"
+                                            class="w-full h-full object-cover" />
+                                    </div>
+                                    <div class="col-span-8 py-1">
+                                        <p class="text-xs uppercase tracking-wide text-slate-500 mb-2">Research</p>
+                                        <p class="text-sm text-slate-600 mb-4">Dedicated research units advancing clinical knowledge, fertility science, and regulated clinical operations.</p>
+                                        <div class="grid grid-cols-2 gap-3">
+                                            <a href="#coe-fertility-research-center"
+                                                class="block rounded-xl border border-slate-100 px-4 py-3 hover:bg-blue-50 transition-colors">
+                                                <span class="block text-sm font-semibold text-slate-800">Infertility Research Center</span>
+                                                <span class="block text-xs text-slate-500">Evidence-based fertility research and innovation.</span>
+                                            </a>
+                                            <a href="#research-cro"
+                                                class="block rounded-xl border border-slate-100 px-4 py-3 hover:bg-blue-50 transition-colors">
+                                                <span class="block text-sm font-semibold text-slate-800">CRO (Contract Research Organisation)</span>
+                                                <span class="block text-xs text-slate-500">Clinical research coordination and compliance.</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Mega Menu: Centre of Excellence -->
                     <div class="desktop-menu-item relative">
                         <button type="button"
@@ -209,8 +245,6 @@ onUnmounted(() => {
                         </div>
                     </div>
 
-                    <a href="#testimonials"
-                        class="text-gray-700 hover:text-blue-800 transition-colors font-medium">Testimonials</a>
                     <a href="#contact" class="text-gray-700 hover:text-blue-800 transition-colors font-medium">Contact</a>
                     <a href="#appointment"
                         class="bg-gradient-to-r from-blue-800 to-sky-500 text-white px-6 py-2.5 rounded-lg font-semibold hover:shadow-lg transition-all transform hover:scale-105">
@@ -265,6 +299,17 @@ onUnmounted(() => {
                     <details class="group">
                         <summary
                             class="list-none cursor-pointer text-gray-700 hover:text-blue-800 transition-colors py-2 font-medium flex items-center justify-between">
+                            Research
+                            <i class="fas fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <div class="pl-4 pb-2 flex flex-col space-y-2 border-l-2 border-slate-100">
+                            <a href="#coe-fertility-research-center" class="text-slate-600 hover:text-blue-800 transition-colors">Infertility Research Center</a>
+                            <a href="#research-cro" class="text-slate-600 hover:text-blue-800 transition-colors">CRO (Contract Research Organisation)</a>
+                        </div>
+                    </details>
+                    <details class="group">
+                        <summary
+                            class="list-none cursor-pointer text-gray-700 hover:text-blue-800 transition-colors py-2 font-medium flex items-center justify-between">
                             Center Of Excellence
                             <i class="fas fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
                         </summary>
@@ -275,8 +320,6 @@ onUnmounted(() => {
                             <a href="#coe-cancer-care-center" class="text-slate-600 hover:text-blue-800 transition-colors">Cancer Care Center</a>
                         </div>
                     </details>
-                    <a href="#testimonials" @click="closeMobileMenu"
-                        class="text-gray-700 hover:text-blue-800 transition-colors py-2 font-medium">Testimonials</a>
                     <a href="#contact" @click="closeMobileMenu"
                         class="text-gray-700 hover:text-blue-800 transition-colors py-2 font-medium">Contact</a>
                     <a href="#appointment" @click="closeMobileMenu"
